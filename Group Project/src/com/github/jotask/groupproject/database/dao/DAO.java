@@ -8,7 +8,7 @@ import java.sql.Statement;
 import com.github.jotask.groupproject.database.DataBase;
 
 /**
- * Class for store the database instance and the reference to the actual connecion
+ * Class for store the database instance and the reference to the actual connection
  * Also have methods for close connections
  * @author Jose Vives
  * @version 1.0
