@@ -12,7 +12,6 @@ import com.github.jotask.groupproject.database.DataBase;
  * Also have methods for close connections
  * @author Jose Vives
  * @version 1.0
- * @since 23 / October  / 2015
  */
 public abstract class DAO {
 	

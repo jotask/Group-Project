@@ -9,6 +9,7 @@ import com.github.jotask.groupproject.database.DataBase;
  * DataBase and our connection we established
  * 
  * @author Jose Vives
+ * @version 0.1
  *
  */
 public class UserDAO extends DAO {
