@@ -1,5 +1,10 @@
 package com.github.jotask.groupproject;
 
+import javax.swing.JDialog;
+
+import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.gui.Login;
+
 /**
  * Start class where all start
  * @author Jose Vives
@@ -7,14 +12,25 @@ package com.github.jotask.groupproject;
  */
 public class Application {
 	
+	private DataBase db;
+	
 	/**
-	 * Constructor for initialize variables
+	 * Constructor for initialise variables
 	 */
 	public Application() {
-		// TODO Auto-generated constructor stub
+		db = new DataBase();
+
+		try {
+			Login dialog = new Login(db);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
+	 * Launch the application
 	 * This method is the first methods called when the program start
 	 * @param args
 	 */
