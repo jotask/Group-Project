@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 
 import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.util.MD5;
 
 /**
  * Class for get and update information from the table user from our connection between the
@@ -29,6 +30,15 @@ public class UserDAO extends DAO {
 		super(db, conn);
 	}
 	
+	/**
+	 * 
+	 * @param username
+	 * 				The username 
+	 * @param password
+	 * 				The
+	 * @return
+	 * 			If the username and the password is correct
+	 */
 	public boolean login(String username, char[] password) {
 		
 		Statement stm = null;
@@ -38,6 +48,8 @@ public class UserDAO extends DAO {
 			stm = conn.createStatement();
 			String sql = "select password from users where username=" + username;
 			rs = stm.executeQuery(sql);
+			
+			password = MD5.encrypt(password.toString()).toCharArray();
 			
 			while(rs.next()){
 				char[] passwd = rs.getString("password").toCharArray();

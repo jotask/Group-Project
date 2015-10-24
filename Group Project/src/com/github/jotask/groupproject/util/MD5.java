@@ -4,8 +4,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Static class for encrypt and de-encrypt a string for security proposes
- * @author Jota
+ * Static class for encrypt a string for security proposes
+ * Code bellows to the follow webpage
+ * http://www.java2s.com/Code/Java/Security/UseMD5toencryptastring.htm
+ * @author Jose Vives and the java2s website
+ * @version 1.0
  *
  */
 public class MD5 {
@@ -22,7 +25,7 @@ public class MD5 {
     }
 	
 	/**
-	 * Encrypt with a md5 algorithm an array
+	 * Encrypt a string with a MD5 algorithm
 	 * @param text
 	 * 			The text for encrypt
 	 * @return
