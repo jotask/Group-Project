@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -38,6 +39,9 @@ public class Login extends JDialog {
 	 */
 	public Login(DataBase db) {
 		this.db = db;
+		ImageIcon img = new ImageIcon("resources/icon.png");
+		setIconImage(img.getImage());
+		setResizable(false);
 		setTitle("Login to TaskManager");
 		setBounds(100, 100, 450, 165);
 		getContentPane().setLayout(new BorderLayout());
@@ -62,23 +66,23 @@ public class Login extends JDialog {
 			contentPanel.add(passwordField, "cell 1 1,growx");
 		}
 		{
-			JCheckBox chckbxNewCheckBox = new JCheckBox("Remember");
-			contentPanel.add(chckbxNewCheckBox, "cell 1 2,alignx right");
+			JCheckBox remember = new JCheckBox("Remember");
+			contentPanel.add(remember, "cell 1 2,alignx right");
 		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
+				JButton loginBtn = new JButton("Login");
+				loginBtn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						login();
 					}
 				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				loginBtn.setActionCommand("OK");
+				buttonPane.add(loginBtn);
+				getRootPane().setDefaultButton(loginBtn);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
@@ -88,6 +92,10 @@ public class Login extends JDialog {
 						dispose();
 					}
 				});
+				{
+					JButton offlineBtn = new JButton("Offline");
+					buttonPane.add(offlineBtn);
+				}
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
