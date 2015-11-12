@@ -1,0 +1,36 @@
+Project:  CS22100 Group Project (Group 17) 
+Date:  Thursday 12th November 2015, 11:10 AM
+Meeting:  Weekly Project Meeting - Room C55
+Present: Laurence Tyler, Peter George, Frederik Kranich, Jack Thomson, George Vinters, Jose Vives Iznardo, Alexander Webb, 
+Apologies:  Grigor Mironov, Stuart Tee
+Circulation List:  All project members including the project manager
+Author:  George Vinters		
+Produced: Thursday 12th November
+Version:  1.0
+ 
+ 
+Matters arising
+1. The Test Specification document has been submitted.  Feedback has been given for the input and output descriptions to be more specific.
+
+
+New Business
+2. New tasks for the group have been given out with a deadline of before the Thursday 19th meeting.  This is with the exception of Grigor who has been asked to submit his work by Tuesday 17th at 10AM.  The SE.QA.05A Design Specification Standards document can be used for additional information.  The tasks are as follows:
+ACTION:  Jack - Create descriptions for the significant classes
+ACTION:  Peter - Create the interface descriptions
+ACTION:  George - Create the state diagrams
+ACTION:  Frederik - Create the data transmission formats
+ACTION:  Alex - Record spike work and help produce the sequence diagrams alongside Grigor
+ACTION:  Stuart - Continue with the creation of the component description 
+ACTION:  Grigor - Create the sequence diagrams for the java log in, view task and edit task
+ACTION:  Jose - Create the class and object diagrams
+  
+
+AOB
+3. Date, Time and Venue for next meeting
+Monday 16th November - Geography Building at 3 PM (Think Tank)
+Thursday 19th November - CS221 Tutorial at 11:10 AM (Room C55)
+
+
+George Vinters - ghv@aber.ac.uk
+Minutes produced:  Thursday 12th November
+Please email me if you believe there are any errors within the minutes.
