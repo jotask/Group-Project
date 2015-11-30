@@ -1,5 +1,6 @@
-user=
+user=root
 passwd=
-dbName=
-server=
-port=
+db=project
+port=3306
+server=localhost
+url=jdbc:mysql://

@@ -1,5 +1,7 @@
 package com.github.jotask.groupproject.database;
 
+import com.github.jotask.groupproject.database.dao.UserDAO;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,8 +9,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-
-import com.github.jotask.groupproject.database.dao.UserDAO;
 
 /**
  * Main class for hold all we need for retrieve information and update
@@ -74,6 +74,9 @@ public class DataBase {
 			try {
 				Class.forName(DRIVER);
 				conn = DriverManager.getConnection(url, user, password);
+				if(conn == null){
+					System.exit(1);
+				}
 			} catch (SQLException e) {
 				// TODO Connection not created
 			} catch (ClassNotFoundException e) {
