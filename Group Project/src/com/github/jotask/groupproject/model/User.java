@@ -5,12 +5,40 @@ public class User {
 	/** The user ID */
 	int id;
 	/** The user username */
-	String username;
+	String surname;
 	/** The name from the user */
-	String name;
+	String firstname;
 	/** The mail from the user */
 	String mail;
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
 	/**
 	 * Constructor for the User, get all the parameters from one user
 	 * @param id
@@ -22,10 +50,10 @@ public class User {
 	 * @param mail
 	 * 			The mail from the user
 	 */
-	public User(int id, String username, String name, String mail) {
+	public User(int id, String surname, String firstname, String mail) {
 		this.id = id;
-		this.username = username;
-		this.name = name;
+		this.surname = surname;
+		this.firstname = firstname;
 		this.mail = mail;
 	}
 
