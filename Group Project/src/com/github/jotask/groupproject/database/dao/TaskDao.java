@@ -32,18 +32,26 @@ public class TaskDao extends DAO{
         ArrayList<Task> tasks = new ArrayList<>();
 
         Statement stm = null;
-        ResultSet rs;
+        ResultSet rs = null;
 
         try {
             String sql = "SELECT * FROM task WHERE member_id=\"" + user.getId() + "\"";
             rs = stm.executeQuery(sql);
 
             while(rs.next()){
-                creteTask(rs);
+                Task task = creteTask(rs);
+                tasks.add(task);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                close(stm, rs);
+            } catch (SQLException e) {
+                // TODO nothing to do
+                e.printStackTrace();
+            }
         }
 
         return tasks;
