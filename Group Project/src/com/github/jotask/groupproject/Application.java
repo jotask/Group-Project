@@ -1,9 +1,9 @@
 package com.github.jotask.groupproject;
 
-import javax.swing.JDialog;
-
 import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.gui.Login;
+
+import javax.swing.*;
 
 /**
  * Start class where all start
@@ -35,7 +35,9 @@ public class Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new Application();
+
+		 new Application();
+
 	}
 	
 }
