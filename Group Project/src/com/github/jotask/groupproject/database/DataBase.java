@@ -1,5 +1,7 @@
 package com.github.jotask.groupproject.database;
 
+import com.github.jotask.groupproject.database.dao.UserDAO;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,8 +9,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-
-import com.github.jotask.groupproject.database.dao.UserDAO;
 
 /**
  * Main class for hold all we need for retrieve information and update
@@ -18,6 +18,13 @@ import com.github.jotask.groupproject.database.dao.UserDAO;
  *
  */
 public class DataBase {
+
+	private static final String SERVER = "localhost";
+	private static final String PORT = "3306";
+	private static final String USER = "root";
+	private static final String PASSWORD = "";
+	private static final String DATABASE = "project";
+	private static final String URL = "jdbc:mysql://";
 	
 	/**
 	 * The JBDC we gonna use for the connection for an MySQL server
@@ -49,14 +56,16 @@ public class DataBase {
 		{
 			try{
 				props = new Properties();
-				props.load(new FileReader("db.props"));
+				props.load(new FileReader("database.properties"));
 			} catch (FileNotFoundException e) {
 				// TODO Handle exception
 			} catch (IOException e) {
 				// TODO Handle exception
 			}
-			user = props.getProperty("user");
-			password = props.getProperty("passw");
+//			user = props.getProperty("user");
+			user = USER;
+//			password = props.getProperty("passw");
+			password = PASSWORD;
 			
 			// Create the URL
 			StringBuilder DBURL = new StringBuilder();
@@ -65,7 +74,8 @@ public class DataBase {
 			DBURL.append(props.getProperty("port") + "/");
 			DBURL.append(props.getProperty("db"));
 			
-			url = DBURL.toString();
+//			url = DBURL.toString();
+			url = URL + SERVER + ":" + PORT + "/" + DATABASE;
 		}
 		
 		// Create the connection using the mySQL driver and connect to the DataBase server for
@@ -76,8 +86,12 @@ public class DataBase {
 				conn = DriverManager.getConnection(url, user, password);
 			} catch (SQLException e) {
 				// TODO Connection not created
+				e.printStackTrace();
+				System.exit(1);
 			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 				// TODO Handle the class not found exception
+				System.exit(1);
 			}
 		}
 		
