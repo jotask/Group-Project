@@ -1,24 +1,13 @@
 package com.github.jotask.groupproject.gui;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import com.github.jotask.groupproject.database.DataBase;
+import net.miginfocom.swing.MigLayout;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-
-import com.github.jotask.groupproject.database.DataBase;
-
-import net.miginfocom.swing.MigLayout;
 
 /**
  * Login dialog for the login to the database
@@ -106,7 +95,7 @@ public class Login extends JDialog {
 		String username = usernameField.getText();
 		char[] password = passwordField.getPassword();
 		
-		if(db.getUser().login(username, password)){
+		if(db.getMember().login(username, password)){
 			JOptionPane.showMessageDialog(this, "Login", "Succes", JOptionPane.INFORMATION_MESSAGE);
 		}else{
 			JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);

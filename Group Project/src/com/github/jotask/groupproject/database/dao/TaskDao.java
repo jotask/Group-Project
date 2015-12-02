@@ -39,7 +39,7 @@ public class TaskDao extends DAO{
             rs = stm.executeQuery(sql);
 
             while(rs.next()){
-                Task task = creteTask(rs);
+                Task task = createTask(rs);
                 tasks.add(task);
             }
 
@@ -58,7 +58,7 @@ public class TaskDao extends DAO{
 
     }
 
-    private Task creteTask(ResultSet rs) throws SQLException {
+    private Task createTask(ResultSet rs) throws SQLException {
         int id = rs.getInt("task_id");
         String name = rs.getString("task_name");
         int team_id = rs.getInt("team_id");

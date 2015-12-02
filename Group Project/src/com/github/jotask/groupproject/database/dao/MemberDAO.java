@@ -16,7 +16,7 @@ import java.sql.Statement;
  * @version 0.1
  *
  */
-public class UserDAO extends DAO {
+public class MemberDAO extends DAO {
 
 	/**
 	 * Constructor for the class
@@ -25,7 +25,7 @@ public class UserDAO extends DAO {
 	 * @param conn
 	 * 			The Connection instance
 	 */
-	public UserDAO(DataBase db, Connection conn) {
+	public MemberDAO(DataBase db, Connection conn) {
 		super(db, conn);
 	}
 	
