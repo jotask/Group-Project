@@ -97,7 +97,7 @@ public class Login extends JDialog {
 		String username = usernameField.getText();
 		char[] password = passwordField.getPassword();
 
-		User user = db.getMember().login(username, password);
+		User user = db.getMemberDao().login(username, password);
 
 		if(user != null){
 			this.setVisible(false);
