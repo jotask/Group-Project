@@ -1,12 +1,14 @@
 package com.github.jotask.groupproject.gui;
 
 import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Application {
 
@@ -23,6 +25,7 @@ public class Application {
         this.db = db;
         this.user = user;
         initialize();
+        this.refreshTaskView();
     }
 
     /**
@@ -57,6 +60,12 @@ public class Application {
         scrollPane.setViewportView(table);
 
         frame.setVisible(true);
+    }
+
+    public void refreshTaskView() {
+        ArrayList<Task> tasks = db.getTaskDAO().getAllTasks(user);
+        TaskTableModel model = new TaskTableModel(tasks);
+        table.setModel(model);
     }
 
 }
