@@ -1,6 +1,7 @@
 package com.github.jotask.groupproject.database.dao;
 
 import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.model.User;
 import com.github.jotask.groupproject.util.MD5;
 
 import java.sql.Connection;
@@ -38,7 +39,7 @@ public class MemberDAO extends DAO {
 	 * @return
 	 * 			If the username and the password is correct
 	 */
-	public boolean login(String username, char[] password) {
+	public User login(String username, char[] password) {
 		
 		Statement stm = null;
 		ResultSet rs;
@@ -57,9 +58,9 @@ public class MemberDAO extends DAO {
 //				if(Arrays.equals(passwd, password)){
 //					return true;
 //				}
-				System.out.println(rs.getString("surname"));
 				if(rs.getString("surname").equals(username)){
-					return true;
+					User user = converToUser(rs);
+					return user;
 				}
 			}
 		}catch(SQLException sqlex){
@@ -73,7 +74,15 @@ public class MemberDAO extends DAO {
 				e.printStackTrace();
 			}
 		}
-		return false;
+		return null;
+	}
+
+	private User converToUser(ResultSet rs) throws SQLException {
+		int id = rs.getInt("id");
+		String username = rs.getString("username");
+		String firstname = rs.getString("firstname");
+		String mail = rs.getString("mail");
+		return new User(id, username, firstname, mail);
 	}
 
 }
