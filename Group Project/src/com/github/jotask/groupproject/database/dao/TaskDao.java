@@ -23,7 +23,7 @@ public class TaskDao extends DAO{
      * @param db   The actual DataBase instance
      * @param conn
      */
-    protected TaskDao(DataBase db, Connection conn) {
+    public TaskDao(DataBase db, Connection conn) {
         super(db, conn);
     }
 

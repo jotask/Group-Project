@@ -20,7 +20,7 @@ public class TeamDao extends  DAO{
      * @param db   The actual DataBase instance
      * @param conn
      */
-    protected TeamDao(DataBase db, Connection conn) {
+    public TeamDao(DataBase db, Connection conn) {
         super(db, conn);
     }
 

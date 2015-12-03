@@ -1,5 +1,6 @@
 package com.github.jotask.groupproject.database;
 
+import com.github.jotask.groupproject.database.dao.ElementDAO;
 import com.github.jotask.groupproject.database.dao.MemberDAO;
 import com.github.jotask.groupproject.database.dao.TaskDao;
 import com.github.jotask.groupproject.database.dao.TeamDao;
@@ -47,7 +48,8 @@ public class DataBase {
 	 */
 	private MemberDAO memberDao;
 	private TaskDao taskDAO;
-	private TeamDao teamDao;
+	private TeamDao teamDAO;
+	private ElementDAO elementDAO;
 	
 	/**
 	 * Constructor the main class, we instantiate and load our configuration from a file.
@@ -101,18 +103,27 @@ public class DataBase {
 		
 		// Initialise all our DAO objects
 		{
-			memberDao = new MemberDAO(this, conn);
+			this.memberDao = new MemberDAO(this, conn);
+			this.elementDAO = new ElementDAO(this, conn);
+			this.taskDAO = new TaskDao(this, conn);
+			this.teamDAO = new TeamDao(this, conn);
 		}
 		
 	}
-	
-	/**
-	 * Get the userDAO object
-	 * @return
-	 * 		Our userDAO instance
-	 */
-	public MemberDAO getMember(){
+
+	public MemberDAO getMemberDao() {
 		return memberDao;
 	}
 
+	public TaskDao getTaskDAO() {
+		return taskDAO;
+	}
+
+	public TeamDao getTeamDAO() {
+		return teamDAO;
+	}
+
+	public ElementDAO getElementDAO() {
+		return elementDAO;
+	}
 }

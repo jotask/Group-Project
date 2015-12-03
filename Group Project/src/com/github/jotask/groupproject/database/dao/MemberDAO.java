@@ -79,10 +79,10 @@ public class MemberDAO extends DAO {
 
 	private User converToUser(ResultSet rs) throws SQLException {
 		int id = rs.getInt("id");
-		String username = rs.getString("username");
-		String firstname = rs.getString("firstname");
+		String surname = rs.getString("surname");
+		String forename = rs.getString("forename");
 		String mail = rs.getString("mail");
-		return new User(id, username, firstname, mail);
+		return new User(id, surname, forename, mail);
 	}
 
 }

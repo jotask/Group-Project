@@ -22,7 +22,7 @@ public class ElementDAO extends DAO{
      * @param db   The actual DataBase instance
      * @param conn
      */
-    protected ElementDAO(DataBase db, Connection conn) {
+    public ElementDAO(DataBase db, Connection conn) {
         super(db, conn);
     }
 
