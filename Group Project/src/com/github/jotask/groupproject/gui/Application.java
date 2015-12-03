@@ -10,9 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Application {
+public class Application extends JFrame{
 
-    private JFrame frame;
     private JTable table;
 
     private DataBase db;
@@ -32,12 +31,12 @@ public class Application {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        frame = new JFrame();
-        frame.setBounds(100, 100, 450, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle("Task Manager");
+        this.setBounds(100, 100, 450, 300);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panel = new JPanel();
-        frame.getContentPane().add(panel, BorderLayout.WEST);
+        this.getContentPane().add(panel, BorderLayout.WEST);
         panel.setLayout(new GridLayout(0, 1, 0, 0));
 
         JLabel lblUsername = new JLabel(user.getSurname());
@@ -46,6 +45,7 @@ public class Application {
         JButton btnNewButton = new JButton("Add Task");
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
             }
         });
         panel.add(btnNewButton);
@@ -54,12 +54,12 @@ public class Application {
         panel.add(btnUpdate);
 
         JScrollPane scrollPane = new JScrollPane();
-        frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+        this.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
         table = new JTable();
         scrollPane.setViewportView(table);
 
-        frame.setVisible(true);
+        this.setVisible(true);
     }
 
     public void refreshTaskView() {

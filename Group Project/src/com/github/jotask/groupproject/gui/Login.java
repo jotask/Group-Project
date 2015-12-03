@@ -101,7 +101,7 @@ public class Login extends JDialog {
 
 		if(user != null){
 			this.setVisible(false);
-			JOptionPane.showMessageDialog(this, "Login", "Succes", JOptionPane.INFORMATION_MESSAGE);
+//			JOptionPane.showMessageDialog(this, "Login", "Succes", JOptionPane.INFORMATION_MESSAGE);
 			Application app = new Application(db, user);
 		}else{
 			JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);
