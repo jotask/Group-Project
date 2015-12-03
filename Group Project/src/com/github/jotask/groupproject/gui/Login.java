@@ -1,6 +1,7 @@
 package com.github.jotask.groupproject.gui;
 
 import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.model.User;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -43,6 +44,7 @@ public class Login extends JDialog {
 		}
 		{
 			usernameField = new JTextField();
+			usernameField.setText("jota");
 			contentPanel.add(usernameField, "cell 1 0,growx");
 			usernameField.setColumns(10);
 		}
@@ -94,9 +96,13 @@ public class Login extends JDialog {
 	private void login(){
 		String username = usernameField.getText();
 		char[] password = passwordField.getPassword();
-		
-		if(db.getMember().login(username, password)){
+
+		User user = db.getMember().login(username, password);
+
+		if(user != null){
+			this.setVisible(false);
 			JOptionPane.showMessageDialog(this, "Login", "Succes", JOptionPane.INFORMATION_MESSAGE);
+			Application app = new Application(db, user);
 		}else{
 			JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);
 		}		
