@@ -87,10 +87,25 @@ public class Login extends JDialog {
 					JButton offlineBtn = new JButton("Offline");
 					buttonPane.add(offlineBtn);
 				}
+				{
+					JButton register = new JButton("Register");
+					register.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e){
+							RegisterDialog registerDialog = new RegisterDialog();
+						}
+					});
+					buttonPane.add(register);
+				}
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+
+	private void createuser(){
+
+
+
 	}
 	
 	private void login(){

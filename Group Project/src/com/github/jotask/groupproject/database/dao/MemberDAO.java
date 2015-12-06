@@ -85,4 +85,26 @@ public class MemberDAO extends DAO {
 		return new User(id, surname, forename, mail);
 	}
 
+	public void register(String surname, String forename, String mail) {
+
+		String sql = "INSERT INTO `project`.`member` (`id`, `surname`, `forename`, `mail`) VALUES (NULL, '" + surname + "', '" + forename + "', '" + mail + "');";
+
+		Statement stm = null;
+		ResultSet rs = null;
+
+		try {
+			stm = conn.createStatement();
+			rs = stm.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO not crated handle
+			e.printStackTrace();
+		}finally {
+			try {
+				close(stm, rs);
+			} catch (SQLException e) {
+				// TODO Nothing we cand do
+			}
+		}
+
+	}
 }
