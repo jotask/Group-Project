@@ -1,6 +1,9 @@
 package com.github.jotask.groupproject.database;
 
-import com.github.jotask.groupproject.database.dao.UserDAO;
+import com.github.jotask.groupproject.database.dao.ElementDAO;
+import com.github.jotask.groupproject.database.dao.MemberDAO;
+import com.github.jotask.groupproject.database.dao.TaskDao;
+import com.github.jotask.groupproject.database.dao.TeamDao;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -43,7 +46,10 @@ public class DataBase {
 	/**
 	 * Instance for the userDAO object
 	 */
-	private UserDAO userDAO;
+	private MemberDAO memberDao;
+	private TaskDao taskDAO;
+	private TeamDao teamDAO;
+	private ElementDAO elementDAO;
 	
 	/**
 	 * Constructor the main class, we instantiate and load our configuration from a file.
@@ -97,18 +103,27 @@ public class DataBase {
 		
 		// Initialise all our DAO objects
 		{
-			userDAO = new UserDAO(this, conn);
+			this.memberDao = new MemberDAO(this, conn);
+			this.elementDAO = new ElementDAO(this, conn);
+			this.taskDAO = new TaskDao(this, conn);
+			this.teamDAO = new TeamDao(this, conn);
 		}
 		
 	}
-	
-	/**
-	 * Get the userDAO object
-	 * @return
-	 * 		Our userDAO instance
-	 */
-	public UserDAO getUser(){
-		return userDAO;
+
+	public MemberDAO getMemberDao() {
+		return memberDao;
 	}
 
+	public TaskDao getTaskDAO() {
+		return taskDAO;
+	}
+
+	public TeamDao getTeamDAO() {
+		return teamDAO;
+	}
+
+	public ElementDAO getElementDAO() {
+		return elementDAO;
+	}
 }

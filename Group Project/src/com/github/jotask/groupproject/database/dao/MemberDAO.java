@@ -1,6 +1,7 @@
 package com.github.jotask.groupproject.database.dao;
 
 import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.model.User;
 import com.github.jotask.groupproject.util.MD5;
 
 import java.sql.Connection;
@@ -16,7 +17,7 @@ import java.sql.Statement;
  * @version 0.1
  *
  */
-public class UserDAO extends DAO {
+public class MemberDAO extends DAO {
 
 	/**
 	 * Constructor for the class
@@ -25,7 +26,7 @@ public class UserDAO extends DAO {
 	 * @param conn
 	 * 			The Connection instance
 	 */
-	public UserDAO(DataBase db, Connection conn) {
+	public MemberDAO(DataBase db, Connection conn) {
 		super(db, conn);
 	}
 	
@@ -38,7 +39,7 @@ public class UserDAO extends DAO {
 	 * @return
 	 * 			If the username and the password is correct
 	 */
-	public boolean login(String username, char[] password) {
+	public User login(String username, char[] password) {
 		
 		Statement stm = null;
 		ResultSet rs;
@@ -57,9 +58,9 @@ public class UserDAO extends DAO {
 //				if(Arrays.equals(passwd, password)){
 //					return true;
 //				}
-				System.out.println(rs.getString("surname"));
 				if(rs.getString("surname").equals(username)){
-					return true;
+					User user = converToUser(rs);
+					return user;
 				}
 			}
 		}catch(SQLException sqlex){
@@ -73,7 +74,36 @@ public class UserDAO extends DAO {
 				e.printStackTrace();
 			}
 		}
-		return false;
+		return null;
 	}
 
+	private User converToUser(ResultSet rs) throws SQLException {
+		int id = rs.getInt("id");
+		String surname = rs.getString("surname");
+		String forename = rs.getString("forename");
+		String mail = rs.getString("mail");
+		return new User(id, surname, forename, mail);
+	}
+
+	public void register(String surname, String forename, String mail) {
+
+		String sql = "INSERT INTO `project`.`member` (`id`, `surname`, `forename`, `mail`) VALUES (NULL, '" + surname + "', '" + forename + "', '" + mail + "');";
+
+		Statement stm = null;
+
+		try {
+			stm = conn.createStatement();
+			stm.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO not created handle
+			e.printStackTrace();
+		}finally {
+			try {
+				close(stm);
+			} catch (SQLException e) {
+				// TODO Nothing we can do
+			}
+		}
+
+	}
 }

@@ -27,7 +27,6 @@ public class Task {
         this.endDate = endDate;
         this.status = status;
     }
-
     public int getId() {
         return id;
     }
