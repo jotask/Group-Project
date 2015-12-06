@@ -88,6 +88,7 @@ public class RegisterDialog extends JDialog {
                 buttonPane.add(cancelButton);
             }
         }
+        this.setVisible(true);
         this.db = db;
     }
 

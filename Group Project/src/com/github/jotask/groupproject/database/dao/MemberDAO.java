@@ -90,19 +90,18 @@ public class MemberDAO extends DAO {
 		String sql = "INSERT INTO `project`.`member` (`id`, `surname`, `forename`, `mail`) VALUES (NULL, '" + surname + "', '" + forename + "', '" + mail + "');";
 
 		Statement stm = null;
-		ResultSet rs = null;
 
 		try {
 			stm = conn.createStatement();
-			rs = stm.executeQuery(sql);
+			stm.executeUpdate(sql);
 		} catch (SQLException e) {
-			// TODO not crated handle
+			// TODO not created handle
 			e.printStackTrace();
 		}finally {
 			try {
-				close(stm, rs);
+				close(stm);
 			} catch (SQLException e) {
-				// TODO Nothing we cand do
+				// TODO Nothing we can do
 			}
 		}
 

@@ -91,7 +91,7 @@ public class Login extends JDialog {
 					JButton register = new JButton("Register");
 					register.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent e){
-							RegisterDialog registerDialog = new RegisterDialog();
+							RegisterDialog registerDialog = new RegisterDialog(db);
 						}
 					});
 					buttonPane.add(register);
