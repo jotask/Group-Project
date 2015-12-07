@@ -101,12 +101,6 @@ public class Login extends JDialog {
 			}
 		}
 	}
-
-	private void createuser(){
-
-
-
-	}
 	
 	private void login(){
 		String username = usernameField.getText();

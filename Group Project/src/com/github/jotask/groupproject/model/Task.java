@@ -1,7 +1,5 @@
 package com.github.jotask.groupproject.model;
 
-import java.util.Date;
-
 /**
  * Created by Jose Vives on 30/11/2015.
  *
@@ -14,11 +12,11 @@ public class Task {
     private String name;
     private int team_id;
     private int member_id;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private String status;
 
-    public Task(int id, String name, int team_id, int member_id, Date startDate, Date endDate, String status) {
+    public Task(int id, String name, int team_id, int member_id, String startDate, String endDate, String status) {
         this.id = id;
         this.name = name;
         this.team_id = team_id;
@@ -55,19 +53,19 @@ public class Task {
         this.member_id = member_id;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

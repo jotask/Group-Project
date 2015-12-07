@@ -1,12 +1,19 @@
 package com.github.jotask.groupproject.gui;
 
+import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.model.Task;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class TaskDialog extends JDialog {
+
+    private DataBase db;
 
     private final JPanel contentPanel = new JPanel();
     private JTextField textField;
@@ -20,20 +27,21 @@ public class TaskDialog extends JDialog {
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
-        try {
-            TaskDialog dialog = new TaskDialog();
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args) {
+//        try {
+//            TaskDialog dialog = new TaskDialog();
+//            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//            dialog.setVisible(true);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * Create the dialog.
      */
-    public TaskDialog() {
+    public TaskDialog(DataBase db) {
+        this.db = db;
         setBounds(100, 100, 450, 259);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -114,13 +122,49 @@ public class TaskDialog extends JDialog {
                 okButton.setActionCommand("OK");
                 buttonPane.add(okButton);
                 getRootPane().setDefaultButton(okButton);
+                okButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        okClicked();
+                    }
+                });
             }
             {
                 JButton cancelButton = new JButton("Cancel");
                 cancelButton.setActionCommand("Cancel");
                 buttonPane.add(cancelButton);
+                cancelButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cancelCliked();
+                    }
+                });
             }
         }
+    }
+
+    private void okClicked(){
+
+        int id = -1;
+        String name = textField_1.getText();
+        int team_id = Integer.parseInt(textField_2.getText());
+        int member_id = Integer.parseInt(textField_3.getText());
+        String startDate = null;
+        String endDate = null;
+        String status = textField_6.getText();
+
+        Task task = new Task(id, name, team_id, member_id, startDate, endDate, status);
+
+        try {
+            db.getTaskDAO().insertTask(task);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void cancelCliked(){
+        setVisible(false);
     }
 
 }

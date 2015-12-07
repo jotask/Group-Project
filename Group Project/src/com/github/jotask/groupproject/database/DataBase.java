@@ -22,11 +22,11 @@ import java.util.Properties;
  */
 public class DataBase {
 
-	private static final String SERVER = "localhost";
+	private static final String SERVER = "db.dcs.aber.ac.uk";
 	private static final String PORT = "3306";
-	private static final String USER = "root";
-	private static final String PASSWORD = "";
-	private static final String DATABASE = "project";
+	private static final String USER = "csgpadm_17";
+	private static final String PASSWORD = "ZsdRKXnE";
+	private static final String DATABASE = "csgp_17_15_16";
 	private static final String URL = "jdbc:mysql://";
 	
 	/**

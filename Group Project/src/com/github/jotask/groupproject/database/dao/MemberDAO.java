@@ -85,18 +85,22 @@ public class MemberDAO extends DAO {
 		return new User(id, surname, forename, mail);
 	}
 
-	public void register(String surname, String forename, String mail) {
+	public boolean register(String surname, String forename, String mail) {
 
-		String sql = "INSERT INTO `project`.`member` (`id`, `surname`, `forename`, `mail`) VALUES (NULL, '" + surname + "', '" + forename + "', '" + mail + "');";
+		boolean success;
+
+		String sql = "INSERT INTO `MEMBER` (`SURNAME`, `FORENAME`, `EMAIL_ADDRESS`) VALUES ('" + surname + "', '" + forename + "', '" + mail + "');";
 
 		Statement stm = null;
 
 		try {
 			stm = conn.createStatement();
 			stm.executeUpdate(sql);
+			success = true;
 		} catch (SQLException e) {
 			// TODO not created handle
 			e.printStackTrace();
+			success = false;
 		}finally {
 			try {
 				close(stm);
@@ -104,6 +108,6 @@ public class MemberDAO extends DAO {
 				// TODO Nothing we can do
 			}
 		}
-
+		return success;
 	}
 }
