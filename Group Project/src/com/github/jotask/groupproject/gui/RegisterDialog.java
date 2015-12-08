@@ -35,7 +35,8 @@ public class RegisterDialog extends JDialog {
      * Create the dialog.
      */
     public RegisterDialog(DataBase db) {
-        setBounds(100, 100, 450, 300);
+        setTitle("Register new member");
+        setBounds(100, 100, 450, 200);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -98,7 +99,11 @@ public class RegisterDialog extends JDialog {
         String forename = textField_1.getText();
         String mail = textField_2.getText();
 
-        db.getMemberDao().register(surname, forename, mail);
+        if(db.getMemberDao().register(surname, forename, mail)) {
+            setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(this, "Error Creating user", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 

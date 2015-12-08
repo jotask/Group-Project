@@ -1,6 +1,6 @@
 package com.github.jotask.groupproject.model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Created by Jose Vives on 30/11/2015.
@@ -14,11 +14,11 @@ public class Task {
     private String name;
     private int team_id;
     private int member_id;
-    private Date startDate;
-    private Date endDate;
+    private Timestamp startDate;
+    private Timestamp endDate;
     private String status;
 
-    public Task(int id, String name, int team_id, int member_id, Date startDate, Date endDate, String status) {
+    public Task(int id, String name, int team_id, int member_id, Timestamp startDate, Timestamp endDate, String status) {
         this.id = id;
         this.name = name;
         this.team_id = team_id;
@@ -55,19 +55,19 @@ public class Task {
         this.member_id = member_id;
     }
 
-    public Date getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public Timestamp getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
 
