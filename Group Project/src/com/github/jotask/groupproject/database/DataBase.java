@@ -21,17 +21,6 @@ import java.util.Properties;
  *
  */
 public class DataBase {
-
-//	private static final String SERVER = "db.dcs.aber.ac.uk";
-	private static final String SERVER = "localhost";
-	private static final String PORT = "3306";
-//	private static final String USER = "csgpadm_17";
-	private static final String USER = "root";
-//	private static final String PASSWORD = "ZsdRKXnE";
-	private static final String PASSWORD = "";
-//	private static final String DATABASE = "csgp_17_15_16";
-	private static final String DATABASE = "project";
-	private static final String URL = "jdbc:mysql://";
 	
 	/**
 	 * The JBDC we gonna use for the connection for an MySQL server
@@ -66,17 +55,16 @@ public class DataBase {
 		{
 			try{
 				props = new Properties();
-				props.load(new FileReader("database.properties"));
+				props.load(new FileReader("resources/database.properties"));
 			} catch (FileNotFoundException e) {
 				// TODO Handle exception
 			} catch (IOException e) {
 				// TODO Handle exception
 			}
-//			user = props.getProperty("user");
-			user = USER;
-//			password = props.getProperty("passw");
-			password = PASSWORD;
-			
+			user = props.getProperty("user");
+
+			password = props.getProperty("passw");
+
 			// Create the URL
 			StringBuilder DBURL = new StringBuilder();
 			DBURL.append(props.getProperty("url"));
@@ -84,8 +72,8 @@ public class DataBase {
 			DBURL.append(props.getProperty("port") + "/");
 			DBURL.append(props.getProperty("db"));
 			
-//			url = DBURL.toString();
-			url = URL + SERVER + ":" + PORT + "/" + DATABASE;
+			url = DBURL.toString();
+
 		}
 		
 		// Create the connection using the mySQL driver and connect to the DataBase server for
