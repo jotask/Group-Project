@@ -14,6 +14,7 @@ public class Application extends JFrame{
 
     private JTable table;
 
+    private Application instance;
     private DataBase db;
     private User user;
 
@@ -21,6 +22,7 @@ public class Application extends JFrame{
      * Create the application.
      */
     public Application(DataBase db, User user) {
+        instance = this;
         this.db = db;
         this.user = user;
         initialize();
@@ -45,7 +47,7 @@ public class Application extends JFrame{
         JButton btnNewButton = new JButton("Add Task");
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                TaskDialog taskDialog = new TaskDialog(instance, db);
             }
         });
         panel.add(btnNewButton);
@@ -68,4 +70,7 @@ public class Application extends JFrame{
         table.setModel(model);
     }
 
+    public User getUser() {
+        return user;
+    }
 }
