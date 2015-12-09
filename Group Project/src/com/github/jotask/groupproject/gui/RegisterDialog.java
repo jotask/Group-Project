@@ -19,23 +19,14 @@ public class RegisterDialog extends JDialog {
     private JTextField textField_2;
 
     /**
-     * Launch the application.
-     */
-//    public static void main(String[] args) {
-//        try {
-//            RegisterDialog dialog = new RegisterDialog();
-//            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//            dialog.setVisible(true);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    /**
      * Create the dialog.
      */
     public RegisterDialog(DataBase db) {
+        this.db = db;
+        setModal(true);
         setTitle("Register new member");
+        ImageIcon img = new ImageIcon("resources/icon.png");
+        setIconImage(img.getImage());
         setBounds(100, 100, 450, 200);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,10 +78,20 @@ public class RegisterDialog extends JDialog {
                 JButton cancelButton = new JButton("Cancel");
                 cancelButton.setActionCommand("Cancel");
                 buttonPane.add(cancelButton);
+                cancelButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        close();
+                    }
+                });
             }
         }
         this.setVisible(true);
-        this.db = db;
+    }
+
+    private void close(){
+        dispose();
+        setVisible(false);
     }
 
     private void register() {
@@ -99,8 +100,19 @@ public class RegisterDialog extends JDialog {
         String forename = textField_1.getText();
         String mail = textField_2.getText();
 
+        if(surname.equals("")){
+            // TODO
+            return;
+        }else if(forename.equals("")){
+            // TODO
+            return;
+        }else if(mail.equals("")){
+            // TODO
+            return;
+        }
+
         if(db.getMemberDao().register(surname, forename, mail)) {
-            setVisible(false);
+            close();
         }else{
             JOptionPane.showMessageDialog(this, "Error Creating user", "Error", JOptionPane.ERROR_MESSAGE);
         }

@@ -18,6 +18,7 @@ public class Application {
 	 * Constructor for initialise variables
 	 */
 	public Application() {
+		
 		db = new DataBase();
 
 		try {

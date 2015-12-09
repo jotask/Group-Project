@@ -30,10 +30,18 @@ public class TaskDialog extends JDialog {
     /**
      * Create the dialog.
      */
-    public TaskDialog(Application app, DataBase db) {
+
+    public TaskDialog(Application app, DataBase db){
+        this(app, db, null);
+    }
+
+    public TaskDialog(Application app, DataBase db, Task task) {
         this.app = app;
         this.db = db;
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        ImageIcon img = new ImageIcon("resources/icon.png");
+        setIconImage(img.getImage());
+        setModal(true);
         setBounds(100, 100, 450, 259);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -48,6 +56,8 @@ public class TaskDialog extends JDialog {
             taskId.setEditable(false);
             contentPanel.add(taskId, "cell 1 0,growx");
             taskId.setColumns(10);
+            if(task != null)
+                taskId.setText(String.valueOf(task.getId()));
         }
         {
             JLabel lblName = new JLabel("Name");
@@ -57,6 +67,8 @@ public class TaskDialog extends JDialog {
             taskName = new JTextField();
             contentPanel.add(taskName, "cell 1 1,growx");
             taskName.setColumns(10);
+            if(task != null)
+                taskName.setText(task.getName());
         }
         {
             JLabel lblTeamid = new JLabel("TeamID:");
@@ -67,6 +79,8 @@ public class TaskDialog extends JDialog {
             teamId.setEditable(false);
             contentPanel.add(teamId, "cell 1 2,growx");
             teamId.setColumns(10);
+            if(task != null)
+                teamId.setText(String.valueOf(task.getTeam_id()));
         }
         {
             JLabel lblMemberid = new JLabel("MemberID:");
@@ -77,7 +91,7 @@ public class TaskDialog extends JDialog {
             memberId.setEditable(false);
             contentPanel.add(memberId, "cell 1 3,growx");
             memberId.setColumns(10);
-            memberId.setText(Integer.toString(app.getUser().getId()));
+            memberId.setText(Integer.toString(task.getMember_id()));
         }
         {
             JLabel lblStartdate = new JLabel("StartDate");
@@ -89,7 +103,11 @@ public class TaskDialog extends JDialog {
             startDate.setColumns(10);
             //TODO Delete this
             java.util.Date d = new java.util.Date();
-            startDate.setText(new Timestamp(new java.util.Date().getTime()).toString());
+            if(task != null){
+                startDate.setText(task.getStartDate().toString());
+            }else {
+                startDate.setText(new Timestamp(new java.util.Date().getTime()).toString());
+            }
         }
         {
             JLabel lblEnddate = new JLabel("EndDate:");
@@ -100,8 +118,11 @@ public class TaskDialog extends JDialog {
             contentPanel.add(endDate, "cell 1 5,growx");
             endDate.setColumns(10);
             // TODO Delete this
-            endDate.setText(new Timestamp(new java.util.Date().getTime()).toString());
-        }
+            if(task != null){
+                endDate.setText(task.getEndDate().toString());
+            }else {
+                startDate.setText(new Timestamp(new java.util.Date().getTime()).toString());
+            }        }
         {
             JLabel lblStatus = new JLabel("Status:");
             contentPanel.add(lblStatus, "cell 0 6,alignx trailing");
@@ -110,20 +131,29 @@ public class TaskDialog extends JDialog {
             taskStatus = new JTextField();
             contentPanel.add(taskStatus, "cell 1 6,growx");
             taskStatus.setColumns(10);
+            if(task != null){
+                taskStatus.setText(task.getStatus());
+            }
         }
         {
             JPanel buttonPane = new JPanel();
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
-                JButton okButton = new JButton("OK");
-                okButton.setActionCommand("OK");
+                String text;
+                if(task == null){
+                    text = "Insert";
+                }else{
+                    text = "Update";
+                }
+                JButton okButton = new JButton(text);
+                okButton.setActionCommand(text);
                 buttonPane.add(okButton);
                 getRootPane().setDefaultButton(okButton);
                 okButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        okClicked();
+                        okClicked(task);
                     }
                 });
             }
@@ -142,7 +172,39 @@ public class TaskDialog extends JDialog {
         setVisible(true);
     }
 
-    private void okClicked(){
+    private void okClicked(Task task){
+        if(task == null){
+            insertNewUser();
+        }else{
+            updateUser();
+        }
+    }
+
+    private void updateUser(){
+
+        String taskID = taskId.getText();
+        int id = Integer.parseInt(taskID);
+        String name = taskName.getText();
+        String teamID = this.teamId.getText();
+        int team_id = Integer.parseInt(teamID);
+        String memberID = memberId.getText();
+        int member_id = Integer.parseInt(memberID);
+        Timestamp startDateTime = Util.stringToTimetamp(startDate.getText());
+        Timestamp endDateTime = Util.stringToTimetamp(endDate.getText());
+        String status = taskStatus.getText();
+
+        Task task = new Task(id, name, team_id, member_id, startDateTime, endDateTime, status);
+
+        try {
+            db.getTaskDAO().updateTask(task);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        app.refreshTaskView();
+        cancelCliked();
+    }
+
+    private void insertNewUser(){
 
         int id = -1;
         String name = taskName.getText();

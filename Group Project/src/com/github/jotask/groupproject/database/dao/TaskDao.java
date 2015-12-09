@@ -56,6 +56,36 @@ public class TaskDao extends DAO{
 
     }
 
+    public Task getTask(int id){
+
+        Task task = null;
+
+        Statement stm = null;
+        ResultSet rs = null;
+
+        try {
+
+            String sql = "SELECT * FROM task WHERE task_id=\"" + id + "\"";
+            stm = conn.createStatement();
+            rs = stm.executeQuery(sql);
+
+            while (rs.next())
+                task = getTask(rs);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                close(stm, rs);
+            } catch (SQLException e) {
+                // TODO nothing to do
+                e.printStackTrace();
+            }
+        }
+
+        return task;
+    }
+
     private Task getTask(ResultSet rs) throws SQLException {
 
         int id = rs.getInt("task_id");
@@ -84,5 +114,32 @@ public class TaskDao extends DAO{
             close(stm, null);
         }
 
+    }
+
+    public void updateTask(Task task) throws SQLException {
+
+        PreparedStatement stm = null;
+
+        try{
+            String sql = "UPDATE `task` SET " +
+                    "`task_name` = ?," +
+                    "`team_id` = ?," +
+                    "`member_id` = ?," +
+                    "`start_date` = ?, " +
+                    "`end_date` = ?, " +
+                    "`task_status` = ? " +
+                    "WHERE `task_id` = ?;";
+            stm = conn.prepareStatement(sql);
+            stm.setString(1, task.getName());
+            stm.setInt(2, task.getTeam_id());
+            stm.setInt(3, task.getMember_id());
+            stm.setTimestamp(4, task.getStartDate());
+            stm.setTimestamp(5, task.getEndDate());
+            stm.setString(6, task.getStatus());
+            stm.setInt(7, task.getId());
+            stm.executeUpdate();
+        }finally{
+            close(stm, null);
+        }
     }
 }

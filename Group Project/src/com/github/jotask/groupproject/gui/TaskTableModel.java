@@ -9,12 +9,12 @@ public class TaskTableModel extends AbstractTableModel{
 
     private static final long serialVersionUID = 1429691555122236840L;
     public static final int OBJECT_COL = -1;
-    private static final int ID_COL = 0;
-    private static final int NAME_COL = 1;
-    private static final int TEAM_COL = 2;
-    private static final int START_COL = 3;
-    private static final int END_COL = 4;
-    private static final int STATUS_COL = 5;
+    public static final int ID_COL = 0;
+    public static final int NAME_COL = 1;
+    public static final int TEAM_COL = 2;
+    public static final int START_COL = 3;
+    public static final int END_COL = 4;
+    public static final int STATUS_COL = 5;
 
     private String[] columnsNames = {"Id", "Name", "Team", "Start Date", "End Date", "Status"};
 

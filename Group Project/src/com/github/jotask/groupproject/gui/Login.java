@@ -91,7 +91,7 @@ public class Login extends JDialog {
 					JButton register = new JButton("Register");
 					register.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent e){
-							RegisterDialog registerDialog = new RegisterDialog(db);
+							register();
 						}
 					});
 					buttonPane.add(register);
@@ -100,6 +100,10 @@ public class Login extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+
+	private void register(){
+		RegisterDialog registerDialog = new RegisterDialog(db);
 	}
 	
 	private void login(){
@@ -110,7 +114,8 @@ public class Login extends JDialog {
 
 		if(user != null){
 			this.setVisible(false);
-//			JOptionPane.showMessageDialog(this, "Login", "Succes", JOptionPane.INFORMATION_MESSAGE);
+			dispose();
+//			JOptionPane.showMessageDialog(this, "Login", "Success", JOptionPane.INFORMATION_MESSAGE);
 			Application app = new Application(db, user);
 		}else{
 			JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);

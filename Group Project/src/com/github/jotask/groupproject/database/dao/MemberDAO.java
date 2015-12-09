@@ -87,9 +87,12 @@ public class MemberDAO extends DAO {
 
 	public boolean register(String surname, String forename, String mail) {
 
+		System.out.println("insideRegister");
+
 		boolean success;
 
-		String sql = "INSERT INTO `MEMBER` (`SURNAME`, `FORENAME`, `EMAIL_ADDRESS`) VALUES ('" + surname + "', '" + forename + "', '" + mail + "');";
+//		String sql = "INSERT INTO `MEMBER` (`SURNAME`, `FORENAME`, `EMAIL_ADDRESS`) VALUES ('" + surname + "', '" + forename + "', '" + mail + "');";
+		String sql = "INSERT INTO `MEMBER` (`SURNAME`, `FORENAME`, `MAIL`) VALUES ('" + surname + "', '" + forename + "', '" + mail + "');";
 
 		Statement stm = null;
 

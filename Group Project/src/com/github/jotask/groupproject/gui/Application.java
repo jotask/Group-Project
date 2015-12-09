@@ -37,6 +37,10 @@ public class Application extends JFrame{
         this.setBounds(100, 100, 450, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
+        ImageIcon img = new ImageIcon("resources/icon.png");
+        this.setIconImage(img.getImage());
+
         JPanel panel = new JPanel();
         this.getContentPane().add(panel, BorderLayout.WEST);
         panel.setLayout(new GridLayout(0, 1, 0, 0));
@@ -52,9 +56,16 @@ public class Application extends JFrame{
         });
         panel.add(btnNewButton);
 
-        JButton btnUpdate = new JButton("Update Task");
-        panel.add(btnUpdate);
-
+        {
+            JButton btnUpdate = new JButton("Update Task");
+            panel.add(btnUpdate);
+            btnUpdate.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateTask();
+                }
+            });
+        }
         JScrollPane scrollPane = new JScrollPane();
         this.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
@@ -68,6 +79,22 @@ public class Application extends JFrame{
         ArrayList<Task> tasks = db.getTaskDAO().getAllTasks(user);
         TaskTableModel model = new TaskTableModel(tasks);
         table.setModel(model);
+    }
+
+    private void updateTask(){
+        // get row selected
+        int row = table.getSelectedRow();
+        // check if a row is selected
+        if(row < 0){
+            return;
+        }
+        // Get the Employee selected
+        int t = Integer.parseInt(table.getValueAt(row, TaskTableModel.ID_COL).toString());
+        Task tmp = db.getTaskDAO().getTask(t);
+//        Task tmp = (Task) table.getValueAt(row, TaskTableModel.OBJECT_COL);
+        // Create the dialog and make it visible
+        TaskDialog dialog = new TaskDialog(instance, db, tmp);
+        dialog.setVisible(true);
     }
 
     public User getUser() {
