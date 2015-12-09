@@ -38,6 +38,13 @@ public class TaskDialog extends JDialog {
     public TaskDialog(Application app, DataBase db, Task task) {
         this.app = app;
         this.db = db;
+
+        if(task == null){
+            setTitle("Insert new task");
+        }else{
+            setTitle("Update task");
+        }
+
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         ImageIcon img = new ImageIcon("resources/icon.png");
         setIconImage(img.getImage());
@@ -91,7 +98,11 @@ public class TaskDialog extends JDialog {
             memberId.setEditable(false);
             contentPanel.add(memberId, "cell 1 3,growx");
             memberId.setColumns(10);
-            memberId.setText(Integer.toString(task.getMember_id()));
+            if(task != null){
+                memberId.setText(String.valueOf(task.getMember_id()));
+            }else {
+                memberId.setText(String.valueOf(app.getUser().getId()));
+            }
         }
         {
             JLabel lblStartdate = new JLabel("StartDate");
@@ -121,8 +132,9 @@ public class TaskDialog extends JDialog {
             if(task != null){
                 endDate.setText(task.getEndDate().toString());
             }else {
-                startDate.setText(new Timestamp(new java.util.Date().getTime()).toString());
-            }        }
+                endDate.setText(new Timestamp(new java.util.Date().getTime()).toString());
+            }
+        }
         {
             JLabel lblStatus = new JLabel("Status:");
             contentPanel.add(lblStatus, "cell 0 6,alignx trailing");
@@ -169,12 +181,11 @@ public class TaskDialog extends JDialog {
                 });
             }
         }
-        setVisible(true);
     }
 
     private void okClicked(Task task){
         if(task == null){
-            insertNewUser();
+            insertNewTask();
         }else{
             updateUser();
         }
@@ -204,7 +215,7 @@ public class TaskDialog extends JDialog {
         cancelCliked();
     }
 
-    private void insertNewUser(){
+    private void insertNewTask(){
 
         int id = -1;
         String name = taskName.getText();

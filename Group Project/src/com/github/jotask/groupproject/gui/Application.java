@@ -34,7 +34,7 @@ public class Application extends JFrame{
      */
     private void initialize() {
         this.setTitle("Task Manager");
-        this.setBounds(100, 100, 450, 300);
+        this.setBounds(100, 100, 800, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -52,6 +52,7 @@ public class Application extends JFrame{
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 TaskDialog taskDialog = new TaskDialog(instance, db);
+                taskDialog.setVisible(true);
             }
         });
         panel.add(btnNewButton);
