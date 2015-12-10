@@ -1,0 +1,28 @@
+Project:  CS22100 Group Project (Group 17) 
+Date:  Thursday 10th December 2015, 11:10 AM
+Meeting:  Weekly Project Meeting - Room C55
+Present: Laurence Tyler, Peter George, Frederik Kranich, Jack Thomson, George Vinters, Jose Vives Iznardo, Alexander Webb
+Apologies:  Stuart Tee, Grigor Mironov
+Circulation List:  All project members including the project manager
+Author:  George Vinters		
+Produced: Thursday 10th December
+Version:  1.0
+ 
+ 
+Matters arising
+1. The initial prototype for TaskerMAN, TaskerCLI and the database have all been demonstrated and feedback has been given.  TaskerCLI was said to be showing too many properties similar to what TaskerMAN is required to have.  TaskerMAN was criticised for not yet having any functionality with the database interaction.  The database will need to implement automatic incrementing for ID numbers.
+
+
+New Business
+2. Improvements to the prototype will need to be made alongside fully completing implementation and testing of the final system before the next deadline
+ACTION:  All members
+  
+
+AOB
+3. Date, Time and Venue for next meeting
+To be announced
+
+
+George Vinters - ghv@aber.ac.uk
+Minutes produced:  Thursday 10th December
+Please email me if you believe there are any errors within the minutes.
