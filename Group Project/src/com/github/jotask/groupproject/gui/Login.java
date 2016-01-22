@@ -2,7 +2,6 @@ package com.github.jotask.groupproject.gui;
 
 import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.model.User;
-import com.github.jotask.groupproject.util.MD5;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -110,6 +109,21 @@ public class Login extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+
+		// Load previous data if exist
+		{
+			String username = this.properties.getProperty("username");
+			String password = this.properties.getProperty("password");
+
+			if(!username.isEmpty()){
+				this.remember.setSelected(true);
+				this.usernameField.setText(username);
+				// FIXME the password is not stored because later we can't or i don't know
+				// how load and decrypt a MD5 encryption
+			}
+
+		}
+
 	}
 
 	private void register(){
@@ -132,9 +146,9 @@ public class Login extends JDialog {
 					!this.properties.getProperty("username").equals(username)){
 				this.properties.setProperty("username", username);
 
-				// Encrypt password and store the encrypted password
-				String pEncrypted = MD5.encrypt(new String(password));
-				this.properties.setProperty("password", pEncrypted);
+//				// Encrypt password and store the encrypted password
+//				String pEncrypted = MD5.encrypt(new String(password));
+//				this.properties.setProperty("password", pEncrypted);
 
 				// Save this values to the config file
 				try {
