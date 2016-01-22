@@ -4,6 +4,9 @@ import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.gui.Login;
 
 import javax.swing.*;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Start class where all start
@@ -11,18 +14,30 @@ import javax.swing.*;
  *
  */
 public class Application {
-	
+
+	public static final String PROPERTIES_FILE = "resources/config.properties";
+
+	private Properties properties;
 	private DataBase db;
 	
 	/**
 	 * Constructor for initialise variables
 	 */
 	public Application() {
+
+		{
+			try {
+				this.properties = new Properties();
+				this.properties.load(new FileReader(PROPERTIES_FILE));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
-		db = new DataBase();
+		db = new DataBase(this.properties);
 
 		try {
-			Login dialog = new Login(db);
+			Login dialog = new Login(db, properties);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

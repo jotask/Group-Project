@@ -5,9 +5,6 @@ import com.github.jotask.groupproject.database.dao.MemberDAO;
 import com.github.jotask.groupproject.database.dao.TaskDao;
 import com.github.jotask.groupproject.database.dao.TeamDao;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -48,29 +45,24 @@ public class DataBase {
 	 * Constructor the main class, we instantiate and load our configuration from a file.
 	 * And we create the connection between our code and the DataBase server
 	 */
-	public DataBase() {
+	public DataBase(Properties properties) {
+
+		this.props = properties;
 		
 		// Load properties from the configuration file
 		String url, user, password;
 		{
-			try{
-				props = new Properties();
-				props.load(new FileReader("resources/database.properties"));
-			} catch (FileNotFoundException e) {
-				// TODO Handle exception
-			} catch (IOException e) {
-				// TODO Handle exception
-			}
-			user = props.getProperty("user");
 
-			password = props.getProperty("passw");
+			user = props.getProperty("db_user");
+
+			password = props.getProperty("db_passwd");
 
 			// Create the URL
 			StringBuilder DBURL = new StringBuilder();
-			DBURL.append(props.getProperty("url"));
-			DBURL.append(props.getProperty("server") + ":");
-			DBURL.append(props.getProperty("port") + "/");
-			DBURL.append(props.getProperty("db"));
+			DBURL.append(props.getProperty("db_url"));
+			DBURL.append(props.getProperty("db_server") + ":");
+			DBURL.append(props.getProperty("db_port") + "/");
+			DBURL.append(props.getProperty("db_db"));
 			
 			url = DBURL.toString();
 
