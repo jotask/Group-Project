@@ -35,7 +35,7 @@ public class TaskDialog extends JDialog {
         this(app, db, null);
     }
 
-    public TaskDialog(Application app, DataBase db, Task task) {
+    public TaskDialog(Application app, DataBase db, final Task task) {
         this.app = app;
         this.db = db;
 
