@@ -2,6 +2,7 @@ package com.github.jotask.groupproject.gui;
 
 import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.model.User;
+import com.github.jotask.groupproject.util.MD5;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
 /**
  * Login dialog for the login to the database
@@ -21,14 +23,17 @@ public class Login extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JPasswordField passwordField;
 	private JTextField usernameField;
+	private JCheckBox remember;
 	
 	private DataBase db;
+	private Properties properties;
 
 	/**
 	 * Create the dialog for the login to the database.
 	 */
-	public Login(DataBase db) {
+	public Login(DataBase db, Properties properties) {
 		this.db = db;
+		this.properties = properties;
 		ImageIcon img = new ImageIcon("resources/icon.png");
 		setIconImage(img.getImage());
 		setResizable(false);
@@ -44,7 +49,6 @@ public class Login extends JDialog {
 		}
 		{
 			usernameField = new JTextField();
-			usernameField.setText("jota");
 			contentPanel.add(usernameField, "cell 1 0,growx");
 			usernameField.setColumns(10);
 		}
@@ -57,7 +61,7 @@ public class Login extends JDialog {
 			contentPanel.add(passwordField, "cell 1 1,growx");
 		}
 		{
-			JCheckBox remember = new JCheckBox("Remember");
+			remember = new JCheckBox("Remember");
 			contentPanel.add(remember, "cell 1 2,alignx right");
 		}
 		{
@@ -113,6 +117,25 @@ public class Login extends JDialog {
 		User user = db.getMemberDao().login(username, password);
 
 		if(user != null){
+
+			//Save options
+			// If remember checkbox is selected and also on the config file the username
+			// from the previous session and the actual session is different we save this
+			// new options.
+			String usernameF = this.usernameField.getText();
+			if(this.remember.isSelected() &&
+					!this.properties.getProperty("username").equals(usernameF)){
+				this.properties.setProperty("username", usernameF);
+
+				// Now save password
+				char[] p = this.passwordField.getPassword();
+				String pEncrypted = MD5.encrypt(new String(p));
+
+				// Save the encrypted password
+				this.properties.setProperty("password", pEncrypted);
+
+			}
+
 			this.setVisible(false);
 			dispose();
 //			JOptionPane.showMessageDialog(this, "Login", "Success", JOptionPane.INFORMATION_MESSAGE);
