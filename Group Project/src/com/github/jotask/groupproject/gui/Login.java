@@ -10,7 +10,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Properties;
+
+import static com.github.jotask.groupproject.Application.PROPERTIES_FILE;
 
 /**
  * Login dialog for the login to the database
@@ -122,17 +128,23 @@ public class Login extends JDialog {
 			// If remember checkbox is selected and also on the config file the username
 			// from the previous session and the actual session is different we save this
 			// new options.
-			String usernameF = this.usernameField.getText();
 			if(this.remember.isSelected() &&
-					!this.properties.getProperty("username").equals(usernameF)){
-				this.properties.setProperty("username", usernameF);
+					!this.properties.getProperty("username").equals(username)){
+				this.properties.setProperty("username", username);
 
-				// Now save password
-				char[] p = this.passwordField.getPassword();
-				String pEncrypted = MD5.encrypt(new String(p));
-
-				// Save the encrypted password
+				// Encrypt password and store the encrypted password
+				String pEncrypted = MD5.encrypt(new String(password));
 				this.properties.setProperty("password", pEncrypted);
+
+				// Save this values to the config file
+				try {
+					OutputStream fos = new FileOutputStream(PROPERTIES_FILE);
+					this.properties.store(fos, null);
+				} catch (FileNotFoundException e) {
+					// Nothing we can do, because this has been checked before start the program
+				} catch (IOException e) {
+					// Nothing we can do, because this has been checked before start the program
+				}
 
 			}
 
