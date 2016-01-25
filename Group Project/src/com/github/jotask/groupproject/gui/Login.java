@@ -159,7 +159,7 @@ public class Login extends JDialog {
 
 		if(!username.isEmpty()){
 
-			Connection connection = new Connection(true, properties, username);
+			Connection connection = new Connection(true, properties, username, password);
 
 			//Save options
 			// If remember checkbox is selected and also on the config file the username
@@ -202,13 +202,14 @@ public class Login extends JDialog {
 		System.out.println("offline");
 
 		String username = this.usernameField.getText();
+		char[] password = this.passwordField.getPassword();
 
 		if(username.isEmpty()){
 			// Validate the field if is not empty
 			return;
 		}
 
-		Connection connection = new Connection(false, properties, username);
+		Connection connection = new Connection(false, properties, username, password);
 		closeDialog();
 		Application app = new Application(connection);
 	}
