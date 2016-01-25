@@ -32,7 +32,7 @@ public class TaskDao extends DAO{
 
         try {
 
-            String sql = "SELECT * FROM task WHERE member_id=\"" + user.getId() + "\"";
+            String sql = "SELECT * FROM TASK WHERE MEMBER_ID=\"" + user.getId() + "\"";
             stm = conn.createStatement();
             rs = stm.executeQuery(sql);
 
@@ -65,7 +65,7 @@ public class TaskDao extends DAO{
 
         try {
 
-            String sql = "SELECT * FROM task WHERE task_id=\"" + id + "\"";
+            String sql = "SELECT * FROM TASK WHERE TASK_ID=\"" + id + "\"";
             stm = conn.createStatement();
             rs = stm.executeQuery(sql);
 
@@ -102,7 +102,7 @@ public class TaskDao extends DAO{
     public void insertTask(Task task) throws SQLException {
         PreparedStatement stm = null;
         try{
-            stm = conn.prepareStatement("insert into task (task_name, team_id, member_id, start_date, end_date, task_status) values ( ?, ?, ?, ?, ?, ?)");
+            stm = conn.prepareStatement("insert into TASK (TASK_NAME, TEAM_ID, MEMBER_ID, START_DATE, EXPECTED_COMPLETION_DATE, TASK_STATUS) values ( ?, ?, ?, ?, ?, ?)");
             stm.setString(1, task.getName());
             stm.setInt(2, task.getTeam_id());
             stm.setInt(3, task.getMember_id());
@@ -121,14 +121,14 @@ public class TaskDao extends DAO{
         PreparedStatement stm = null;
 
         try{
-            String sql = "UPDATE `task` SET " +
-                    "`task_name` = ?," +
-                    "`team_id` = ?," +
-                    "`member_id` = ?," +
-                    "`start_date` = ?, " +
-                    "`end_date` = ?, " +
-                    "`task_status` = ? " +
-                    "WHERE `task_id` = ?;";
+            String sql = "UPDATE `TASK` SET " +
+                    "`TASK_NAME` = ?," +
+                    "`TEAM_ID` = ?," +
+                    "`MEMBER_ID` = ?," +
+                    "`START_DATE` = ?, " +
+                    "`EXPECTED_COMPLETION_DATE` = ?, " +
+                    "`TASK_STATUS` = ? " +
+                    "WHERE `TASK_ID` = ?;";
             stm = conn.prepareStatement(sql);
             stm.setString(1, task.getName());
             stm.setInt(2, task.getTeam_id());

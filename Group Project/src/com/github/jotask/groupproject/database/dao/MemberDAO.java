@@ -46,7 +46,7 @@ public class MemberDAO extends DAO {
 
 		try{
 			stm = conn.createStatement();
-			String sql = "SELECT * FROM member WHERE surname=\"" + username + "\"";
+			String sql = "SELECT * FROM MEMBER WHERE SURNAME=\"" + username + "\"";
 			rs = stm.executeQuery(sql);
 
 			// TODO implement password login
@@ -78,10 +78,10 @@ public class MemberDAO extends DAO {
 	}
 
 	private User converToUser(ResultSet rs) throws SQLException {
-		int id = rs.getInt("id");
-		String surname = rs.getString("surname");
-		String forename = rs.getString("forename");
-		String mail = rs.getString("mail");
+		int id = rs.getInt("MEMBER_ID");
+		String surname = rs.getString("SURNAME");
+		String forename = rs.getString("FORENAME");
+		String mail = rs.getString("EMAIL_ADDRESS");
 		return new User(id, surname, forename, mail);
 	}
 
@@ -89,8 +89,7 @@ public class MemberDAO extends DAO {
 
 		boolean success;
 
-//		String sql = "INSERT INTO `MEMBER` (`SURNAME`, `FORENAME`, `EMAIL_ADDRESS`) VALUES ('" + surname + "', '" + forename + "', '" + mail + "');";
-		String sql = "INSERT INTO `MEMBER` (`SURNAME`, `FORENAME`, `MAIL`) VALUES ('" + surname + "', '" + forename + "', '" + mail + "');";
+		String sql = "INSERT INTO `MEMBER` (`SURNAME`, `FORENAME`, `EMAIL_ADDRESS`) VALUES ('" + surname + "', '" + forename + "', '" + mail + "');";
 
 		Statement stm = null;
 
