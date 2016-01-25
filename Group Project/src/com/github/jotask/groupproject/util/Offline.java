@@ -6,6 +6,7 @@ import com.github.jotask.groupproject.model.User;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Jose Vives on 25/01/2016.
@@ -26,7 +27,20 @@ public class Offline {
 
     }
 
-    private void saveToFile(){
+    private Task getTaskRandom(Random r){
+        return new Task(r.nextInt(), "test", r.nextInt(), r.nextInt(), null, null, "test");
+    }
+
+    private ArrayList<Task> getRandom(){
+        Random random = new Random();
+        ArrayList<Task> tasks = new ArrayList<>();
+        for(int i = 0 ; i < 5; i++){
+            tasks.add(getTaskRandom(random));
+        }
+        return  tasks;
+    }
+
+    public void saveToFile(){
         File userData = new File(user.getId()+".user");
         if (!userData.exists()) {
             try {
@@ -35,6 +49,8 @@ public class Offline {
                 e.printStackTrace();
             }
         }
+
+        ArrayList<Task> tasks = this.getRandom();
 
         try {
             FileOutputStream fos = new FileOutputStream(userData);
@@ -55,4 +71,12 @@ public class Offline {
     public void updateTask(DataBase dataBase){
         this.tasks = dataBase.getTaskDAO().getAllTasks(user);
     }
+
+    public static void main(String[] args) {
+
+        User user = new User(1, "test", "test", "test");
+        Offline offline = new Offline(user);
+        offline.saveToFile();
+    }
+
 }
