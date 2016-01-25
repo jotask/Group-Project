@@ -4,11 +4,16 @@ import com.github.jotask.groupproject.database.dao.ElementDAO;
 import com.github.jotask.groupproject.database.dao.MemberDAO;
 import com.github.jotask.groupproject.database.dao.TaskDao;
 import com.github.jotask.groupproject.database.dao.TeamDao;
+import com.github.jotask.groupproject.model.Task;
+import com.github.jotask.groupproject.model.User;
 
+
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.ArrayList;
 
 /**
  * Main class for hold all we need for retrieve information and update
@@ -96,6 +101,10 @@ public class DataBase {
 		}
 		
 	}
+
+	public ArrayList<Task> getTasks(User user) {
+        return getTaskDAO().getAllTasks(user);
+    }
 
 	public MemberDAO getMemberDao() {
 		return memberDao;

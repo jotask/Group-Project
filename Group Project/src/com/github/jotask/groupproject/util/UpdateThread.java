@@ -50,6 +50,9 @@ public class UpdateThread{
 
         @Override
         public void run() {
+
+
+
             System.out.println("This is printed each " + delay / 1000 + " seconds.");
         }
 
