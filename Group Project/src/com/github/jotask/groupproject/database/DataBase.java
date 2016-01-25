@@ -7,13 +7,11 @@ import com.github.jotask.groupproject.database.dao.TeamDao;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 
-
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * Main class for hold all we need for retrieve information and update
@@ -124,6 +122,15 @@ public class DataBase {
 
 	public void setOffline(boolean offline){
 		this.offline = offline;
+	}
+
+	public void close(){
+		try {
+			this.conn.close();
+		} catch (SQLException e) {
+			// TODO I think is nothing to do here
+			e.printStackTrace();
+		}
 	}
 
 }

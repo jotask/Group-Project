@@ -1,33 +1,29 @@
 package com.github.jotask.groupproject.gui;
 
-import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.database.Connection;
 import com.github.jotask.groupproject.model.Task;
-import com.github.jotask.groupproject.model.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Properties;
 
 public class Application extends JFrame{
 
     private JTable table;
 
     private Application instance;
-    private DataBase db;
-    private User user;
+    private Connection connection;
 
     /**
      * Create the application.
      */
-    public Application(Properties properties, User user) {
+    public Application(Connection connection) {
         instance = this;
-        this.db = new DataBase(properties);
-        this.user = user;
+        this.connection = connection;
         initialize();
-        this.refreshTaskView();
+        this.refreshTaskView(connection.getTasks());
     }
 
     /**
@@ -46,17 +42,17 @@ public class Application extends JFrame{
         this.getContentPane().add(panel, BorderLayout.WEST);
         panel.setLayout(new GridLayout(0, 1, 0, 0));
 
-        JLabel lblUsername = new JLabel(user.getSurname());
+        JLabel lblUsername = new JLabel(connection.getUser().getSurname());
         panel.add(lblUsername);
 
-        JButton btnNewButton = new JButton("Add Task");
-        btnNewButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TaskDialog taskDialog = new TaskDialog(instance, db);
-                taskDialog.setVisible(true);
-            }
-        });
-        panel.add(btnNewButton);
+//        JButton btnNewButton = new JButton("Add Task");
+//        btnNewButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                TaskDialog taskDialog = new TaskDialog(instance, connection);
+//                taskDialog.setVisible(true);
+//            }
+//        });
+//        panel.add(btnNewButton);
 
         {
             JButton btnUpdate = new JButton("Update Task");
@@ -77,8 +73,7 @@ public class Application extends JFrame{
         this.setVisible(true);
     }
 
-    public void refreshTaskView() {
-        ArrayList<Task> tasks = db.getTaskDAO().getAllTasks(user);
+    public void refreshTaskView(ArrayList<Task> tasks) {
         TaskTableModel model = new TaskTableModel(tasks);
         table.setModel(model);
     }
@@ -92,14 +87,12 @@ public class Application extends JFrame{
         }
         // Get the Employee selected
         int t = Integer.parseInt(table.getValueAt(row, TaskTableModel.ID_COL).toString());
-        Task tmp = db.getTaskDAO().getTask(t);
+//        Task tmp = db.getTaskDAO().getTask(t);
+        Task tmp = connection.getTask(t);
 //        Task tmp = (Task) table.getValueAt(row, TaskTableModel.OBJECT_COL);
         // Create the dialog and make it visible
-        TaskDialog dialog = new TaskDialog(instance, db, tmp);
+        TaskDialog dialog = new TaskDialog(instance, connection, tmp);
         dialog.setVisible(true);
     }
 
-    public User getUser() {
-        return user;
-    }
 }

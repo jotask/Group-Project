@@ -1,6 +1,6 @@
 package com.github.jotask.groupproject.gui;
 
-import com.github.jotask.groupproject.model.User;
+import com.github.jotask.groupproject.database.Connection;
 import com.github.jotask.groupproject.util.UpdateThread;
 
 import javax.swing.*;
@@ -82,6 +82,12 @@ public class Login extends JDialog {
 			offlineBtn.setBorder(null);
 			offlineBtn.setBackground(new Color(192,192,192));
 			getContentPane().add(offlineBtn);
+			offlineBtn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					offline();
+				}
+			});
 		}
 		{
 			JButton loginBtn = new JButton("Login");
@@ -154,8 +160,9 @@ public class Login extends JDialog {
 
 		if(!username.isEmpty()){
 
-			// TODO if the connection fail go to offline mode
-			UpdateThread update = new UpdateThread(this.properties, "Database Update", 300);
+			Connection connection = new Connection(properties);
+
+			UpdateThread update = connection.getThread();
 
 			//Save options
 			// If remember checkbox is selected and also on the config file the username
@@ -185,18 +192,34 @@ public class Login extends JDialog {
 				}
 			}
 
-			User user = update.getUser();
-
-			this.setVisible(false);
-			dispose();
+			closeDialog();
 
 			JOptionPane.showMessageDialog(this, "Login", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-			Application app = new Application(properties, user);
+			Application app = new Application(connection);
 
 		}else{
 			JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);
 		}		
+	}
+
+	private void closeDialog(){
+		this.setVisible(false);
+		dispose();
+	}
+
+	private void offline(){
+
+		String username = this.usernameField.getText();
+
+		if(!username.isEmpty()){
+			// Validate the field if is not empty
+			return;
+		}
+
+		Connection connection = new Connection(username);
+		closeDialog();
+		Application app = new Application(connection);
 	}
 
 }

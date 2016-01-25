@@ -10,6 +10,8 @@ public class User {
 	String firstname;
 	/** The mail from the user */
 	String mail;
+	/** The user password */
+	String password;
 
 	public int getId() {
 		return id;
@@ -39,6 +41,10 @@ public class User {
 		this.mail = mail;
 	}
 
+	public User(int id, String surname, String firstname, String mail){
+		this(id, surname, firstname, mail, "");
+	}
+
 	/**
 	 * Constructor for the User, get all the parameters from one user
 	 * @param id
@@ -49,12 +55,16 @@ public class User {
 	 * 			The Name from the user
 	 * @param mail
 	 * 			The mail from the user
+	 * @param password
+	 * 			The password from the user
 	 */
-	public User(int id, String surname, String firstname, String mail) {
+
+	public User(int id, String surname, String firstname, String mail, String password) {
 		this.id = id;
 		this.surname = surname;
 		this.firstname = firstname;
 		this.mail = mail;
+		this.password = password;
 	}
 
 }
