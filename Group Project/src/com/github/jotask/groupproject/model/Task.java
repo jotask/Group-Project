@@ -1,5 +1,6 @@
 package com.github.jotask.groupproject.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -8,7 +9,7 @@ import java.sql.Timestamp;
  * @author Jose Vives.
  * @since 30/11/2015
  */
-public class Task {
+public class Task implements Serializable {
 
     private int id;
     private String name;
@@ -17,6 +18,7 @@ public class Task {
     private Timestamp startDate;
     private Timestamp endDate;
     private String status;
+    private char Seperator = '|';
 
     public Task(int id, String name, int team_id, int member_id, Timestamp startDate, Timestamp endDate, String status) {
         this.id = id;
@@ -77,5 +79,12 @@ public class Task {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        String output = Integer.toString(id);
+        output += Seperator;
+        return output;
     }
 }

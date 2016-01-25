@@ -4,6 +4,7 @@ import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +27,28 @@ public class Offline {
     }
 
     private void saveToFile(){
+        File userData = new File(user.getId()+".user");
+        if (!userData.exists()) {
+            try {
+                userData.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            FileOutputStream fos = new FileOutputStream(userData);
+            ObjectOutputStream ois = new ObjectOutputStream(fos);
+            if (tasks.size() > 0) {
+                for (Task task : tasks){
+                    ois.writeObject(task);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
