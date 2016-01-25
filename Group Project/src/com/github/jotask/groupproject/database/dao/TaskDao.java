@@ -5,7 +5,8 @@ import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.Date;
 
 /**
  * Created by Jose Vives on 01/12/2015.
@@ -92,8 +93,8 @@ public class TaskDao extends DAO{
         String name = rs.getString("task_name");
         int team_id = rs.getInt("team_id");
         int member_id = rs.getInt("member_id");
-        Timestamp startDate = rs.getTimestamp("start_date");
-        Timestamp endDate = rs.getTimestamp("end_date");
+        Date startDate = rs.getTimestamp("start_date");
+        Date endDate = rs.getTimestamp("end_date");
         String status = rs.getString("task_status");
 
         return new Task(id, name, team_id, member_id, startDate, endDate, status);
