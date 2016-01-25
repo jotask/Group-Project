@@ -2,6 +2,7 @@ package com.github.jotask.groupproject;
 
 import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.gui.Login;
+import com.github.jotask.groupproject.util.UpdateThread;
 
 import javax.swing.*;
 import java.io.FileReader;
@@ -52,7 +53,11 @@ public class Application {
 	 */
 	public static void main(String[] args) {
 
+//		FIXME
 		 new Application();
+
+		UpdateThread ut = new UpdateThread("Update", 10);
+		ut.start();
 
 	}
 	

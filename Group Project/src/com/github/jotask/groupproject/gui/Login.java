@@ -2,10 +2,8 @@ package com.github.jotask.groupproject.gui;
 
 import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.model.User;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,75 +37,97 @@ public class Login extends JDialog {
 	public Login(DataBase db, Properties properties) {
 		this.db = db;
 		this.properties = properties;
+
+		getContentPane().setBackground(Color.WHITE);
+		setResizable(false);
+		setBackground(Color.WHITE);
 		ImageIcon img = new ImageIcon("resources/icon.png");
 		setIconImage(img.getImage());
-		setResizable(false);
-		setTitle("Login to TaskManager");
-		setBounds(100, 100, 450, 165);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new MigLayout("", "[][grow]", "[][][]"));
+		setTitle("Login");
+		setBounds(100, 100, 492, 233);
+		getContentPane().setLayout(null);
 		{
-			JLabel lblUsername = new JLabel("Username:");
-			contentPanel.add(lblUsername, "cell 0 0,alignx trailing");
+			JLabel lblPassword = new JLabel("Password:");
+			lblPassword.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+			lblPassword.setBounds(10, 92, 66, 20);
+			getContentPane().add(lblPassword);
 		}
 		{
 			usernameField = new JTextField();
-			contentPanel.add(usernameField, "cell 1 0,growx");
+			usernameField.setToolTipText("Surname");
+			usernameField.setBounds(90, 51, 373, 20);
+			getContentPane().add(usernameField);
 			usernameField.setColumns(10);
 		}
 		{
-			JLabel lblPassword = new JLabel("Password:");
-			contentPanel.add(lblPassword, "cell 0 1,alignx trailing");
+			JLabel lblUsername = new JLabel("Username:");
+			lblUsername.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+			lblUsername.setBounds(10, 53, 66, 14);
+			getContentPane().add(lblUsername);
 		}
 		{
 			passwordField = new JPasswordField();
-			contentPanel.add(passwordField, "cell 1 1,growx");
+			passwordField.setToolTipText("Enter password");
+			passwordField.setBounds(90, 93, 373, 20);
+			getContentPane().add(passwordField);
 		}
 		{
 			remember = new JCheckBox("Remember");
-			contentPanel.add(remember, "cell 1 2,alignx right");
+			remember.setBackground(Color.WHITE);
+			remember.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
+			remember.setBounds(171, 164, 73, 30);
+			getContentPane().add(remember);
 		}
 		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton loginBtn = new JButton("Login");
-				loginBtn.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						login();
-					}
-				});
-				loginBtn.setActionCommand("OK");
-				buttonPane.add(loginBtn);
-				getRootPane().setDefaultButton(loginBtn);
-			}
+			JButton offlineBtn = new JButton("Offline");
+			offlineBtn.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
+			offlineBtn.setBounds(398, 167, 65, 23);
+			offlineBtn.setBorder(null);
+			offlineBtn.setBackground(new Color(192,192,192));
+			getContentPane().add(offlineBtn);
+		}
+		{
+			JButton loginBtn = new JButton("Login");
+			loginBtn.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
+			loginBtn.setBounds(254, 167, 57, 23);
+			loginBtn.setBorder(null);
+			loginBtn.setBackground(new Color(192,192,192));
+			getContentPane().add(loginBtn);
+			loginBtn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					login();
+				}
+			});
+			loginBtn.setActionCommand("OK");
+			getRootPane().setDefaultButton(loginBtn);
+		}
+		{
+			JButton register = new JButton("Register");
+			register.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
+			register.setBounds(318, 167, 73, 23);
+			register.setBorder(null);
+			register.setBackground(new Color(192,192,192));
+			getContentPane().add(register);
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
+				cancelButton.setBounds(11, 167, 65, 23);
+				cancelButton.setBorder(null);
+				cancelButton.setBackground(new Color(192,192,192));
+				getContentPane().add(cancelButton);
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						setVisible(false);
 						dispose();
 					}
 				});
-				{
-					JButton offlineBtn = new JButton("Offline");
-					buttonPane.add(offlineBtn);
-				}
-				{
-					JButton register = new JButton("Register");
-					register.addActionListener(new ActionListener(){
-						public void actionPerformed(ActionEvent e){
-							register();
-						}
-					});
-					buttonPane.add(register);
-				}
 				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
 			}
+			register.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					register();
+				}
+			});
 		}
 
 		// Load previous data if exist

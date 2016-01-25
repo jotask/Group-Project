@@ -1,10 +1,8 @@
 package com.github.jotask.groupproject.gui;
 
 import com.github.jotask.groupproject.database.DataBase;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +10,6 @@ import java.awt.event.ActionListener;
 public class RegisterDialog extends JDialog {
 
     private DataBase db;
-
-    private final JPanel contentPanel = new JPanel();
     private JTextField textField;
     private JTextField textField_1;
     private JTextField textField_2;
@@ -22,62 +18,75 @@ public class RegisterDialog extends JDialog {
      * Create the dialog.
      */
     public RegisterDialog(DataBase db) {
+        getContentPane().setBackground(Color.WHITE);
+        setBackground(Color.WHITE);
         this.db = db;
         setModal(true);
         setTitle("Register new member");
         ImageIcon img = new ImageIcon("resources/icon.png");
         setIconImage(img.getImage());
-        setBounds(100, 100, 450, 200);
-        getContentPane().setLayout(new BorderLayout());
-        contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        getContentPane().add(contentPanel, BorderLayout.CENTER);
-        contentPanel.setLayout(new MigLayout("", "[][grow]", "[][][]"));
+        setBounds(100, 100, 495, 226);
+        getContentPane().setLayout(null);
         {
-            JLabel lblSurname = new JLabel("Surname:");
-            contentPanel.add(lblSurname, "cell 0 0,alignx trailing");
-        }
-        {
-            textField = new JTextField();
-            contentPanel.add(textField, "cell 1 0,growx");
-            textField.setColumns(10);
-        }
-        {
-            JLabel lblForename = new JLabel("Forename:");
-            contentPanel.add(lblForename, "cell 0 1,alignx trailing");
-        }
-        {
-            textField_1 = new JTextField();
-            contentPanel.add(textField_1, "cell 1 1,growx");
-            textField_1.setColumns(10);
-        }
-        {
-            JLabel lblEmail = new JLabel("E-Mail:");
-            contentPanel.add(lblEmail, "cell 0 2,alignx trailing");
-        }
-        {
-            textField_2 = new JTextField();
-            contentPanel.add(textField_2, "cell 1 2,growx");
-            textField_2.setColumns(10);
-        }
-        {
-            JPanel buttonPane = new JPanel();
-            buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-            getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
-                JButton okButton = new JButton("OK");
-                okButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        register();
-                    }
-                });
-                okButton.setActionCommand("Register");
-                buttonPane.add(okButton);
-                getRootPane().setDefaultButton(okButton);
-            }
-            {
+                {
+                    JLabel lblSurname = new JLabel("Surname:");
+                    lblSurname.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+                    lblSurname.setBounds(10, 70, 63, 14);
+                    getContentPane().add(lblSurname);
+                }
+                {
+                    textField = new JTextField();
+                    textField.setBounds(89, 64, 374, 20);
+                    getContentPane().add(textField);
+                    textField.setColumns(10);
+                }
+                {
+                    JLabel lblForename = new JLabel("Forename:");
+                    lblForename.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+                    lblForename.setBounds(10, 34, 67, 14);
+                    getContentPane().add(lblForename);
+                }
+                {
+                    textField_1 = new JTextField();
+                    textField_1.setBounds(89, 29, 374, 20);
+                    getContentPane().add(textField_1);
+                    textField_1.setColumns(10);
+                }
+                {
+                    JLabel lblEmail = new JLabel("E-Mail:");
+                    lblEmail.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+                    lblEmail.setBounds(10, 105, 54, 14);
+                    getContentPane().add(lblEmail);
+                }
+                {
+                    textField_2 = new JTextField();
+                    textField_2.setBounds(89, 103, 374, 20);
+                    getContentPane().add(textField_2);
+                    textField_2.setColumns(10);
+                }
+                {
+                    JButton okButton = new JButton("OK");
+                    okButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
+                    okButton.setBounds(89, 150, 47, 23);
+                    okButton.setBorder(null);
+                    okButton.setBackground(new Color(192,192,192));
+                    getContentPane().add(okButton);
+                    okButton.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            register();
+                        }
+                    });
+                    okButton.setActionCommand("Register");
+                    getRootPane().setDefaultButton(okButton);
+                }
                 JButton cancelButton = new JButton("Cancel");
+                cancelButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
+                cancelButton.setBounds(389, 150, 75, 23);
+                cancelButton.setBorder(null);
+                cancelButton.setBackground(new Color(192,192,192));
+                getContentPane().add(cancelButton);
                 cancelButton.setActionCommand("Cancel");
-                buttonPane.add(cancelButton);
                 cancelButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {

@@ -32,6 +32,8 @@ public class DataBase {
 	 * The connection between our code and the database
 	 */
 	private Connection conn;
+
+	private boolean offline = false;
 	
 	/**
 	 * Instance for the userDAO object
@@ -110,4 +112,9 @@ public class DataBase {
 	public ElementDAO getElementDAO() {
 		return elementDAO;
 	}
+
+	public void setOffline(boolean offline){
+		this.offline = offline;
+	}
+
 }
