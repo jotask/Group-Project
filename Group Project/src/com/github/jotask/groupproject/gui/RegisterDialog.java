@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
 public class RegisterDialog extends JDialog {
 
@@ -17,7 +18,10 @@ public class RegisterDialog extends JDialog {
     /**
      * Create the dialog.
      */
-    public RegisterDialog(DataBase db) {
+    public RegisterDialog(Properties properties) {
+
+        this.db = new DataBase(properties);
+
         getContentPane().setBackground(Color.WHITE);
         setBackground(Color.WHITE);
         this.db = db;

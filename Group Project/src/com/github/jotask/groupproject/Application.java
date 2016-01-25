@@ -1,8 +1,6 @@
 package com.github.jotask.groupproject;
 
-import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.gui.Login;
-import com.github.jotask.groupproject.util.UpdateThread;
 
 import javax.swing.*;
 import java.io.FileReader;
@@ -19,7 +17,6 @@ public class Application {
 	public static final String PROPERTIES_FILE = "resources/config.properties";
 
 	private Properties properties;
-	private DataBase db;
 	
 	/**
 	 * Constructor for initialise variables
@@ -34,11 +31,9 @@ public class Application {
 				e.printStackTrace();
 			}
 		}
-		
-		db = new DataBase(this.properties);
 
 		try {
-			Login dialog = new Login(db, properties);
+			Login dialog = new Login(properties);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -52,13 +47,7 @@ public class Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
-//		FIXME
 		 new Application();
-
-		UpdateThread ut = new UpdateThread("Update", 10);
-		ut.start();
-
 	}
 	
 }

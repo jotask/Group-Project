@@ -1,6 +1,10 @@
 package com.github.jotask.groupproject.util;
 
+import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.model.User;
+
 import java.util.Date;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,11 +21,23 @@ public class UpdateThread{
     private LoopTask task;
     private Timer timer;
 
-    public UpdateThread(String taskName, long seconds) {
+    private boolean isFinish;
+
+    private Properties properties;
+    private DataBase database;
+
+    public UpdateThread(Properties properties, String taskName, long seconds) {
+        this.properties = properties;
         this.taskName = taskName;
+
+        this.isFinish = false;
+
         this.delay = seconds * 1000;
         this.task = new LoopTask();
         this.timer = new Timer(this.taskName);
+
+        this.database = new DataBase(this.properties);
+
     }
 
     public void start(){
@@ -37,6 +53,14 @@ public class UpdateThread{
             System.out.println("This is printed each " + delay / 1000 + " seconds.");
         }
 
+    }
+
+    public boolean isFinish(){
+        return this.isFinish;
+    }
+
+    public User getUser(){
+        return null;
     }
 
 }

@@ -1,7 +1,7 @@
 package com.github.jotask.groupproject.gui;
 
-import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.model.User;
+import com.github.jotask.groupproject.util.UpdateThread;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,15 +27,13 @@ public class Login extends JDialog {
 	private JPasswordField passwordField;
 	private JTextField usernameField;
 	private JCheckBox remember;
-	
-	private DataBase db;
+
 	private Properties properties;
 
 	/**
 	 * Create the dialog for the login to the database.
 	 */
-	public Login(DataBase db, Properties properties) {
-		this.db = db;
+	public Login(Properties properties) {
 		this.properties = properties;
 
 		getContentPane().setBackground(Color.WHITE);
@@ -147,16 +145,18 @@ public class Login extends JDialog {
 	}
 
 	private void register(){
-		RegisterDialog registerDialog = new RegisterDialog(db);
+		RegisterDialog registerDialog = new RegisterDialog(properties);
 	}
 	
 	private void login(){
+
 		String username = usernameField.getText();
 		char[] password = passwordField.getPassword();
 
-		User user = db.getMemberDao().login(username, password);
+		if(!username.isEmpty()){
 
-		if(user != null){
+			// TODO if the connection fail go to offline mode
+			UpdateThread update = new UpdateThread(this.properties, "Database Update", 300);
 
 			//Save options
 			// If remember checkbox is selected and also on the config file the username
@@ -165,10 +165,6 @@ public class Login extends JDialog {
 			if(this.remember.isSelected() &&
 					!this.properties.getProperty("username").equals(username)){
 				this.properties.setProperty("username", username);
-
-//				// Encrypt password and store the encrypted password
-//				String pEncrypted = MD5.encrypt(new String(password));
-//				this.properties.setProperty("password", pEncrypted);
 
 				// Save this values to the config file
 				try {
@@ -182,10 +178,21 @@ public class Login extends JDialog {
 
 			}
 
+			while(!update.isFinish()) {
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+
+			User user = update.getUser();
+
 			this.setVisible(false);
 			dispose();
 //			JOptionPane.showMessageDialog(this, "Login", "Success", JOptionPane.INFORMATION_MESSAGE);
-			Application app = new Application(db, user);
+			Application app = new Application(properties, user);
+
 		}else{
 			JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);
 		}		

@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class Application extends JFrame{
 
@@ -21,9 +22,9 @@ public class Application extends JFrame{
     /**
      * Create the application.
      */
-    public Application(DataBase db, User user) {
+    public Application(Properties properties, User user) {
         instance = this;
-        this.db = db;
+        this.db = new DataBase(properties);
         this.user = user;
         initialize();
         this.refreshTaskView();
