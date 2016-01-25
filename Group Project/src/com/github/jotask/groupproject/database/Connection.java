@@ -28,28 +28,47 @@ public class Connection {
     private Offline offline;
 
     // For online connection
-    public Connection(Properties properties) {
+    public Connection(boolean isOnline, Properties properties, String username, char[] password) {
 
-        this.isOnline = true;
+        this.isOnline = isOnline;
         this.properties = properties;
 
+        if (isOnline) {
+            online(username, password);
+            if(user == null)
+                offline(username, password);
+        }else {
+            offline(username, password);
+        }
+
+        this.offline = new Offline(user);
+    }
+
+    private boolean online(String username, char[] password){
+
         this.dataBase = new DataBase(this.properties);
+        user = this.dataBase.getMemberDao().login(username, password);
+        if(user == null){
+            // TODO user not found pop up a dialog for choose between offline o try login again or something
+            return false;
+        }
         this.thread = new UpdateThread(dataBase, "Database Update", 300);
         this.thread.start();
 
+        this.isOnline = true;
+        return isOnline;
+
     }
 
-    // For offline connection
-    public Connection(String forename){
+    private boolean offline(String username, char[] password){
+
+        // TODO
+
+        this.user = new User(1, username, "f", "m", "p");
+
         this.isOnline = false;
-    }
+        return isOnline;
 
-    public DataBase getDataBase() {
-        return dataBase;
-    }
-
-    public UpdateThread getThread() {
-        return thread;
     }
 
     public void close(){
@@ -71,6 +90,10 @@ public class Connection {
     }
 
     public ArrayList<Task> getTasks() {
+        // TODO
         return null;
     }
+
+
+
 }

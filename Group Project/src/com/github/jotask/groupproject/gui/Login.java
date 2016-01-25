@@ -1,7 +1,6 @@
 package com.github.jotask.groupproject.gui;
 
 import com.github.jotask.groupproject.database.Connection;
-import com.github.jotask.groupproject.util.UpdateThread;
 
 import javax.swing.*;
 import java.awt.*;
@@ -160,9 +159,7 @@ public class Login extends JDialog {
 
 		if(!username.isEmpty()){
 
-			Connection connection = new Connection(properties);
-
-			UpdateThread update = connection.getThread();
+			Connection connection = new Connection(true, properties, username);
 
 			//Save options
 			// If remember checkbox is selected and also on the config file the username
@@ -184,14 +181,6 @@ public class Login extends JDialog {
 
 			}
 
-			while(!update.isFinish()) {
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-
 			closeDialog();
 
 			JOptionPane.showMessageDialog(this, "Login", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -210,14 +199,16 @@ public class Login extends JDialog {
 
 	private void offline(){
 
+		System.out.println("offline");
+
 		String username = this.usernameField.getText();
 
-		if(!username.isEmpty()){
+		if(username.isEmpty()){
 			// Validate the field if is not empty
 			return;
 		}
 
-		Connection connection = new Connection(username);
+		Connection connection = new Connection(false, properties, username);
 		closeDialog();
 		Application app = new Application(connection);
 	}
