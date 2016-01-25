@@ -23,7 +23,6 @@ import static com.github.jotask.groupproject.Application.PROPERTIES_FILE;
 public class Login extends JDialog {
 
 	private static final long serialVersionUID = -6203552975399889940L;
-	private final JPanel contentPanel = new JPanel();
 	private JPasswordField passwordField;
 	private JTextField usernameField;
 	private JCheckBox remember;
@@ -145,7 +144,7 @@ public class Login extends JDialog {
 	}
 
 	private void register(){
-		RegisterDialog registerDialog = new RegisterDialog(properties);
+		new RegisterDialog(properties);
 	}
 	
 	private void login(){
@@ -190,7 +189,9 @@ public class Login extends JDialog {
 
 			this.setVisible(false);
 			dispose();
-//			JOptionPane.showMessageDialog(this, "Login", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+			JOptionPane.showMessageDialog(this, "Login", "Success", JOptionPane.INFORMATION_MESSAGE);
+
 			Application app = new Application(properties, user);
 
 		}else{

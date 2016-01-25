@@ -24,7 +24,6 @@ public class RegisterDialog extends JDialog {
 
         getContentPane().setBackground(Color.WHITE);
         setBackground(Color.WHITE);
-        this.db = db;
         setModal(true);
         setTitle("Register new member");
         ImageIcon img = new ImageIcon("resources/icon.png");

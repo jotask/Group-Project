@@ -30,7 +30,7 @@ public class UpdateThread{
         this.properties = properties;
         this.taskName = taskName;
 
-        this.isFinish = false;
+        this.isFinish = true;
 
         this.delay = seconds * 1000;
         this.task = new LoopTask();

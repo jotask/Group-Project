@@ -24,6 +24,7 @@ public class Application {
 	public Application() {
 
 		{
+			// Load properties file
 			try {
 				this.properties = new Properties();
 				this.properties.load(new FileReader(PROPERTIES_FILE));
