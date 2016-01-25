@@ -3,6 +3,7 @@ package com.github.jotask.groupproject.database.dao;
 import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
+import com.github.jotask.groupproject.util.Util;
 
 import java.sql.*;
 import java.util.*;
@@ -100,23 +101,6 @@ public class TaskDao extends DAO{
         return new Task(id, name, team_id, member_id, startDate, endDate, status);
     }
 
-    public void insertTask(Task task) throws SQLException {
-        PreparedStatement stm = null;
-        try{
-            stm = conn.prepareStatement("insert into TASK (TASK_NAME, TEAM_ID, MEMBER_ID, START_DATE, EXPECTED_COMPLETION_DATE, TASK_STATUS) values ( ?, ?, ?, ?, ?, ?)");
-            stm.setString(1, task.getName());
-            stm.setInt(2, task.getTeam_id());
-            stm.setInt(3, task.getMember_id());
-            stm.setTimestamp(4, task.getStartDate());
-            stm.setTimestamp(5, task.getEndDate());
-            stm.setString(6, task.getStatus());
-            stm.executeUpdate();
-        }finally{
-            close(stm, null);
-        }
-
-    }
-
     public void updateTask(Task task) throws SQLException {
 
         PreparedStatement stm = null;
@@ -134,8 +118,8 @@ public class TaskDao extends DAO{
             stm.setString(1, task.getName());
             stm.setInt(2, task.getTeam_id());
             stm.setInt(3, task.getMember_id());
-            stm.setTimestamp(4, task.getStartDate());
-            stm.setTimestamp(5, task.getEndDate());
+            stm.setDate(4, Util.toSQLDate(task.getStartDate()));
+            stm.setDate(5, Util.toSQLDate(task.getEndDate()));
             stm.setString(6, task.getStatus());
             stm.setInt(7, task.getId());
             stm.executeUpdate();
