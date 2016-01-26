@@ -1,6 +1,6 @@
-package com.github.jotask.groupproject.database.dao;
+package com.github.jotask.groupproject.connection.dao;
 
-import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.connection.DataBase;
 import com.github.jotask.groupproject.model.User;
 import com.github.jotask.groupproject.util.MD5;
 
@@ -115,7 +115,7 @@ public class MemberDAO extends DAO {
 
     public void printAllMember(){
         // FIXME delete this method
-        // TODO get all tasks from database
+        // TODO get all tasks from connection
         ArrayList<User> users = new ArrayList<>();
 
         Statement stm = null;

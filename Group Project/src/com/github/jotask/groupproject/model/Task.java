@@ -3,6 +3,7 @@ package com.github.jotask.groupproject.model;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -22,7 +23,9 @@ public class Task {
     private Date startDate;
     private Date endDate;
     private String status;
-    private static char Seperator = '#';
+    private static char seperator = '#';
+
+    private ArrayList<Element> elements;
 
     public Task(int id, String name, int team_id, int member_id, Date startDate, Date endDate, String status) {
         this.id = id;
@@ -88,17 +91,17 @@ public class Task {
     @Override
     public String toString() {
         String output = Integer.toString(id);
-        output += Seperator;
+        output += seperator;
         output += name;
-        output += Seperator;
+        output += seperator;
         output += team_id;
-        output += Seperator;
+        output += seperator;
         output += member_id;
-        output += Seperator;
+        output += seperator;
         output += startDate;
-        output += Seperator;
+        output += seperator;
         output += endDate;
-        output += Seperator;
+        output += seperator;
         output += status;
         return output;
     }
@@ -110,7 +113,7 @@ public class Task {
          * for parsing and object creation
          *
          */
-        String[] separate = str.split(Character.toString(Seperator));
+        String[] separate = str.split(Character.toString(seperator));
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
         /**
@@ -141,5 +144,9 @@ public class Task {
         }
 
         return null;
+    }
+
+    public void setElements(ArrayList<Element> elements) {
+        this.elements = elements;
     }
 }

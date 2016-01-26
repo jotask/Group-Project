@@ -31,7 +31,7 @@ public class User {
 	 * Constructor for the User, get all the parameters from one user
 	 *
 	 * @param id
-	 * 			The user ID from the database
+	 * 			The user ID from the connection
 	 * @param surname
 	 * 			The user username
 	 * @param firstName

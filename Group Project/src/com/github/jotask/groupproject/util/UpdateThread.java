@@ -1,6 +1,6 @@
 package com.github.jotask.groupproject.util;
 
-import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.connection.DataBase;
 import com.github.jotask.groupproject.model.User;
 
 import java.util.Date;

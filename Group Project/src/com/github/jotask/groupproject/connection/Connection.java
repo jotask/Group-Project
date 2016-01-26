@@ -1,5 +1,6 @@
-package com.github.jotask.groupproject.database;
+package com.github.jotask.groupproject.connection;
 
+import com.github.jotask.groupproject.model.Element;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 import com.github.jotask.groupproject.util.UpdateThread;
@@ -95,9 +96,14 @@ public class Connection {
 
     public ArrayList<Task> getTasks() {
         // TODO
-        ArrayList<Task> tasks = null;
+        ArrayList<Task> tasks;
         if(this.isOnline){
             tasks = dataBase.getTasks(user);
+            if(tasks != null){
+                for(Task t: tasks){
+                    t.setElements(getElements(t));
+                }
+            }
         }else{
             tasks = this.offline.getTasks();
         }
@@ -116,11 +122,22 @@ public class Connection {
             return true;
 
         }else{
-            // TODO offline update a task
+
         }
         return false;
     }
 
+    private ArrayList<Element> getElements(Task task){
+
+        ArrayList<Element> elements = null;
+
+        if(isOnline){
+            elements = dataBase.getElementDAO().getAllElementOnTask(task);
+        }
+
+        return elements;
+
+    }
 
 
 }

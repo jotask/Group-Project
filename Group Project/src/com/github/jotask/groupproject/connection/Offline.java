@@ -1,12 +1,10 @@
-package com.github.jotask.groupproject.database;
+package com.github.jotask.groupproject.connection;
 
-import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Jose Vives on 25/01/2016.
@@ -37,7 +35,6 @@ public class Offline {
             String surname = br.readLine();
 
             this.user = new User(id, surname, forename, mail);
-            System.out.println(user.toString());
 
             while ((sCurrentLine = br.readLine()) != null) {
                 Task toAdd = Task.stringToTask(sCurrentLine);
@@ -53,6 +50,7 @@ public class Offline {
     }
 
     public void saveToFile(){
+
         File userData = new File(user.getFirstName()+".user");
         if (!userData.exists()) {
             try {

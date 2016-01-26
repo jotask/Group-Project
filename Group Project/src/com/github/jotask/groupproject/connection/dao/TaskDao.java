@@ -1,6 +1,6 @@
-package com.github.jotask.groupproject.database.dao;
+package com.github.jotask.groupproject.connection.dao;
 
-import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.connection.DataBase;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 import com.github.jotask.groupproject.util.Util;
@@ -26,7 +26,7 @@ public class TaskDao extends DAO{
     }
 
     public ArrayList<Task> getAllTasks(User user){
-        // TODO get all tasks from database
+        // TODO get all tasks from connection
         ArrayList<Task> tasks = new ArrayList<>();
 
         Statement stm = null;
