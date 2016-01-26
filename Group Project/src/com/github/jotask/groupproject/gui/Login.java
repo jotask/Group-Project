@@ -158,7 +158,11 @@ public class Login extends JDialog {
 
 		if(!username.isEmpty()){
 
-			Connection connection = new Connection(true, properties, username, password);
+			Connection connection = new Connection(properties);
+            if(!connection.online(username, password)){
+                JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
 			//Save options
 			// If remember checkbox is selected and also on the config file the username
@@ -182,7 +186,7 @@ public class Login extends JDialog {
 
 			closeDialog();
 
-			JOptionPane.showMessageDialog(this, "Login", "Success", JOptionPane.INFORMATION_MESSAGE);
+//			JOptionPane.showMessageDialog(this, "Login", "Success", JOptionPane.INFORMATION_MESSAGE);
 
 			Application app = new Application(connection);
 
@@ -198,8 +202,6 @@ public class Login extends JDialog {
 
 	private void offline(){
 
-		System.out.println("offline");
-
 		String username = this.usernameField.getText();
 		char[] password = this.passwordField.getPassword();
 
@@ -208,7 +210,8 @@ public class Login extends JDialog {
 			return;
 		}
 
-		Connection connection = new Connection(false, properties, username, password);
+		Connection connection = new Connection(properties);
+        connection.offline(username, password);
 		closeDialog();
 		Application app = new Application(connection);
 	}
