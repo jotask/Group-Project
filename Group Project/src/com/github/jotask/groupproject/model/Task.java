@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
  * @author Jose Vives.
  * @since 30/11/2015
  */
-public class Task implements Serializable {
+public class Task {
 
     private int id;
     private String name;
