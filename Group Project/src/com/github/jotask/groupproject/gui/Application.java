@@ -32,7 +32,7 @@ public class Application extends JFrame{
     private void initialize() {
         this.setTitle("Task Manager");
         this.setBounds(100, 100, 800, 300);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 
         ImageIcon img = new ImageIcon("resources/icon.png");
@@ -95,4 +95,9 @@ public class Application extends JFrame{
         dialog.setVisible(true);
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        connection.close();
+    }
 }
