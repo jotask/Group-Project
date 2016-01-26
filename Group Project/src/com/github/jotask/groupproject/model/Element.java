@@ -41,4 +41,9 @@ public class Element {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "{"+id+":"+taskID+":"+description+"}";
+    }
+
 }
