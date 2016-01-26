@@ -8,6 +8,8 @@ package com.github.jotask.groupproject.model;
  */
 public class Element {
 
+    // FIXME
+
     private int id;
     private int taskID;
     private String name;

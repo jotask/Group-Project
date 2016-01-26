@@ -16,6 +16,7 @@ import java.util.Properties;
 /**
  * Main class for hold all we need for retrieve information and update
  * information for the database
+ *
  * @author Jose Vives
  * @version 0.1
  *
@@ -35,8 +36,6 @@ public class DataBase {
 	 * The connection between our code and the database
 	 */
 	private Connection conn;
-
-	private boolean offline = false;
 	
 	/**
 	 * Instance for the userDAO object
@@ -100,30 +99,61 @@ public class DataBase {
 		
 	}
 
+    /**
+     * Get all tasks for a specified user
+     *
+     * @param user
+     *      The user we want all his task
+     * @return
+     *      An ArrayList with all the tasks from this user
+     */
 	public ArrayList<Task> getTasks(User user) {
         return getTaskDAO().getAllTasks(user);
     }
 
+    /**
+     * Get the DAO object for member
+     *
+     * @return
+     *      The memberDAO object
+     */
 	public MemberDAO getMemberDao() {
 		return memberDao;
 	}
 
+    /**
+     * Get the DAO object for Task
+     *
+     * @return
+     *      The taskDAO Object
+     */
 	public TaskDao getTaskDAO() {
 		return taskDAO;
 	}
 
+    /**
+     * Get the DAO object for team
+     *
+     * @return
+     *      The teamDAO Object
+     */
 	public TeamDao getTeamDAO() {
 		return teamDAO;
 	}
 
+    /**
+     * Get the DAO object for element
+     *
+     * @return
+     *      The elementDAO object
+     */
 	public ElementDAO getElementDAO() {
 		return elementDAO;
 	}
 
-	public void setOffline(boolean offline){
-		this.offline = offline;
-	}
-
+    /**
+     * Close the connection between the source code and the server
+     */
 	public void close(){
 		try {
 			this.conn.close();

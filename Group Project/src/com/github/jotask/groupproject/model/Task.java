@@ -1,6 +1,5 @@
 package com.github.jotask.groupproject.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +8,7 @@ import java.util.Date;
  * @author Jose Vives.
  * @since 30/11/2015
  */
-public class Task implements Serializable {
+public class Task {
 
     private int id;
     private String name;
@@ -18,7 +17,7 @@ public class Task implements Serializable {
     private Date startDate;
     private Date endDate;
     private String status;
-    private char Seperator = '|';
+    private char separator = '|';
 
     public Task(int id, String name, int team_id, int member_id, Date startDate, Date endDate, String status) {
         this.id = id;
@@ -84,7 +83,7 @@ public class Task implements Serializable {
     @Override
     public String toString() {
         String output = Integer.toString(id);
-        output += Seperator;
+        output += separator;
         return output;
     }
 }

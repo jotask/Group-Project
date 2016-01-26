@@ -140,8 +140,7 @@ public class Login extends JDialog {
 			if(!username.isEmpty()){
 				this.remember.setSelected(true);
 				this.usernameField.setText(username);
-				// FIXME the password is not stored because later we can't or i don't know
-				// how load and decrypt a MD5 encryption
+				// FIXME
 			}
 
 		}

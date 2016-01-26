@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class TaskDialog extends JDialog {
 
@@ -164,12 +165,16 @@ public class TaskDialog extends JDialog {
         int team_id = Integer.parseInt(teamID);
         String memberID = memberId.getText();
         int member_id = Integer.parseInt(memberID);
-        Timestamp startDateTime = Util.stringToTimetamp(startDate.getText());
-        Timestamp endDateTime = Util.stringToTimetamp(endDate.getText());
+
+        // FIXME
+        Date startDateTime = new Date();
+        Date endDateTime = new Date();
+
         String status = taskStatus.getText();
 
         Task task = new Task(id, name, team_id, member_id, startDateTime, endDateTime, status);
 
+        // FIXME change to offline logic at the moment is just working everyvere with the old logic
         try {
             db.getTaskDAO().updateTask(task);
         } catch (SQLException e) {

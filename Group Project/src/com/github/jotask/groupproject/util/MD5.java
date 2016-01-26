@@ -7,7 +7,9 @@ import java.security.NoSuchAlgorithmException;
  * Static class for encrypt a string for security proposes
  * Code bellows to the follow webpage
  * http://www.java2s.com/Code/Java/Security/UseMD5toencryptastring.htm
- * @author Jose Vives and the java2s website
+ *
+ * @author Jose Vives
+ * @author java2s website
  * @version 1.0
  *
  */
