@@ -23,8 +23,21 @@ public class Offline {
         this.user = user;
     }
 
-    private void loadFromFile(){
+    public void loadFromFile(){
+        File userData = new File(user.getId()+".user");
 
+        try (BufferedReader br = new BufferedReader(new FileReader(userData)))
+        {
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                Task.stringToTask(sCurrentLine);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private Task getTaskRandom(Random r){
@@ -53,13 +66,14 @@ public class Offline {
         ArrayList<Task> tasks = this.getRandom();
 
         try {
-            FileOutputStream fos = new FileOutputStream(userData);
-            ObjectOutputStream ois = new ObjectOutputStream(fos);
+            FileWriter fw = new FileWriter(userData);
             if (tasks.size() > 0) {
                 for (Task task : tasks){
-                    ois.writeObject(task);
+                    fw.write(task.toString() + "\n");
                 }
             }
+            fw.flush();
+            fw.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -77,6 +91,8 @@ public class Offline {
         User user = new User(1, "test", "test", "test");
         Offline offline = new Offline(user);
         offline.saveToFile();
+
+        offline.loadFromFile();
     }
 
 }

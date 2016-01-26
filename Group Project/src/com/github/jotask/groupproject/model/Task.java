@@ -1,7 +1,12 @@
 package com.github.jotask.groupproject.model;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Date;
+import java.util.Locale;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 
 /**
  * Created by Jose Vives on 30/11/2015.
@@ -18,7 +23,7 @@ public class Task implements Serializable {
     private Date startDate;
     private Date endDate;
     private String status;
-    private char Seperator = '|';
+    private static char Seperator = '#';
 
     public Task(int id, String name, int team_id, int member_id, Date startDate, Date endDate, String status) {
         this.id = id;
@@ -85,6 +90,57 @@ public class Task implements Serializable {
     public String toString() {
         String output = Integer.toString(id);
         output += Seperator;
+        output += name;
+        output += Seperator;
+        output += team_id;
+        output += Seperator;
+        output += member_id;
+        output += Seperator;
+        output += startDate;
+        output += Seperator;
+        output += endDate;
+        output += Seperator;
+        output += status;
         return output;
+    }
+
+    public static Task stringToTask(String str) {
+        /**
+         *
+         * Splitting the string into multiple sub strings
+         * for parsing and object creation
+         *
+         */
+        String[] separate = str.split(Character.toString(Seperator));
+        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+
+        /**
+         *
+         * Parsing the strings into the correct format
+         *
+         */
+
+        if (separate[4] == null || separate[5] == null) {
+            System.out.println("Error with dates");
+            return null;
+        }
+
+        try {
+            int id = Integer.parseInt(separate[0]);
+            String name = separate[1];
+            int team_id = Integer.parseInt(separate[2]);
+            int member_id = Integer.parseInt(separate[3]);
+            Date start_date = format.parse(separate[4]);
+            Date end_date = format.parse(separate[5]);
+            String status = separate[6];
+
+            Task returnTask = new Task(id,name,team_id,member_id,start_date,end_date,status);
+
+            return returnTask;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
