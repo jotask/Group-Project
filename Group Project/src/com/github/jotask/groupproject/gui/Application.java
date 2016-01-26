@@ -24,7 +24,7 @@ public class Application extends JFrame{
         this.connection = connection;
         initialize();
 
-        this.refreshTaskView(connection.getTasks());
+        this.refreshTaskView(connection.getAllTasks());
     }
 
     /**
@@ -81,6 +81,7 @@ public class Application extends JFrame{
         int t = Integer.parseInt(table.getValueAt(row, TaskTableModel.ID_COL).toString());
 //        Task tmp = db.getTaskDAO().getTask(t);
         Task tmp = connection.getTask(t);
+        System.out.println(tmp.getElements().size());
 //        Task tmp = (Task) table.getValueAt(row, TaskTableModel.OBJECT_COL);
         // Create the dialog and make it visible
         TaskDialog dialog = new TaskDialog(instance, connection, tmp);

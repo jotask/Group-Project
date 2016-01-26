@@ -1,5 +1,6 @@
 package com.github.jotask.groupproject.connection;
 
+import com.github.jotask.groupproject.model.Element;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 
@@ -65,7 +66,7 @@ public class Offline {
             fw.write(user.getId() + "\n");
             fw.write(user.getMail() + "\n");
             fw.write(user.getSurname() + "\n");
-            if (tasks.size() > 0) {
+            if (!tasks.isEmpty()) {
                 for (Task task : tasks){
                     fw.write(task.toString() + "\n");
                 }

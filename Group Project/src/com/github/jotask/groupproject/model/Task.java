@@ -111,12 +111,12 @@ public class Task {
 
     private String elementListToString() {
         if (elements == null) {
-            return "";
+            System.out.println("null");
+            return "---";
         }
-        System.out.println(elements.size());
+//        System.out.println(elements.size());
         String returnString = "";
         for (Element e: elements) {
-
             returnString += e.toString();
         }
         return returnString;
@@ -166,7 +166,5 @@ public class Task {
         this.elements = elements;
     }
 
-    public ArrayList<Element> getElements() {
-        return elements;
-    }
+    public ArrayList<Element> getElements() { return this.elements; }
 }

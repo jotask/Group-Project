@@ -60,7 +60,6 @@ public class ElementDAO extends DAO{
 
         int id = rs.getInt("ELEMENT_ID");
         int taskID = rs.getInt("TASK_ID");
-        String name = rs.getString("ELEMENT_NAME");
         String comment = rs.getString("TASK_COMMENT");
 
         Element element = new Element(id, taskID, comment);
@@ -75,10 +74,9 @@ public class ElementDAO extends DAO{
         int taskId = element.getTaskID();
         String comment = element.getDescription().toString();
         String name = "name";
-
         String desc = "nothing";
 
-        String sql = "INSERT INTO `TASK_ELEMENT` (`TASK_ID`, `TASK_DESCRIPTION`, `TASK_COMMENT`, `ELEMENT_NAME`) VALUES ('" + taskId + "', '" + comment + "', '" + name + "', '" + desc + "');";
+        String sql = "INSERT INTO `TASK_ELEMENT` (`TASK_ID`, `TASK_DESCRIPTION`, `TASK_COMMENT`, `ELEMENT_NAME`) VALUES ('" + taskId + "', '" + desc + "', '" + comment + "', '" + name + "');";
 
         Statement stm = null;
 

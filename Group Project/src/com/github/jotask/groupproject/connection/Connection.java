@@ -48,19 +48,24 @@ public class Connection {
 
         if(user == null){
             // TODO user not found pop up a dialog for choose between offline o try login again or something
-
             return false;
         }
 
+        this.isOnline = true;
+
         this.offline = new Offline(user);
-        this.offline.setTasks(dataBase.getTasks(user));
+
+        ArrayList<Task> tasks = dataBase.getTasks(user);
+        for(Task t: tasks){
+            t.setElements(getElements(t));
+        }
+        this.offline.setTasks(tasks);
         this.offline.saveToFile();
 
         // TODO update the file
-        this.thread = new UpdateThread(this, "Database Update", 10);
+        this.thread = new UpdateThread(this, "Database Update", 3);
         this.thread.start();
 
-        this.isOnline = true;
         return isOnline;
 
     }
@@ -96,14 +101,17 @@ public class Connection {
         Task task = null;
         if(this.isOnline){
             task = dataBase.getTaskDAO().getTask(taskID);
+            if(task != null){
+                task.setElements(getElements(task));
+            }
         }else{
             // TODO offline get task by id
         }
         return task;
     }
 
-    public ArrayList<Task> getTasks() {
-        // TODO
+    public ArrayList<Task> getAllTasks() {
+        // FIXME in some point they loose the elements
         ArrayList<Task> tasks;
         if(this.isOnline){
             tasks = dataBase.getTasks(user);
@@ -111,6 +119,8 @@ public class Connection {
                 for(Task t: tasks){
                     t.setElements(getElements(t));
                 }
+            }else{
+                System.out.println("any task for this user");
             }
         }else{
             tasks = this.offline.getTasks();
@@ -132,6 +142,8 @@ public class Connection {
 
         }else{
 
+
+
         }
         return false;
     }
@@ -142,10 +154,21 @@ public class Connection {
 
         if(isOnline){
             elements = dataBase.getElementDAO().getAllElementOnTask(task);
+        }else{
+            System.out.println("we are offline");
         }
 
         return elements;
 
+    }
+
+    public ArrayList<Task> getAllTasksWithElements(){
+
+        ArrayList<Task> tasks = getAllTasks();
+        for(Task t: tasks){
+            t.setElements(getElements(t));
+        }
+        return tasks;
     }
 
 

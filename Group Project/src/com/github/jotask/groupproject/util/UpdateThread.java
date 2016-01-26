@@ -58,7 +58,7 @@ public class UpdateThread{
 
         @Override
         public void run() {
-            offline.setTasks(database.getTasks(user));
+            offline.setTasks(connection.getAllTasksWithElements());
             offline.saveToFile();
         }
 

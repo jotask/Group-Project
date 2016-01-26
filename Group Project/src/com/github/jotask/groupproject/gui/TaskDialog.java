@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class TaskDialog extends JDialog {
@@ -39,114 +40,123 @@ public class TaskDialog extends JDialog {
 
         setTitle("Update task");
 
+        int counter = 0;
+
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         ImageIcon img = new ImageIcon("resources/icon.png");
         setIconImage(img.getImage());
         setModal(true);
-        setBounds(100, 100, 450, 259);
+        setBounds(100, 100, 450, 659);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(new MigLayout("", "[][grow]", "[][][][][][][]"));
         {
             JLabel lblId = new JLabel("Id:");
-            contentPanel.add(lblId, "cell 0 0,alignx trailing");
+            contentPanel.add(lblId, "cell 0 " + counter + ",alignx trailing");
         }
         {
             taskId = new JTextField();
             taskId.setEditable(false);
-            contentPanel.add(taskId, "cell 1 0,growx");
+            contentPanel.add(taskId, "cell 1 " + counter +",growx");
             taskId.setColumns(10);
             taskId.setText(String.valueOf(task.getId()));
         }
+        counter++;
         {
             JLabel lblName = new JLabel("Name");
-            contentPanel.add(lblName, "cell 0 1,alignx trailing");
+            contentPanel.add(lblName, "cell 0 " + counter + ",alignx trailing");
         }
         {
             taskName = new JTextField();
-            contentPanel.add(taskName, "cell 1 1,growx");
+            contentPanel.add(taskName, "cell 1 " + counter + ",growx");
             taskName.setColumns(10);
             taskName.setText(task.getName());
         }
+        counter++;
         {
             JLabel lblTeamid = new JLabel("TeamID:");
-            contentPanel.add(lblTeamid, "cell 0 2,alignx trailing");
+            contentPanel.add(lblTeamid, "cell 0 " + counter + ",alignx trailing");
         }
         {
             teamId = new JTextField();
             teamId.setEditable(false);
-            contentPanel.add(teamId, "cell 1 2,growx");
+            contentPanel.add(teamId, "cell 1 " + counter + ",growx");
             teamId.setColumns(10);
             teamId.setText(String.valueOf(task.getTeam_id()));
         }
+        counter++;
         {
             JLabel lblMemberid = new JLabel("MemberID:");
-            contentPanel.add(lblMemberid, "cell 0 3,alignx trailing");
+            contentPanel.add(lblMemberid, "cell 0 " + counter + ",alignx trailing");
         }
         {
             memberId = new JTextField();
             memberId.setEditable(false);
-            contentPanel.add(memberId, "cell 1 3,growx");
+            contentPanel.add(memberId, "cell 1 " + counter + ",growx");
             memberId.setColumns(10);
             memberId.setText(String.valueOf(task.getMember_id()));
         }
+        counter++;
         {
             JLabel lblStartdate = new JLabel("StartDate");
-            contentPanel.add(lblStartdate, "cell 0 4,alignx trailing");
+            contentPanel.add(lblStartdate, "cell 0 " + counter + ",alignx trailing");
         }
         {
             startDate = new JTextField();
-            contentPanel.add(startDate, "cell 1 4,growx");
+            contentPanel.add(startDate, "cell 1 " + counter + ",growx");
             startDate.setColumns(10);
             //TODO Delete this
             java.util.Date d = new java.util.Date();
             startDate.setText(new Timestamp(new java.util.Date().getTime()).toString());
         }
+        counter++;
         {
             JLabel lblEnddate = new JLabel("EndDate:");
-            contentPanel.add(lblEnddate, "cell 0 5,alignx trailing");
+            contentPanel.add(lblEnddate, "cell 0 " + counter + ",alignx trailing");
         }
         {
             endDate = new JTextField();
-            contentPanel.add(endDate, "cell 1 5,growx");
+            contentPanel.add(endDate, "cell 1 " + counter + ",growx");
             endDate.setColumns(10);
             // TODO Delete this
             endDate.setText(task.getEndDate().toString());
         }
+        counter++;
         {
             JLabel lblStatus = new JLabel("Status:");
-            contentPanel.add(lblStatus, "cell 0 6,alignx trailing");
+            contentPanel.add(lblStatus, "cell 0 " + counter + ",alignx trailing");
         }
         {
             taskStatus = new JTextField();
-            contentPanel.add(taskStatus, "cell 1 6,growx");
+            contentPanel.add(taskStatus, "cell 1 " + counter + ",growx");
             taskStatus.setColumns(10);
             taskStatus.setText(task.getStatus());
         }
+        counter++;
         {
             JLabel lblElement = new JLabel("Previous:");
-            contentPanel.add(lblElement, "cell 0 7,alignx trailing");
+            contentPanel.add(lblElement, "cell 0 " + counter + ",alignx trailing");
         }
         {
+            // FIXME
             ArrayList<Element> elements = task.getElements();
             if(elements != null) {
-                System.out.println(elements.size());
                 for (Element e : elements) {
-                    JLabel tmp = new JLabel("id");
-                    contentPanel.add(tmp, "cell 1 7,alignx trailing");
+                    counter++;
+                    JLabel tmp = new JLabel(e.getDescription());
+                    contentPanel.add(tmp, "cell 1 " + counter + ",alignx trailing");
                 }
-            }else{
-                System.out.println("null");
             }
         }
+        counter++;
         {
             JLabel lblElement = new JLabel("addElement:");
-            contentPanel.add(lblElement, "cell 0 8,alignx trailing");
+            contentPanel.add(lblElement, "cell 0 " + counter + ",alignx trailing");
         }
         {
             elementField = new JTextField();
-            contentPanel.add(elementField, "cell 1 8,growx");
+            contentPanel.add(elementField, "cell 1 " + counter + ",growx");
             elementField.setColumns(10);
         }
         {
@@ -208,7 +218,7 @@ public class TaskDialog extends JDialog {
         // TODO handle if the task is not updated
         conn.updateTask(task, element);
 
-        app.refreshTaskView(conn.getTasks());
+        app.refreshTaskView(conn.getAllTasks());
         cancelCliked();
     }
 
