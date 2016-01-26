@@ -2,7 +2,6 @@ package com.github.jotask.groupproject.database;
 
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
-import com.github.jotask.groupproject.util.Offline;
 import com.github.jotask.groupproject.util.UpdateThread;
 
 import java.sql.SQLException;
@@ -31,8 +30,6 @@ public class Connection {
     // For online connection
     public Connection(Properties properties) {
         this.properties = properties;
-
-        this.offline = new Offline(user);
     }
 
     public boolean online(String username, char[] password){
@@ -46,6 +43,10 @@ public class Connection {
             return false;
         }
 
+        this.offline = new Offline(user);
+        this.offline.setTasks(dataBase.getTasks(user));
+        this.offline.saveToFile();
+
         // TODO update the file
 //        this.thread = new UpdateThread(dataBase, "Database Update", 300);
 //        this.thread.start();
@@ -57,13 +58,12 @@ public class Connection {
 
     public boolean offline(String username, char[] password){
 
-        System.out.println("offline");
+        this.offline= new Offline(null);
+        if(!this.offline.loadFromFile(username)){
+            // TODO not login or not find it
+        }
 
-        this.user = new User(1, username, "f", "m", "p");
-
-        Offline offlineHandler = new Offline(user);
-
-
+        this.user = offline.getUser();
 
         this.isOnline = false;
         return isOnline;
@@ -99,7 +99,7 @@ public class Connection {
         if(this.isOnline){
             tasks = dataBase.getTasks(user);
         }else{
-            // TODO offline get all task offline
+            tasks = this.offline.getTasks();
         }
         return tasks;
     }
@@ -120,4 +120,7 @@ public class Connection {
         }
         return false;
     }
+
+
+
 }

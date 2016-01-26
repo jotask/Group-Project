@@ -1,4 +1,4 @@
-package com.github.jotask.groupproject.util;
+package com.github.jotask.groupproject.database;
 
 import com.github.jotask.groupproject.database.DataBase;
 import com.github.jotask.groupproject.model.Task;
@@ -23,39 +23,33 @@ public class Offline {
         this.user = user;
     }
 
-    public void loadFromFile(){
-        File userData = new File(user.getFirstName()+".user");
+    public boolean loadFromFile(String forename){
+        File userData = new File(forename + ".user");
+
+        tasks = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(userData)))
         {
 
             String sCurrentLine;
-            user.setId(Integer.parseInt(br.readLine()));
-            user.setMail(br.readLine());
-            user.setSurname(br.readLine());
+            int id = Integer.parseInt(br.readLine());
+            String mail = br.readLine();
+            String surname = br.readLine();
+
+            this.user = new User(id, surname, forename, mail);
+            System.out.println(user.toString());
 
             while ((sCurrentLine = br.readLine()) != null) {
                 Task toAdd = Task.stringToTask(sCurrentLine);
                 if (toAdd != null)
                     tasks.add(toAdd);
             }
+            return true;
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private Task getTaskRandom(Random r){
-        return new Task(r.nextInt(), "test", r.nextInt(), r.nextInt(), null, null, "test");
-    }
-
-    private ArrayList<Task> getRandom(){
-        Random random = new Random();
-        ArrayList<Task> tasks = new ArrayList<>();
-        for(int i = 0 ; i < 5; i++){
-            tasks.add(getTaskRandom(random));
-        }
-        return  tasks;
+        return false;
     }
 
     public void saveToFile(){
@@ -67,8 +61,6 @@ public class Offline {
                 e.printStackTrace();
             }
         }
-
-        ArrayList<Task> tasks = this.getRandom();
 
         try {
             FileWriter fw = new FileWriter(userData);
@@ -94,4 +86,15 @@ public class Offline {
         this.tasks = dataBase.getTaskDAO().getAllTasks(user);
     }
 
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
+    public User getUser() {
+        return user;
+    }
 }

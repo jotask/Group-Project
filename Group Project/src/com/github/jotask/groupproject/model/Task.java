@@ -111,7 +111,7 @@ public class Task {
          *
          */
         String[] separate = str.split(Character.toString(Seperator));
-        DateFormat format = new SimpleDateFormat("yyy-mm-dd", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
         /**
          *
