@@ -12,7 +12,8 @@ package com.github.jotask.groupproject.util;
  */
 public final class Util {
 
-    /** Private constructor for make suret that is impossible make an
+    /**
+     * Private constructor for make  that is impossible make an
      * instance of this class
      */
     private Util(){}
