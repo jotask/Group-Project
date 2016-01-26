@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class TaskDialog extends JDialog {
@@ -124,8 +125,28 @@ public class TaskDialog extends JDialog {
             taskStatus.setText(task.getStatus());
         }
         {
+            JLabel lblElement = new JLabel("Previous:");
+            contentPanel.add(lblElement, "cell 0 7,alignx trailing");
+        }
+        {
+            ArrayList<Element> elements = task.getElements();
+            if(elements != null) {
+                System.out.println(elements.size());
+                for (Element e : elements) {
+                    JLabel tmp = new JLabel("id");
+                    contentPanel.add(tmp, "cell 1 7,alignx trailing");
+                }
+            }else{
+                System.out.println("null");
+            }
+        }
+        {
+            JLabel lblElement = new JLabel("addElement:");
+            contentPanel.add(lblElement, "cell 0 8,alignx trailing");
+        }
+        {
             elementField = new JTextField();
-            contentPanel.add(elementField, "cell 1 7,growx");
+            contentPanel.add(elementField, "cell 1 8,growx");
             elementField.setColumns(10);
         }
         {

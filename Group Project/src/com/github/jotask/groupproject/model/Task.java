@@ -165,4 +165,8 @@ public class Task {
     public void setElements(ArrayList<Element> elements) {
         this.elements = elements;
     }
+
+    public ArrayList<Element> getElements() {
+        return elements;
+    }
 }
