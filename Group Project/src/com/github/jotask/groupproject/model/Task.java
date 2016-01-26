@@ -1,11 +1,10 @@
 package com.github.jotask.groupproject.model;
 
-import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 
 /**
@@ -120,7 +119,7 @@ public class Task {
          *
          */
 
-        if (separate[4] == null || separate[5] == null) {
+        if (separate[4].equals("null") || separate[5].equals("null")) {
             System.out.println("Error with dates");
             return null;
         }
