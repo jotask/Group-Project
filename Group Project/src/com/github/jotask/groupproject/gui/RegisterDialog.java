@@ -102,6 +102,7 @@ public class RegisterDialog extends JDialog {
     }
 
     private void close(){
+        this.db.close();
         dispose();
         setVisible(false);
     }
