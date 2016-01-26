@@ -23,7 +23,8 @@ public class Application extends JFrame{
         instance = this;
         this.connection = connection;
         initialize();
-        this.refreshTaskView(connection.getTasks());
+        // FIXME
+//        this.refreshTaskView(connection.getTasks());
     }
 
     /**
