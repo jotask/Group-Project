@@ -32,6 +32,14 @@ public class Connection {
         this.properties = properties;
     }
 
+    public DataBase getDataBase() {
+        return dataBase;
+    }
+
+    public Offline getOffline() {
+        return offline;
+    }
+
     public boolean online(String username, char[] password){
 
         this.dataBase = new DataBase(this.properties);
@@ -48,8 +56,8 @@ public class Connection {
         this.offline.saveToFile();
 
         // TODO update the file
-//        this.thread = new UpdateThread(dataBase, "Database Update", 300);
-//        this.thread.start();
+        this.thread = new UpdateThread(this, "Database Update", 300);
+        this.thread.start();
 
         this.isOnline = true;
         return isOnline;

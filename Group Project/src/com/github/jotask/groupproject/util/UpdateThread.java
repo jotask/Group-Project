@@ -1,6 +1,8 @@
 package com.github.jotask.groupproject.util;
 
+import com.github.jotask.groupproject.database.Connection;
 import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.database.Offline;
 import com.github.jotask.groupproject.model.User;
 
 import java.util.Date;
@@ -24,7 +26,13 @@ public class UpdateThread{
 
     private DataBase database;
 
-    public UpdateThread(DataBase db, String taskName, long seconds) {
+    private Connection connection;
+
+    private Offline offline;
+
+    private User user;
+
+    public UpdateThread(Connection connection, String taskName, long seconds) {
         this.taskName = taskName;
 
         this.isFinish = true;
@@ -33,7 +41,10 @@ public class UpdateThread{
         this.task = new LoopTask();
         this.timer = new Timer(this.taskName);
 
-        this.database = db;
+        this.connection = connection;
+        this.database = connection.getDataBase();
+        this.offline = connection.getOffline();
+        this.user = connection.getUser();
 
     }
 
@@ -47,7 +58,8 @@ public class UpdateThread{
 
         @Override
         public void run() {
-            System.out.println("This is printed each " + delay / 1000 + " seconds.");
+            offline.setTasks(database.getTasks(user));
+            offline.saveToFile();
         }
 
     }
