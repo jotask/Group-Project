@@ -23,8 +23,8 @@ public class Application extends JFrame{
         instance = this;
         this.connection = connection;
         initialize();
-        // FIXME
-//        this.refreshTaskView(connection.getTasks());
+
+        this.refreshTaskView(connection.getTasks());
     }
 
     /**
@@ -45,15 +45,6 @@ public class Application extends JFrame{
 
         JLabel lblUsername = new JLabel(connection.getUser().getSurname());
         panel.add(lblUsername);
-
-//        JButton btnNewButton = new JButton("Add Task");
-//        btnNewButton.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                TaskDialog taskDialog = new TaskDialog(instance, connection);
-//                taskDialog.setVisible(true);
-//            }
-//        });
-//        panel.add(btnNewButton);
 
         {
             JButton btnUpdate = new JButton("Update Task");

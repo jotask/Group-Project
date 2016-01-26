@@ -94,13 +94,4 @@ public class Offline {
         this.tasks = dataBase.getTaskDAO().getAllTasks(user);
     }
 
-    public static void main(String[] args) {
-
-        User user = new User(1, "test", "test", "test");
-        Offline offline = new Offline(user);
-        offline.saveToFile();
-
-        offline.loadFromFile();
-    }
-
 }

@@ -1,7 +1,6 @@
 package com.github.jotask.groupproject.database.dao;
 
 import com.github.jotask.groupproject.database.DataBase;
-import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 import com.github.jotask.groupproject.util.MD5;
 
@@ -43,14 +42,12 @@ public class MemberDAO extends DAO {
 	 */
 	public User login(String username, char[] password) {
 
-        printAllMember();
-		
 		Statement stm = null;
 		ResultSet rs;
 
 		try{
 			stm = conn.createStatement();
-			String sql = "SELECT * FROM MEMBER WHERE SURNAME=\"" + username + "\"";
+			String sql = "SELECT * FROM MEMBER WHERE FORENAME=\"" + username + "\"";
 			rs = stm.executeQuery(sql);
 
 			// TODO implement password login
@@ -62,9 +59,8 @@ public class MemberDAO extends DAO {
 //				if(Arrays.equals(passwd, password)){
 //					return true;
 //				}
-				if(rs.getString("surname").equals(username)){
-                    System.out.println("user find");
-                    User user = converToUser(rs);
+				if(rs.getString("forename").equals(username)){
+                    User user = convertToUser(rs);
                     close(stm);
 					return user;
 				}
@@ -80,11 +76,10 @@ public class MemberDAO extends DAO {
 				e.printStackTrace();
 			}
 		}
-        System.out.println("not finded");
         return null;
 	}
 
-	private User converToUser(ResultSet rs) throws SQLException {
+	private User convertToUser(ResultSet rs) throws SQLException {
 		int id = rs.getInt("MEMBER_ID");
 		String surname = rs.getString("SURNAME");
 		String forename = rs.getString("FORENAME");
@@ -119,6 +114,7 @@ public class MemberDAO extends DAO {
 	}
 
     public void printAllMember(){
+        // FIXME delete this method
         // TODO get all tasks from database
         ArrayList<User> users = new ArrayList<>();
 
@@ -132,7 +128,7 @@ public class MemberDAO extends DAO {
             rs = stm.executeQuery(sql);
 
             while(rs.next()){
-                User task = converToUser(rs);
+                User task = convertToUser(rs);
                 users.add(task);
             }
 
@@ -154,6 +150,7 @@ public class MemberDAO extends DAO {
     }
 
     private void printUser(User u){
+        // FIXME delete this method
         int id = u.getId();
         String first = u.getFirstName();
         String last = u.getSurname();

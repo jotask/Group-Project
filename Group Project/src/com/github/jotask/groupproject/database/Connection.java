@@ -5,6 +5,7 @@ import com.github.jotask.groupproject.model.User;
 import com.github.jotask.groupproject.util.Offline;
 import com.github.jotask.groupproject.util.UpdateThread;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -45,6 +46,7 @@ public class Connection {
             return false;
         }
 
+        // TODO update the file
 //        this.thread = new UpdateThread(dataBase, "Database Update", 300);
 //        this.thread.start();
 
@@ -81,16 +83,41 @@ public class Connection {
         return this.user;
     }
 
-    public Task getTask(int t) {
-        // TODO
-        return null;
+    public Task getTask(int taskID) {
+        Task task = null;
+        if(this.isOnline){
+            task = dataBase.getTaskDAO().getTask(taskID);
+        }else{
+            // TODO offline get task by id
+        }
+        return task;
     }
 
     public ArrayList<Task> getTasks() {
         // TODO
-        return null;
+        ArrayList<Task> tasks = null;
+        if(this.isOnline){
+            tasks = dataBase.getTasks(user);
+        }else{
+            // TODO offline get all task offline
+        }
+        return tasks;
     }
 
 
+    public boolean updateTask(Task task) {
+        if(this.isOnline){
+            try {
+                dataBase.getTaskDAO().updateTask(task);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
 
+        }else{
+            // TODO offline update a task
+        }
+        return false;
+    }
 }
