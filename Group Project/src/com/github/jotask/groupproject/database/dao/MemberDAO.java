@@ -47,7 +47,7 @@ public class MemberDAO extends DAO {
 
 		try{
 			stm = conn.createStatement();
-			String sql = "SELECT * FROM MEMBER WHERE SURNAME=\"" + username + "\"";
+			String sql = "SELECT * FROM MEMBER WHERE FORENAME=\"" + username + "\"";
 			rs = stm.executeQuery(sql);
 
 			// TODO implement password login
@@ -59,7 +59,7 @@ public class MemberDAO extends DAO {
 //				if(Arrays.equals(passwd, password)){
 //					return true;
 //				}
-				if(rs.getString("surname").equals(username)){
+				if(rs.getString("forename").equals(username)){
                     User user = convertToUser(rs);
                     close(stm);
 					return user;
