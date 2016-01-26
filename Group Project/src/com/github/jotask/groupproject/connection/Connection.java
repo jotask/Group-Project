@@ -57,7 +57,7 @@ public class Connection {
         this.offline.saveToFile();
 
         // TODO update the file
-        this.thread = new UpdateThread(this, "Database Update", 300);
+        this.thread = new UpdateThread(this, "Database Update", 10);
         this.thread.start();
 
         this.isOnline = true;

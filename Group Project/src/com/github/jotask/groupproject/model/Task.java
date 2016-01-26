@@ -103,7 +103,23 @@ public class Task {
         output += endDate;
         output += seperator;
         output += status;
+        output += seperator;
+        output += elementListToString();
+        output += seperator;
         return output;
+    }
+
+    private String elementListToString() {
+        if (elements == null) {
+            return "";
+        }
+        System.out.println(elements.size());
+        String returnString = "";
+        for (Element e: elements) {
+
+            returnString += e.toString();
+        }
+        return returnString;
     }
 
     public static Task stringToTask(String str) {
