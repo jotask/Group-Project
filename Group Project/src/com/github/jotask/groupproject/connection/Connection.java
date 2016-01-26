@@ -49,8 +49,8 @@ public class Connection {
         this.offline.saveToFile();
 
         // TODO update the file
-//        this.thread = new UpdateThread(dataBase, "Database Update", 300);
-//        this.thread.start();
+        this.thread = new UpdateThread(dataBase, "Database Update", 300);
+        this.thread.start();
 
         this.isOnline = true;
         return isOnline;
@@ -111,7 +111,7 @@ public class Connection {
     }
 
 
-    public boolean updateTask(Task task) {
+    public boolean updateTask(Task task, Element element) {
         if(this.isOnline){
             try {
                 dataBase.getTaskDAO().updateTask(task);
@@ -119,6 +119,7 @@ public class Connection {
                 e.printStackTrace();
                 return false;
             }
+            dataBase.getElementDAO().addElement(element);
             return true;
 
         }else{

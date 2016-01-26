@@ -1,6 +1,7 @@
 package com.github.jotask.groupproject.gui;
 
 import com.github.jotask.groupproject.connection.Connection;
+import com.github.jotask.groupproject.model.Element;
 import com.github.jotask.groupproject.model.Task;
 import net.miginfocom.swing.MigLayout;
 
@@ -25,6 +26,7 @@ public class TaskDialog extends JDialog {
     private JTextField startDate;
     private JTextField endDate;
     private JTextField taskStatus;
+    private JTextField elementField;
 
     /**
      * Create the dialog.
@@ -122,6 +124,11 @@ public class TaskDialog extends JDialog {
             taskStatus.setText(task.getStatus());
         }
         {
+            elementField = new JTextField();
+            contentPanel.add(elementField, "cell 1 7,growx");
+            elementField.setColumns(10);
+        }
+        {
             JPanel buttonPane = new JPanel();
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -154,6 +161,11 @@ public class TaskDialog extends JDialog {
 
     private void updateTask(){
 
+        if(elementField.getText().isEmpty()){
+            // TODO add a pop error. An elementField can't be empty i think
+            return;
+        }
+
         String taskID = taskId.getText();
         int id = Integer.parseInt(taskID);
         String name = taskName.getText();
@@ -170,8 +182,10 @@ public class TaskDialog extends JDialog {
 
         Task task = new Task(id, name, team_id, member_id, startDateTime, endDateTime, status);
 
+        Element element = new Element(-1, task.getId(), elementField.getText());
+
         // TODO handle if the task is not updated
-        conn.updateTask(task);
+        conn.updateTask(task, element);
 
         app.refreshTaskView(conn.getTasks());
         cancelCliked();

@@ -34,13 +34,15 @@ public class ElementDAO extends DAO{
 
         try {
 
-            String sql = "SELECT * FROM TASK_ELEMENT WHERE TASK_ID=\"" + task.getId() + "\"";
+            String sql = "SELECT * FROM TASK_ELEMENT WHERE TASK_ID = " + task.getId() + ";";
+            stm = conn.createStatement();
             rs = stm.executeQuery(sql);
 
             while(rs.next()){
                 Element element = createElement(rs);
                 elements.add(element);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
@@ -59,11 +61,41 @@ public class ElementDAO extends DAO{
         int id = rs.getInt("ELEMENT_ID");
         int taskID = rs.getInt("TASK_ID");
         String name = rs.getString("ELEMENT_NAME");
-        String description = rs.getString("TASK_DESCRIPTION");
         String comment = rs.getString("TASK_COMMENT");
 
-        Element element = new Element(id, taskID, name, description, comment);
+        Element element = new Element(id, taskID, comment);
         return element;
 
+    }
+
+    public boolean addElement(Element element){
+
+        boolean success;
+
+        int taskId = element.getTaskID();
+        String comment = element.getDescription().toString();
+        String name = "name";
+        String desc = "nothing";
+
+        String sql = "INSERT INTO `TASK_ELEMENT` (`TASK_ID`, `TASK_COMMENT`, `ELEMENT_NAME`, `TASK_DESCRIPTION`) VALUES ('" + taskId + "', '" + comment + "', '" + name + "', '" + desc + "');";
+
+        Statement stm = null;
+
+        try {
+            stm = conn.createStatement();
+            stm.executeUpdate(sql);
+            success = true;
+        } catch (SQLException e) {
+            // TODO not created handle
+            e.printStackTrace();
+            success = false;
+        }finally {
+            try {
+                close(stm);
+            } catch (SQLException e) {
+                // TODO Nothing we can do
+            }
+        }
+        return success;
     }
 }
