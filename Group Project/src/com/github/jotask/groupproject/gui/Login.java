@@ -1,41 +1,34 @@
 package com.github.jotask.groupproject.gui;
 
-import com.github.jotask.groupproject.database.DataBase;
-import com.github.jotask.groupproject.model.User;
+import com.github.jotask.groupproject.connection.Connection;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Properties;
 
 import static com.github.jotask.groupproject.Application.PROPERTIES_FILE;
 
 /**
- * Login dialog for the login to the database
+ * Login dialog for the login to the connection
  * @author Jose Vives
  * @version 0.1
  */
 public class Login extends JDialog {
 
 	private static final long serialVersionUID = -6203552975399889940L;
-	private final JPanel contentPanel = new JPanel();
 	private JPasswordField passwordField;
 	private JTextField usernameField;
 	private JCheckBox remember;
-	
-	private DataBase db;
+
 	private Properties properties;
 
 	/**
-	 * Create the dialog for the login to the database.
+	 * Create the dialog for the login to the connection.
 	 */
-	public Login(DataBase db, Properties properties) {
-		this.db = db;
+	public Login(Properties properties) {
 		this.properties = properties;
 
 		getContentPane().setBackground(Color.WHITE);
@@ -85,6 +78,12 @@ public class Login extends JDialog {
 			offlineBtn.setBorder(null);
 			offlineBtn.setBackground(new Color(192,192,192));
 			getContentPane().add(offlineBtn);
+			offlineBtn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					offline();
+				}
+			});
 		}
 		{
 			JButton loginBtn = new JButton("Login");
@@ -138,8 +137,7 @@ public class Login extends JDialog {
 			if(!username.isEmpty()){
 				this.remember.setSelected(true);
 				this.usernameField.setText(username);
-				// FIXME the password is not stored because later we can't or i don't know
-				// how load and decrypt a MD5 encryption
+				// FIXME
 			}
 
 		}
@@ -147,16 +145,21 @@ public class Login extends JDialog {
 	}
 
 	private void register(){
-		RegisterDialog registerDialog = new RegisterDialog(db);
+		new RegisterDialog(properties);
 	}
 	
 	private void login(){
+
 		String username = usernameField.getText();
 		char[] password = passwordField.getPassword();
 
-		User user = db.getMemberDao().login(username, password);
+		if(!username.isEmpty()){
 
-		if(user != null){
+			Connection connection = new Connection(properties);
+            if(!connection.online(username, password)){
+                JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
 			//Save options
 			// If remember checkbox is selected and also on the config file the username
@@ -165,10 +168,6 @@ public class Login extends JDialog {
 			if(this.remember.isSelected() &&
 					!this.properties.getProperty("username").equals(username)){
 				this.properties.setProperty("username", username);
-
-//				// Encrypt password and store the encrypted password
-//				String pEncrypted = MD5.encrypt(new String(password));
-//				this.properties.setProperty("password", pEncrypted);
 
 				// Save this values to the config file
 				try {
@@ -182,13 +181,43 @@ public class Login extends JDialog {
 
 			}
 
-			this.setVisible(false);
-			dispose();
+			closeDialog();
+
 //			JOptionPane.showMessageDialog(this, "Login", "Success", JOptionPane.INFORMATION_MESSAGE);
-			Application app = new Application(db, user);
+
+			Application app = new Application(connection);
+
 		}else{
 			JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);
 		}		
+	}
+
+	private void closeDialog(){
+		this.setVisible(false);
+		dispose();
+	}
+
+	private void offline(){
+
+		String username = this.usernameField.getText();
+		char[] password = this.passwordField.getPassword();
+
+		if(username.isEmpty()){
+			// Validate the field if is not empty
+			return;
+		}
+
+		File userData = new File (username + ".user");
+
+		if (!userData.exists()) {
+			System.out.println("User data does not exist");
+			return;
+		}
+
+		Connection connection = new Connection(properties);
+        connection.offline(username, password);
+		closeDialog();
+		Application app = new Application(connection);
 	}
 
 }

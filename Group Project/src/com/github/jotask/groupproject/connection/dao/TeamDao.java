@@ -1,6 +1,6 @@
-package com.github.jotask.groupproject.database.dao;
+package com.github.jotask.groupproject.connection.dao;
 
-import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.connection.DataBase;
 import com.github.jotask.groupproject.model.Team;
 
 import java.sql.Connection;
@@ -25,7 +25,7 @@ public class TeamDao extends  DAO{
     }
 
     public ArrayList<Team> getAllTeam(){
-        // TODO get all tasks from database
+        // TODO get all tasks from connection
         ArrayList<Team> teams = new ArrayList<>();
 
         Statement stm = null;

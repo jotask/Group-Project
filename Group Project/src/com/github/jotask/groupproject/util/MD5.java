@@ -7,7 +7,9 @@ import java.security.NoSuchAlgorithmException;
  * Static class for encrypt a string for security proposes
  * Code bellows to the follow webpage
  * http://www.java2s.com/Code/Java/Security/UseMD5toencryptastring.htm
- * @author Jose Vives and the java2s website
+ *
+ * @author Jose Vives
+ * @author java2s website
  * @version 1.0
  *
  */
@@ -34,7 +36,7 @@ public class MD5 {
 	public static String encrypt(String str){
 
 		if (str == null || str.length() == 0) {
-            throw new IllegalArgumentException("String to encript cannot be null or zero length");
+            throw new IllegalArgumentException("String to encrypt cannot be null or zero length");
         }
 
         digester.update(str.getBytes());

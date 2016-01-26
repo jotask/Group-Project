@@ -1,5 +1,10 @@
 package com.github.jotask.groupproject.util;
 
+import com.github.jotask.groupproject.database.Connection;
+import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.database.Offline;
+import com.github.jotask.groupproject.model.User;
+
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,11 +22,30 @@ public class UpdateThread{
     private LoopTask task;
     private Timer timer;
 
-    public UpdateThread(String taskName, long seconds) {
+    private boolean isFinish;
+
+    private DataBase database;
+
+    private Connection connection;
+
+    private Offline offline;
+
+    private User user;
+
+    public UpdateThread(Connection connection, String taskName, long seconds) {
         this.taskName = taskName;
+
+        this.isFinish = true;
+
         this.delay = seconds * 1000;
         this.task = new LoopTask();
         this.timer = new Timer(this.taskName);
+
+        this.connection = connection;
+        this.database = connection.getDataBase();
+        this.offline = connection.getOffline();
+        this.user = connection.getUser();
+
     }
 
     public void start(){
@@ -34,9 +58,25 @@ public class UpdateThread{
 
         @Override
         public void run() {
-            System.out.println("This is printed each " + delay / 1000 + " seconds.");
+            offline.setTasks(database.getTasks(user));
+            offline.saveToFile();
         }
 
     }
 
+    public boolean isFinish(){
+        return this.isFinish;
+    }
+
+    public User getUser(){
+        return null;
+    }
+
+    public DataBase getDB() {
+        return database;
+    }
+
+    public void close(){
+        timer.cancel();
+    }
 }

@@ -1,11 +1,13 @@
-package com.github.jotask.groupproject.database.dao;
+package com.github.jotask.groupproject.connection.dao;
 
-import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.connection.DataBase;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
+import com.github.jotask.groupproject.util.Util;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.Date;
 
 /**
  * Created by Jose Vives on 01/12/2015.
@@ -24,7 +26,7 @@ public class TaskDao extends DAO{
     }
 
     public ArrayList<Task> getAllTasks(User user){
-        // TODO get all tasks from database
+        // TODO get all tasks from connection
         ArrayList<Task> tasks = new ArrayList<>();
 
         Statement stm = null;
@@ -32,7 +34,7 @@ public class TaskDao extends DAO{
 
         try {
 
-            String sql = "SELECT * FROM task WHERE member_id=\"" + user.getId() + "\"";
+            String sql = "SELECT * FROM TASK WHERE MEMBER_ID=\"" + user.getId() + "\"";
             stm = conn.createStatement();
             rs = stm.executeQuery(sql);
 
@@ -65,7 +67,7 @@ public class TaskDao extends DAO{
 
         try {
 
-            String sql = "SELECT * FROM task WHERE task_id=\"" + id + "\"";
+            String sql = "SELECT * FROM TASK WHERE TASK_ID=\"" + id + "\"";
             stm = conn.createStatement();
             rs = stm.executeQuery(sql);
 
@@ -92,28 +94,11 @@ public class TaskDao extends DAO{
         String name = rs.getString("task_name");
         int team_id = rs.getInt("team_id");
         int member_id = rs.getInt("member_id");
-        Timestamp startDate = rs.getTimestamp("start_date");
-        Timestamp endDate = rs.getTimestamp("end_date");
+        Date startDate = rs.getDate("start_date");
+        Date endDate = rs.getDate("EXPECTED_COMPLETION_DATE");
         String status = rs.getString("task_status");
 
         return new Task(id, name, team_id, member_id, startDate, endDate, status);
-    }
-
-    public void insertTask(Task task) throws SQLException {
-        PreparedStatement stm = null;
-        try{
-            stm = conn.prepareStatement("insert into task (task_name, team_id, member_id, start_date, end_date, task_status) values ( ?, ?, ?, ?, ?, ?)");
-            stm.setString(1, task.getName());
-            stm.setInt(2, task.getTeam_id());
-            stm.setInt(3, task.getMember_id());
-            stm.setTimestamp(4, task.getStartDate());
-            stm.setTimestamp(5, task.getEndDate());
-            stm.setString(6, task.getStatus());
-            stm.executeUpdate();
-        }finally{
-            close(stm, null);
-        }
-
     }
 
     public void updateTask(Task task) throws SQLException {
@@ -121,20 +106,20 @@ public class TaskDao extends DAO{
         PreparedStatement stm = null;
 
         try{
-            String sql = "UPDATE `task` SET " +
-                    "`task_name` = ?," +
-                    "`team_id` = ?," +
-                    "`member_id` = ?," +
-                    "`start_date` = ?, " +
-                    "`end_date` = ?, " +
-                    "`task_status` = ? " +
-                    "WHERE `task_id` = ?;";
+            String sql = "UPDATE `TASK` SET " +
+                    "`TASK_NAME` = ?," +
+                    "`TEAM_ID` = ?," +
+                    "`MEMBER_ID` = ?," +
+                    "`START_DATE` = ?, " +
+                    "`EXPECTED_COMPLETION_DATE` = ?, " +
+                    "`TASK_STATUS` = ? " +
+                    "WHERE `TASK_ID` = ?;";
             stm = conn.prepareStatement(sql);
             stm.setString(1, task.getName());
             stm.setInt(2, task.getTeam_id());
             stm.setInt(3, task.getMember_id());
-            stm.setTimestamp(4, task.getStartDate());
-            stm.setTimestamp(5, task.getEndDate());
+            stm.setDate(4, Util.toSQLDate(task.getStartDate()));
+            stm.setDate(5, Util.toSQLDate(task.getEndDate()));
             stm.setString(6, task.getStatus());
             stm.setInt(7, task.getId());
             stm.executeUpdate();
