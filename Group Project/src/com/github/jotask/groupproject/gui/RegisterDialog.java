@@ -1,6 +1,6 @@
 package com.github.jotask.groupproject.gui;
 
-import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.connection.DataBase;
 
 import javax.swing.*;
 import java.awt.*;

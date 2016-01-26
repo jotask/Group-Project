@@ -1,9 +1,9 @@
-package com.github.jotask.groupproject.database;
+package com.github.jotask.groupproject.connection;
 
-import com.github.jotask.groupproject.database.dao.ElementDAO;
-import com.github.jotask.groupproject.database.dao.MemberDAO;
-import com.github.jotask.groupproject.database.dao.TaskDao;
-import com.github.jotask.groupproject.database.dao.TeamDao;
+import com.github.jotask.groupproject.connection.dao.ElementDAO;
+import com.github.jotask.groupproject.connection.dao.MemberDAO;
+import com.github.jotask.groupproject.connection.dao.TaskDao;
+import com.github.jotask.groupproject.connection.dao.TeamDao;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 
@@ -15,7 +15,7 @@ import java.util.Properties;
 
 /**
  * Main class for hold all we need for retrieve information and update
- * information for the database
+ * information for the connection
  *
  * @author Jose Vives
  * @version 0.1
@@ -33,7 +33,7 @@ public class DataBase {
 	 */
 	private Properties props;
 	/**
-	 * The connection between our code and the database
+	 * The connection between our code and the connection
 	 */
 	private Connection conn;
 	

@@ -1,14 +1,14 @@
-package com.github.jotask.groupproject.database.dao;
+package com.github.jotask.groupproject.connection.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.connection.DataBase;
 
 /**
- * Class for store the database instance and the reference to the actual connection
+ * Class for store the connection instance and the reference to the actual connection
  * Also have methods for close connections
  * @author Jose Vives
  * @version 1.0

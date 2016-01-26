@@ -1,9 +1,7 @@
 package com.github.jotask.groupproject.gui;
 
-import com.github.jotask.groupproject.database.Connection;
-import com.github.jotask.groupproject.database.DataBase;
+import com.github.jotask.groupproject.connection.Connection;
 import com.github.jotask.groupproject.model.Task;
-import com.github.jotask.groupproject.util.Util;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -11,7 +9,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 

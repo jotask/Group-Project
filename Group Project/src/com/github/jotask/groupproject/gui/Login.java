@@ -1,6 +1,6 @@
 package com.github.jotask.groupproject.gui;
 
-import com.github.jotask.groupproject.database.Connection;
+import com.github.jotask.groupproject.connection.Connection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.util.Properties;
 import static com.github.jotask.groupproject.Application.PROPERTIES_FILE;
 
 /**
- * Login dialog for the login to the database
+ * Login dialog for the login to the connection
  * @author Jose Vives
  * @version 0.1
  */
@@ -26,7 +26,7 @@ public class Login extends JDialog {
 	private Properties properties;
 
 	/**
-	 * Create the dialog for the login to the database.
+	 * Create the dialog for the login to the connection.
 	 */
 	public Login(Properties properties) {
 		this.properties = properties;
