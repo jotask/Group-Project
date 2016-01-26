@@ -121,6 +121,16 @@ public class User {
 	}
 
 	/**
+	 * Set the id for this user
+	 *
+	 * @param id
+	 * 			Allocated id for the user
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
 	 * Get the password for this user
 	 *
 	 * @return

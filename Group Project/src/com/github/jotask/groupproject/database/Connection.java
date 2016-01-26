@@ -56,9 +56,12 @@ public class Connection {
     public boolean offline(String username, char[] password){
 
         System.out.println("offline");
-        // TODO
 
         this.user = new User(1, username, "f", "m", "p");
+
+        Offline offlineHandler = new Offline(user);
+
+
 
         this.isOnline = false;
         return isOnline;

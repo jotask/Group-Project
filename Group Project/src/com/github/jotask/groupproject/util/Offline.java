@@ -24,15 +24,20 @@ public class Offline {
     }
 
     public void loadFromFile(){
-        File userData = new File(user.getId()+".user");
+        File userData = new File(user.getFirstName()+".user");
 
         try (BufferedReader br = new BufferedReader(new FileReader(userData)))
         {
 
             String sCurrentLine;
+            user.setId(Integer.parseInt(br.readLine()));
+            user.setMail(br.readLine());
+            user.setSurname(br.readLine());
 
             while ((sCurrentLine = br.readLine()) != null) {
-                Task.stringToTask(sCurrentLine);
+                Task toAdd = Task.stringToTask(sCurrentLine);
+                if (toAdd != null)
+                    tasks.add(toAdd);
             }
 
         } catch (IOException e) {
@@ -54,7 +59,7 @@ public class Offline {
     }
 
     public void saveToFile(){
-        File userData = new File(user.getId()+".user");
+        File userData = new File(user.getFirstName()+".user");
         if (!userData.exists()) {
             try {
                 userData.createNewFile();
@@ -67,6 +72,9 @@ public class Offline {
 
         try {
             FileWriter fw = new FileWriter(userData);
+            fw.write(user.getId() + "\n");
+            fw.write(user.getMail() + "\n");
+            fw.write(user.getSurname() + "\n");
             if (tasks.size() > 0) {
                 for (Task task : tasks){
                     fw.write(task.toString() + "\n");

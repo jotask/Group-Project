@@ -6,10 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Properties;
 
 import static com.github.jotask.groupproject.Application.PROPERTIES_FILE;
@@ -207,6 +204,13 @@ public class Login extends JDialog {
 
 		if(username.isEmpty()){
 			// Validate the field if is not empty
+			return;
+		}
+
+		File userData = new File (username + ".user");
+
+		if (!userData.exists()) {
+			System.out.println("User data does not exist");
 			return;
 		}
 
