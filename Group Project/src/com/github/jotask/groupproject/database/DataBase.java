@@ -89,8 +89,6 @@ public class DataBase {
 			}
 		}
 
-        System.out.println("connected");
-
         // Initialise all our DAO objects
 		{
 			this.memberDao = new MemberDAO(this, conn);

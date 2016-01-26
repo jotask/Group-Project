@@ -19,7 +19,6 @@ public class TaskDialog extends JDialog {
 
     private Application app;
     private Connection conn;
-    private DataBase db;
 
     private final JPanel contentPanel = new JPanel();
     private JTextField taskId;
@@ -174,12 +173,9 @@ public class TaskDialog extends JDialog {
 
         Task task = new Task(id, name, team_id, member_id, startDateTime, endDateTime, status);
 
-        // FIXME change to offline logic at the moment is just working everyvere with the old logic
-        try {
-            db.getTaskDAO().updateTask(task);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        // TODO handle if the task is not updated
+        conn.updateTask(task);
+
         app.refreshTaskView(conn.getTasks());
         cancelCliked();
     }

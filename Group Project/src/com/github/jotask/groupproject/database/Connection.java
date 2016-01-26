@@ -89,5 +89,8 @@ public class Connection {
     }
 
 
-
+    public boolean updateTask(Task task) {
+        // TODO update task
+        return false;
+    }
 }
