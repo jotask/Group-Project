@@ -17,6 +17,8 @@ import java.util.Properties;
  */
 public class Connection {
 
+    private static final long SECONDS = 3;
+
     private Properties properties;
     private boolean isOnline;
 
@@ -63,7 +65,7 @@ public class Connection {
         this.offline.saveToFile();
 
         // TODO update the file
-        this.thread = new UpdateThread(this, "Database Update", 3);
+        this.thread = new UpdateThread(this, "Database Update", SECONDS);
         this.thread.start();
 
         return isOnline;
@@ -169,10 +171,6 @@ public class Connection {
         if(this.dataBase != null){
             dataBase.close();
         }
-        if(thread != null){
-            thread.close();
-        }
-        System.out.println("closing");
     }
 
 }

@@ -4,6 +4,7 @@ package com.github.jotask.groupproject.model;
  * Team model for the teams
  *
  * @author Jose Vives.
+ *
  * @version 1.0
  */
 public class Team {

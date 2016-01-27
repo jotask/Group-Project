@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
 
+/**
+ * Dialog for register a new user
+ */
 public class RegisterDialog extends JDialog {
 
     private DataBase db;
@@ -16,7 +19,10 @@ public class RegisterDialog extends JDialog {
     private JTextField textField_2;
 
     /**
-     * Create the dialog.
+     * Constructor for this register a dialog
+     *
+     * @param properties
+     *      The properties for know all information for create a connection
      */
     public RegisterDialog(Properties properties) {
 

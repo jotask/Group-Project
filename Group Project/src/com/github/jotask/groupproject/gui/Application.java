@@ -127,6 +127,7 @@ public class Application extends JFrame{
     public void dispose() {
         super.dispose();
         connection.close();
+        System.exit(0);
     }
 
 }

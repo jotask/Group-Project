@@ -4,6 +4,7 @@ package com.github.jotask.groupproject.model;
  * User model class for create users
  *
  * @author Jose Vives
+ *
  * @version 1.0
  */
 public class User {

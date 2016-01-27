@@ -12,7 +12,7 @@ import java.util.Properties;
  * all program
  *
  * @author Jose Vives
- * @since 1.0 - Initial version of the file
+ *
  * @version 1.4 - Now just have the basics they need
  *
  */
@@ -55,6 +55,7 @@ public class Application {
 	 * This method is the first methods called when the program start
 	 *
 	 * @param args
+     *      The java arguments for the main method
 	 */
 	public static void main(String[] args) {
 

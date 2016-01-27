@@ -15,25 +15,61 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+/**
+ * Dialog for update a task. They show us all information for one task
+ *
+ * @author Jose Vives
+ *
+ * @version 1.4 - Refactored
+ *
+ */
 public class TaskDialog extends JDialog {
 
+    /** The application that has create this dialog */
     private Application app;
+
+    /** The connection for retrieve and update all information */
     private Connection conn;
 
+    /** The JPanel for this dialog */
     private final JPanel contentPanel = new JPanel();
+
+    /** The JTexField that holds the task id */
     private JTextField taskId;
+
+    /** The JTexField that holds the task name */
     private JTextField taskName;
+
+    /** The JTexField that holds the team id */
     private JTextField teamId;
+
+    /** The JTexField that holds the member id */
     private JTextField memberId;
+
+    /** The JTexField that holds the start date */
     private JTextField startDate;
+
+    /** The JTexField that holds the end date */
     private JTextField endDate;
-    private JTextField taskStatus;
+
+    /** The JComboBox that holds the task status */
+    private JComboBox statusList;
+
+    /** The JTexField that holds the element field */
     private JTextField elementField;
 
     /**
-     * Create the dialog.
+     * Constructor for a dialog
+     *
+     * @param app
+     *      The instance of the application that has initialized this dialog
+     *
+     * @param conn
+     *      The connection for retrieve all information
+     *
+     * @param task
+     *      The task tat we want populate this dialog
      */
-
     public TaskDialog(Application app, Connection conn, final Task task) {
         this.app = app;
         this.conn = conn;
@@ -46,7 +82,7 @@ public class TaskDialog extends JDialog {
         ImageIcon img = new ImageIcon("resources/icon.png");
         setIconImage(img.getImage());
         setModal(true);
-        setBounds(100, 100, 450, 659);
+        setBounds(100, 100, 450, 459);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -128,10 +164,10 @@ public class TaskDialog extends JDialog {
             contentPanel.add(lblStatus, "cell 0 " + counter + ",alignx trailing");
         }
         {
-            taskStatus = new JTextField();
-            contentPanel.add(taskStatus, "cell 1 " + counter + ",growx");
-            taskStatus.setColumns(10);
-            taskStatus.setText(task.getStatus());
+            String[] statusString = { "completed", "abandoned", "allocated" };
+            statusList = new JComboBox(statusString);
+            contentPanel.add(statusList, "cell 1 " + counter + ",growx");
+            // FIXME set the default value to the actual value for tat task
         }
         counter++;
         {
@@ -190,13 +226,21 @@ public class TaskDialog extends JDialog {
         }
     }
 
+    /**
+     * Update a task.
+     * First it check if the element field is empty.
+     * Late get all the information for update the task on the database
+     */
     private void updateTask(){
 
+        // Check if the elementField if empty
         if(elementField.getText().isEmpty()){
             // TODO add a pop error. An elementField can't be empty i think
+            JOptionPane.showMessageDialog(this, "If you update one task, you need to enter the element description", "Field Empty", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // Retrieve all information from one task
         String taskID = taskId.getText();
         int id = Integer.parseInt(taskID);
         String name = taskName.getText();
@@ -205,23 +249,31 @@ public class TaskDialog extends JDialog {
         String memberID = memberId.getText();
         int member_id = Integer.parseInt(memberID);
 
-        // FIXME
+        // FIXME Get actual values for this fields
         Date startDateTime = new Date();
         Date endDateTime = new Date();
 
-        String status = taskStatus.getText();
+        String status = (String) statusList.getSelectedItem();
 
+        // Create a new task for update all iformation
         Task task = new Task(id, name, team_id, member_id, startDateTime, endDateTime, status);
 
+        // Create an element for this update
         Element element = new Element(-1, task.getId(), elementField.getText());
 
-        // TODO handle if the task is not updated
+        // Update the task
         conn.updateTask(task, element);
 
+        // Refres the task view
         app.refreshTaskView(conn.getAllTasks());
+
+        // Cancel and close the dialog
         cancelCliked();
     }
 
+    /**
+     * If the cancel button has clicked close the dialog
+     */
     private void cancelCliked(){
         dispose();
         setVisible(false);

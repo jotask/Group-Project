@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
  * http://www.java2s.com/Code/Java/Security/UseMD5toencryptastring.htm
  *
  * @author Jose Vives
- * @author java2s website
+ *
  * @version 1.0
  *
  */
@@ -28,7 +28,8 @@ public class MD5 {
 	
 	/**
 	 * Encrypt a string with a MD5 algorithm
-	 * @param text
+     *
+	 * @param str
 	 * 			The text for encrypt
 	 * @return
 	 * 			The encrypt string
