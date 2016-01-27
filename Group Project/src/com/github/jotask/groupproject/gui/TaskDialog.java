@@ -46,7 +46,7 @@ public class TaskDialog extends JDialog {
         ImageIcon img = new ImageIcon("resources/icon.png");
         setIconImage(img.getImage());
         setModal(true);
-        setBounds(100, 100, 450, 659);
+        setBounds(100, 100, 450, 459);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);

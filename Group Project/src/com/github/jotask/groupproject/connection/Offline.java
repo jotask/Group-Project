@@ -96,4 +96,5 @@ public class Offline {
     public User getUser() {
         return user;
     }
+
 }
