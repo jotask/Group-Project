@@ -10,22 +10,40 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Main class for the application program
+ *
+ * @author Jose Vives
+ * @author Jack Thomson
+ *
+ * @version 1.3 - new GUI
+ *
+ */
 public class Application extends JFrame{
 
+    /** Table that hold all tasks */
     private JTable table;
 
+    /** Instance for this istance */
     private Application instance;
+
+    /** Connection instance for retrieve all properties */
     private Connection connection;
 
     /**
-     * Create the application.
+     * Constructor for this class
+     * Initialize everything
+     *
+     * @param connection
+     *      The connection instance
      */
     public Application(Connection connection) {
     	setBackground(new Color(240, 240, 240));
-        instance = this;
         this.connection = connection;
+        instance = this;
         initialize();
 
+        // refresh the table with all task
         this.refreshTaskView(connection.getAllTasks());
     }
 
@@ -37,7 +55,6 @@ public class Application extends JFrame{
         this.setBounds(100, 100, 800, 300);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-
         ImageIcon img = new ImageIcon("resources/icon.png");
         this.setIconImage(img.getImage());
         JScrollPane scrollPane = new JScrollPane();
@@ -46,9 +63,7 @@ public class Application extends JFrame{
         table = new JTable();
         scrollPane.setViewportView(table);
 
-
         {
-
             JPanel panel = new JPanel();
             panel.setBackground(Color.WHITE);
             table.setBackground(Color.white);
@@ -100,12 +115,22 @@ public class Application extends JFrame{
         this.setVisible(true);
     }
 
+    /** Refresh the table with new tasks
+     *
+     * @param tasks
+     *      The tasks for populate the table
+     */
     public void refreshTaskView(ArrayList<Task> tasks) {
         TaskTableModel model = new TaskTableModel(tasks);
         table.setModel(model);
     }
 
+    /**
+     * This is called when the update button is clicked
+     * Show a dialog for update a selected task
+     */
     private void updateTask(){
+
         // get row selected
         int row = table.getSelectedRow();
         // check if a row is selected
@@ -114,15 +139,17 @@ public class Application extends JFrame{
         }
         // Get the Employee selected
         int t = Integer.parseInt(table.getValueAt(row, TaskTableModel.ID_COL).toString());
-//        Task tmp = db.getTaskDAO().getTask(t);
+
         Task tmp = connection.getTask(t);
-        System.out.println(tmp.getElements().size());
-//        Task tmp = (Task) table.getValueAt(row, TaskTableModel.OBJECT_COL);
+
         // Create the dialog and make it visible
         TaskDialog dialog = new TaskDialog(instance, connection, tmp);
         dialog.setVisible(true);
     }
 
+    /**
+     * Dispose the application and close all the connection
+     */
     @Override
     public void dispose() {
         super.dispose();

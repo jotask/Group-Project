@@ -17,7 +17,8 @@ import java.util.Properties;
  * information for the connection
  *
  * @author Jose Vives
- * @version 0.1
+ *
+ * @version 1.0
  *
  */
 public class DataBase {
@@ -47,6 +48,9 @@ public class DataBase {
 	/**
 	 * Constructor the main class, we instantiate and load our configuration from a file.
 	 * And we create the connection between our code and the DataBase server
+     *
+     * @param properties
+     *      The properties for load all the information needed
 	 */
 	public DataBase(Properties properties) {
 
