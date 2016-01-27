@@ -1,8 +1,6 @@
-import com.github.jotask.groupproject.model.Element;
-import com.github.jotask.groupproject.model.Task;
+package com.github.jotask.groupproject.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -18,72 +16,12 @@ public class TaskTest {
     private Task testTask = new Task(0,null,0,0,null,null,null);
     private Random rnd = new Random();
 
-    @org.junit.Test
-    public void testGetName() throws Exception {
-
-    }
-
-    @org.junit.Test
-    public void testSetName() throws Exception {
-
-    }
-
-    @org.junit.Test
-    public void testGetTeam_id() throws Exception {
-
-    }
-
-    @org.junit.Test
-    public void testSetTeam_id() throws Exception {
-
-    }
-
     /*
      Should be 0 from init
      */
     @org.junit.Test
     public void testGetMember_id() throws Exception {
         assertTrue(0 == testTask.getMember_id());
-    }
-
-    /*
-     Assumes getMember_id is correct and checks 1000
-     */
-    @org.junit.Test
-    public void testSetMember_id() throws Exception {
-        int r = 0;
-        for (int i = 0; i < testFreq; i ++) {
-            r = rnd.nextInt();
-            testTask.setMember_id(r);
-            assertTrue(r == testTask.getMember_id());
-        }
-    }
-
-
-    /*
-     Creates a random date and assigns it and compares
-     */
-    @org.junit.Test
-    public void testSetStartDate() throws Exception {
-        for (int i = 0; i < testFreq; i ++) {
-            long test = System.currentTimeMillis() + rnd.nextInt();
-            Date date = new Date(test);
-            testTask.setStartDate(date);
-            assertEquals(date, testTask.getStartDate());
-        }
-    }
-
-    /*
-     Creates a random date and assigns it and compares
-     */
-    @org.junit.Test
-    public void testSetEndDate() throws Exception {
-        for (int i = 0; i < testFreq; i ++) {
-            long test = System.currentTimeMillis() + rnd.nextInt();
-            Date date = new Date(test);
-            testTask.setEndDate(date);
-            assertEquals(date, testTask.getEndDate());
-        }
     }
 
     /*

@@ -7,9 +7,8 @@ import com.github.jotask.groupproject.connection.dao.TeamDao;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 
+import java.sql.*;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -162,5 +161,6 @@ public class DataBase {
 			e.printStackTrace();
 		}
 	}
+
 
 }

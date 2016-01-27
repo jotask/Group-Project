@@ -160,4 +160,48 @@ public class MemberDAO extends DAO {
         System.out.printf("ID: " + id + " F: " + first + " S: " + last + " M: " + mail + " P: " + p + "\n");
     }
 
+	/**
+	 * Used for unit testing to grab a list of registered users
+	 *
+	 * @return
+	 *      A list of all the users in the database
+	 */
+
+	public ArrayList<String> getAllUser(){
+
+		ArrayList<String> Users = new ArrayList<>();
+
+		Statement stm = null;
+		ResultSet rs = null;
+
+		try {
+
+			String sql = "SELECT * FROM MEMBER";
+			stm = conn.createStatement();
+			rs = stm.executeQuery(sql);
+
+			while(rs.next()){
+				Users.add(getName(rs));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				close(stm,rs);
+			} catch (SQLException e) {
+				// TODO nothing to do
+				e.printStackTrace();
+			}
+		}
+
+		return Users;
+
+	}
+
+	private String getName(ResultSet rs) throws SQLException{
+		return rs.getString("FORENAME");
+	}
+
+
 }
