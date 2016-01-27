@@ -74,28 +74,28 @@ public class DataBase {
 		
 		// Create the connection using the mySQL driver and connect to the DataBase server for
 		// instantiate the connection
-		{
-			try {
-				Class.forName(DRIVER);
-				conn = DriverManager.getConnection(url, user, password);
-			} catch (SQLException e) {
-				// TODO Connection not created
-				e.printStackTrace();
-				System.exit(1);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				// TODO Handle the class not found exception
-				System.exit(1);
-			}
-		}
+        {
+            try {
+                Class.forName(DRIVER);
+                conn = DriverManager.getConnection(url, user, password);
 
-        // Initialise all our DAO objects
-		{
-			this.memberDao = new MemberDAO(this, conn);
-			this.elementDAO = new ElementDAO(this, conn);
-			this.taskDAO = new TaskDao(this, conn);
-			this.teamDAO = new TeamDao(this, conn);
-		}
+                // Initialise all our DAO objects
+                {
+                    this.memberDao = new MemberDAO(this, conn);
+                    this.elementDAO = new ElementDAO(this, conn);
+                    this.taskDAO = new TaskDao(this, conn);
+                    this.teamDAO = new TeamDao(this, conn);
+                }
+
+            } catch (SQLException se) {
+                //Handle errors for JDBC
+                se.printStackTrace();
+            } catch (Exception e) {
+                //Handle errors for Class.forName
+                e.printStackTrace();
+            }
+        }
+
 		
 	}
 
