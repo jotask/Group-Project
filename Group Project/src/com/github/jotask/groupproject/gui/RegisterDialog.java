@@ -10,16 +10,28 @@ import java.util.Properties;
 
 /**
  * Dialog for register a new user
+ *
+ * @author Jose Vives
+ *
+ * @version 1.4 - Show a dialog if any field is empty before add the user
  */
 public class RegisterDialog extends JDialog {
 
+    /** Database instance */
     private DataBase db;
-    private JTextField textField;
-    private JTextField textField_1;
-    private JTextField textField_2;
+
+    /** JTextField for the forename */
+    private JTextField forenameField;
+
+    /** JTextField for the surename */
+    private JTextField surenameField;
+
+    /** JTextField for the mail */
+    private JTextField mailField;
 
     /**
-     * Constructor for this register a dialog
+     * Constructor for this register a dialog. Initialize and
+     * populate all the dialog
      *
      * @param properties
      *      The properties for know all information for create a connection
@@ -45,10 +57,10 @@ public class RegisterDialog extends JDialog {
                     getContentPane().add(lblSurname);
                 }
                 {
-                    textField = new JTextField();
-                    textField.setBounds(89, 64, 374, 20);
-                    getContentPane().add(textField);
-                    textField.setColumns(10);
+                    forenameField = new JTextField();
+                    forenameField.setBounds(89, 64, 374, 20);
+                    getContentPane().add(forenameField);
+                    forenameField.setColumns(10);
                 }
                 {
                     JLabel lblForename = new JLabel("Forename:");
@@ -57,10 +69,10 @@ public class RegisterDialog extends JDialog {
                     getContentPane().add(lblForename);
                 }
                 {
-                    textField_1 = new JTextField();
-                    textField_1.setBounds(89, 29, 374, 20);
-                    getContentPane().add(textField_1);
-                    textField_1.setColumns(10);
+                    surenameField = new JTextField();
+                    surenameField.setBounds(89, 29, 374, 20);
+                    getContentPane().add(surenameField);
+                    surenameField.setColumns(10);
                 }
                 {
                     JLabel lblEmail = new JLabel("E-Mail:");
@@ -69,10 +81,10 @@ public class RegisterDialog extends JDialog {
                     getContentPane().add(lblEmail);
                 }
                 {
-                    textField_2 = new JTextField();
-                    textField_2.setBounds(89, 103, 374, 20);
-                    getContentPane().add(textField_2);
-                    textField_2.setColumns(10);
+                    mailField = new JTextField();
+                    mailField.setBounds(89, 103, 374, 20);
+                    getContentPane().add(mailField);
+                    mailField.setColumns(10);
                 }
                 {
                     JButton okButton = new JButton("OK");
@@ -107,35 +119,47 @@ public class RegisterDialog extends JDialog {
         this.setVisible(true);
     }
 
-    private void close(){
-        this.db.close();
-        dispose();
-        setVisible(false);
-    }
-
+    /**
+     * This method is called whn the register button has been clicked.
+     * It check if all the fields has information before continue
+     * Can be improved by some type of type check improved
+     */
     private void register() {
 
-        String surname = textField.getText();
-        String forename = textField_1.getText();
-        String mail = textField_2.getText();
+        // Get all information
+        String surname = forenameField.getText();
+        String forename = surenameField.getText();
+        String mail = mailField.getText();
 
+        // Check if any field is empty and show a dialog showing where is the error
         if(surname.equals("")){
-            // TODO
+            JOptionPane.showMessageDialog(this, "Surname can´t be empty", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }else if(forename.equals("")){
-            // TODO
+            JOptionPane.showMessageDialog(this, "Forename can´t be empty", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }else if(mail.equals("")){
-            // TODO
+            JOptionPane.showMessageDialog(this, "Mail can´t be empty", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if(db.getMemberDao().register(surname, forename, mail)) {
-            close();
-        }else{
+        // Show if the user has not been created
+        if(!db.getMemberDao().register(surname, forename, mail)) {
             JOptionPane.showMessageDialog(this, "Error Creating user", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
+        // close the dialog
+        close();
+
+    }
+
+    /**
+     * Method for close this dialog and close the connection to the database
+     */
+    private void close(){
+        db.close();
+        dispose();
+        setVisible(false);
     }
 
 }
