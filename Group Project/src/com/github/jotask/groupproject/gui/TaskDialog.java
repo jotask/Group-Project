@@ -181,7 +181,6 @@ public class TaskDialog extends JDialog {
             statusList = new JComboBox(statusString);
             contentPanel.add(statusList, "cell 1 " + counter + ",growx");
             statusList.setSelectedItem(task.getStatus());
-            // FIXME set the default value to the actual value for tat task
         }
         counter++;
         {
