@@ -102,7 +102,7 @@ public class Offline {
             fw.flush();
             fw.close();
         } catch (FileNotFoundException e) {
-            // Impossible exception because we check before if exisst
+            // Impossible exception because we check before if exist
         } catch (IOException e) {
             e.printStackTrace();
         }

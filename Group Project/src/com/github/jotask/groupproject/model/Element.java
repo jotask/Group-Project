@@ -1,5 +1,7 @@
 package com.github.jotask.groupproject.model;
 
+import java.util.ArrayList;
+
 /**
  * This class holds all the methods and parameters that one element needs
  *
@@ -89,7 +91,31 @@ public class Element {
      */
     @Override
     public String toString() {
-        return "{"+id+":"+taskID+":"+description+"}";
+        return "/"+id+":"+taskID+":"+description;
     }
 
+    /**
+     * Converts a string to a Element Object
+     *
+     * @param str
+     *   String used for conversion
+     *
+     * @return
+     *     An array list of Elements
+     *
+     */
+     public static ArrayList<Element> stringToElements(String str) {
+         ArrayList<Element> returnList = new ArrayList<Element>();
+         String[] individualElements = str.split(Character.toString('/'));
+         for (int i = 1; i < individualElements.length; i++) {
+             System.out.println(individualElements[i]);
+             String[] rawData = individualElements[i].split(Character.toString(':'));
+             int id = Integer.parseInt(rawData[0]);
+             int team_id = Integer.parseInt(rawData[1]);
+             String content = rawData[2];
+             Element temp = new Element(id,team_id,content);
+             returnList.add(temp);
+         }
+         return returnList;
+     }
 }
