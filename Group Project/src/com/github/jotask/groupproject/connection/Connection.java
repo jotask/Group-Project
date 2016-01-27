@@ -71,7 +71,7 @@ public class Connection {
             return false;
         }
 
-        // TODO check if we need to update the database with all previous work
+        // TODO check if we need to update the database with all previous offline work
 
         // We set if we are online. At this point we have a connection between the database and the source code
         this.isOnline = true;
@@ -187,7 +187,6 @@ public class Connection {
             return true;
 
         }else{
-            // FIXME
             offline.updateTask(task, element);
         }
         return false;

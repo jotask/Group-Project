@@ -151,7 +151,6 @@ public class Login extends JDialog {
 			if(!username.isEmpty()){
 				this.remember.setSelected(true);
 				this.usernameField.setText(username);
-				// FIXME
 			}
 
 		}

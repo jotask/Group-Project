@@ -149,8 +149,7 @@ public class DataBase {
 		try {
 			this.conn.close();
 		} catch (SQLException e) {
-			// TODO I think is nothing to do here
-			e.printStackTrace();
+			// I think is nothing to do here
 		}
 	}
 

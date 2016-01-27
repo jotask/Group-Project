@@ -66,13 +66,12 @@ public class MemberDAO extends DAO {
 				}
 			}
 		}catch(SQLException sqlex){
-			// TODO SQLException
+			// SQLException
 			sqlex.printStackTrace();
 		}finally{
 			try {
 				close(stm);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -100,65 +99,18 @@ public class MemberDAO extends DAO {
 			stm.executeUpdate(sql);
 			success = true;
 		} catch (SQLException e) {
-			// TODO not created handle
+			// not created handle
 			e.printStackTrace();
 			success = false;
 		}finally {
 			try {
 				close(stm);
 			} catch (SQLException e) {
-				// TODO Nothing we can do
+                // Nothing to do
 			}
 		}
 		return success;
 	}
-
-    public void printAllMember(){
-        // FIXME delete this method
-        // TODO get all tasks from connection
-        ArrayList<User> users = new ArrayList<>();
-
-        Statement stm = null;
-        ResultSet rs = null;
-
-        try {
-
-            String sql = "SELECT * FROM MEMBER";
-            stm = conn.createStatement();
-            rs = stm.executeQuery(sql);
-
-            while(rs.next()){
-                User task = convertToUser(rs);
-                users.add(task);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                close(stm, rs);
-            } catch (SQLException e) {
-                // TODO nothing to do
-                e.printStackTrace();
-            }
-        }
-
-        for(User u: users){
-            printUser(u);
-        }
-
-    }
-
-    private void printUser(User u){
-        // FIXME delete this method
-        int id = u.getId();
-        String first = u.getFirstName();
-        String last = u.getSurname();
-        String mail = u.getMail();
-        String p = u.getPassword();
-
-        System.out.printf("ID: " + id + " F: " + first + " S: " + last + " M: " + mail + " P: " + p + "\n");
-    }
 
 	/**
 	 * Used for unit testing to grab a list of registered users
@@ -190,8 +142,7 @@ public class MemberDAO extends DAO {
 			try {
 				close(stm,rs);
 			} catch (SQLException e) {
-				// TODO nothing to do
-				e.printStackTrace();
+				// Nothing to do
 			}
 		}
 
