@@ -35,7 +35,7 @@ public class TaskDialog extends JDialog {
     private Connection conn;
 
     /** The JPanel for this dialog */
-    private final JPanel contentPanel = new JPanel();
+    private JPanel contentPanel;
 
     /** The JTexField that holds the task id */
     private JTextField taskId;
@@ -77,7 +77,10 @@ public class TaskDialog extends JDialog {
         this.app = app;
         this.conn = conn;
 
+        contentPanel = new JPanel();
+
         setTitle("Update task");
+        setResizable(false);
 
         int counter = 0;
 
@@ -126,8 +129,8 @@ public class TaskDialog extends JDialog {
         }
         counter++;
         {
-            JLabel lblMemberid = new JLabel("MemberID:");
-            contentPanel.add(lblMemberid, "cell 0 " + counter + ",alignx trailing");
+            JLabel lblMemberId = new JLabel("MemberID:");
+            contentPanel.add(lblMemberId, "cell 0 " + counter + ",alignx trailing");
         }
         {
             memberId = new JTextField();
@@ -177,6 +180,7 @@ public class TaskDialog extends JDialog {
             String[] statusString = { "completed", "abandoned", "allocated" };
             statusList = new JComboBox(statusString);
             contentPanel.add(statusList, "cell 1 " + counter + ",growx");
+            statusList.setSelectedItem(task.getStatus());
             // FIXME set the default value to the actual value for tat task
         }
         counter++;
@@ -185,22 +189,27 @@ public class TaskDialog extends JDialog {
             contentPanel.add(lblElement, "cell 0 " + counter + ",alignx trailing");
         }
         {
-            // FIXME
-            JList<JLabel> list = new JList();
+            ArrayList<String> list = new ArrayList<>();
             ArrayList<Element> elements = task.getElements();
             if(elements != null) {
                 for (Element e : elements) {
-                    counter++;
-                    JLabel tmp = new JLabel(e.getDescription());
-                    System.out.println(e.getDescription());
-                    list.add(tmp);
+                    list.add(e.getDescription() + "   ");
                 }
             }
-            JScrollPane bar = new JScrollPane(list);
-            bar.setPreferredSize(new Dimension(350,400));
-            bar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-            bar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            contentPanel.add(bar, "cell 1 " + counter + ",alignx trailing");
+            JList l = new JList(list.toArray());
+            l.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+            l.setBackground(contentPanel.getBackground());
+
+            JScrollPane scrollPane = new JScrollPane(l);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.setPreferredSize(new Dimension(350,400));
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+            JScrollBar bar = scrollPane.getVerticalScrollBar();
+            bar.setValue(bar.getMaximum());
+
+            contentPanel.add(scrollPane, "cell 1 " + counter + ",alignx trailing");
         }
         counter++;
         {
@@ -252,7 +261,6 @@ public class TaskDialog extends JDialog {
 
         // Check if the elementField if empty
         if(elementField.getText().isEmpty()){
-            // TODO add a pop error. An elementField can't be empty i think
             JOptionPane.showMessageDialog(this, "If you update one task, you need to enter the element description", "Field Empty", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -266,8 +274,6 @@ public class TaskDialog extends JDialog {
         String memberID = memberId.getText();
         int member_id = Integer.parseInt(memberID);
 
-        // FIXME Get actual values for this fields
-
         GregorianCalendar gcS = (GregorianCalendar) startDate.getModel().getValue();
         Date startDateTime = new Date(gcS.getTime().getTime());
 
@@ -276,7 +282,7 @@ public class TaskDialog extends JDialog {
 
         String status = (String) statusList.getSelectedItem();
 
-        // Create a new task for update all iformation
+        // Create a new task for update all information
         Task task = new Task(id, name, team_id, member_id, startDateTime, endDateTime, status);
 
         // Create an element for this update
@@ -298,12 +304,6 @@ public class TaskDialog extends JDialog {
     private void cancelCliked(){
         dispose();
         setVisible(false);
-    }
-
-    public static void main(String[] args) {
-        Task t = new Task(-1, "name", 1, 2, new Date(), new Date(), "completed");
-        TaskDialog d = new TaskDialog(null, null, t);
-        d.setVisible(true);
     }
 
 }
