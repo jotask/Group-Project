@@ -44,7 +44,7 @@ public class Application extends JFrame{
         initialize();
 
         // refresh the table with all task
-        this.refreshTaskView(connection.getAllTasks());
+        this.refreshTaskView(connection.getAllTasksWithElements());
     }
 
     /**

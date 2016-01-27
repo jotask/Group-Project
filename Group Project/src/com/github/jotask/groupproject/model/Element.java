@@ -105,10 +105,9 @@ public class Element {
      *
      */
      public static ArrayList<Element> stringToElements(String str) {
-         ArrayList<Element> returnList = new ArrayList<Element>();
+         ArrayList<Element> returnList = new ArrayList<>();
          String[] individualElements = str.split(Character.toString('/'));
          for (int i = 1; i < individualElements.length; i++) {
-             System.out.println(individualElements[i]);
              String[] rawData = individualElements[i].split(Character.toString(':'));
              int id = Integer.parseInt(rawData[0]);
              int team_id = Integer.parseInt(rawData[1]);

@@ -19,7 +19,7 @@ import java.util.Properties;
 public class Application {
 
 	/** Path and the file for the properties */
-	public static final String PROPERTIES_FILE = "resources/config.properties";
+	public static final String PROPERTIES_FILE = "config.properties";
 
 	/** Property variable */
 	private Properties properties;
@@ -33,7 +33,7 @@ public class Application {
 			// Init and load properties from the file
 			try {
 				this.properties = new Properties();
-				this.properties.load(new FileInputStream(PROPERTIES_FILE));
+				this.properties.load(new FileInputStream("resources/" + PROPERTIES_FILE));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

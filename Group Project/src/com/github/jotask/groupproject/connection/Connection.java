@@ -135,14 +135,14 @@ public class Connection {
      *      the task that we requested
      */
     public Task getTask(int taskID) {
-        Task task = null;
+        Task task;
         if(this.isOnline){
             task = dataBase.getTaskDAO().getTask(taskID);
             if(task != null){
                 task.setElements(getElements(task));
             }
         }else{
-            // TODO offline get task by id
+            task = offline.getTask(taskID);
         }
         return task;
     }
@@ -153,7 +153,7 @@ public class Connection {
      * @return
      *      An arrayList with all task from the selected user
      */
-    public ArrayList<Task> getAllTasks() {
+    private ArrayList<Task> getAllTasks() {
         ArrayList<Task> tasks;
         if(this.isOnline){
             tasks = dataBase.getTasks(user);
@@ -192,7 +192,8 @@ public class Connection {
             return true;
 
         }else{
-            // TODO update a task offline
+            // FIXME
+            offline.updateTask(task, element);
         }
         return false;
     }
@@ -208,12 +209,12 @@ public class Connection {
      */
     private ArrayList<Element> getElements(Task task){
 
-        ArrayList<Element> elements = null;
+        ArrayList<Element> elements;
 
         if(isOnline){
             elements = dataBase.getElementDAO().getAllElementOnTask(task);
         }else{
-            // TODO get all elements from the selected task offline
+            elements = offline.getAllElementOnTask(task);
         }
         return elements;
     }

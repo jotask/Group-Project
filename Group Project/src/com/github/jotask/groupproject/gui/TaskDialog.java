@@ -4,6 +4,9 @@ import com.github.jotask.groupproject.connection.Connection;
 import com.github.jotask.groupproject.model.Element;
 import com.github.jotask.groupproject.model.Task;
 import net.miginfocom.swing.MigLayout;
+import org.jdatepicker.DateModel;
+import org.jdatepicker.JDateComponentFactory;
+import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,9 +14,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Dialog for update a task. They show us all information for one task
@@ -46,11 +49,11 @@ public class TaskDialog extends JDialog {
     /** The JTexField that holds the member id */
     private JTextField memberId;
 
-    /** The JTexField that holds the start date */
-    private JTextField startDate;
+    /** The JDatePicker that holds the start date */
+    private JDatePicker startDate;
 
-    /** The JTexField that holds the end date */
-    private JTextField endDate;
+    /** The JDatePicker that holds the end date */
+    private JDatePicker endDate;
 
     /** The JComboBox that holds the task status */
     private JComboBox statusList;
@@ -139,24 +142,31 @@ public class TaskDialog extends JDialog {
             contentPanel.add(lblStartdate, "cell 0 " + counter + ",alignx trailing");
         }
         {
-            startDate = new JTextField();
-            contentPanel.add(startDate, "cell 1 " + counter + ",growx");
-            startDate.setColumns(10);
-            //TODO Delete this
-            java.util.Date d = new java.util.Date();
-            startDate.setText(new Timestamp(new java.util.Date().getTime()).toString());
+            Date dateT = task.getStartDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateT);
+            startDate = new JDateComponentFactory().createJDatePicker();
+            DateModel date = startDate.getModel();
+            date.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+            date.setMonth(calendar.get(Calendar.MONTH));
+            date.setYear(calendar.get(Calendar.YEAR));
+            contentPanel.add((Component) startDate, "cell 1 " + counter + ",growx");
         }
         counter++;
         {
-            JLabel lblEnddate = new JLabel("EndDate:");
-            contentPanel.add(lblEnddate, "cell 0 " + counter + ",alignx trailing");
+            JLabel lblEndDate = new JLabel("EndDate:");
+            contentPanel.add(lblEndDate, "cell 0 " + counter + ",alignx trailing");
         }
         {
-            endDate = new JTextField();
-            contentPanel.add(endDate, "cell 1 " + counter + ",growx");
-            endDate.setColumns(10);
-            // TODO Delete this
-            endDate.setText(task.getEndDate().toString());
+            Date dateT = task.getEndDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateT);
+            endDate = new JDateComponentFactory().createJDatePicker();
+            DateModel date = endDate.getModel();
+            date.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+            date.setMonth(calendar.get(Calendar.MONTH));
+            date.setYear(calendar.get(Calendar.YEAR));
+            contentPanel.add((Component) endDate, "cell 1 " + counter + ",growx");
         }
         counter++;
         {
@@ -176,14 +186,21 @@ public class TaskDialog extends JDialog {
         }
         {
             // FIXME
+            JList<JLabel> list = new JList();
             ArrayList<Element> elements = task.getElements();
             if(elements != null) {
                 for (Element e : elements) {
                     counter++;
                     JLabel tmp = new JLabel(e.getDescription());
-                    contentPanel.add(tmp, "cell 1 " + counter + ",alignx trailing");
+                    System.out.println(e.getDescription());
+                    list.add(tmp);
                 }
             }
+            JScrollPane bar = new JScrollPane(list);
+            bar.setPreferredSize(new Dimension(350,400));
+            bar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            bar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            contentPanel.add(bar, "cell 1 " + counter + ",alignx trailing");
         }
         counter++;
         {
@@ -250,8 +267,12 @@ public class TaskDialog extends JDialog {
         int member_id = Integer.parseInt(memberID);
 
         // FIXME Get actual values for this fields
-        Date startDateTime = new Date();
-        Date endDateTime = new Date();
+
+        GregorianCalendar gcS = (GregorianCalendar) startDate.getModel().getValue();
+        Date startDateTime = new Date(gcS.getTime().getTime());
+
+        GregorianCalendar gcE = (GregorianCalendar) endDate.getModel().getValue();
+        Date endDateTime = new Date(gcE.getTime().getTime());
 
         String status = (String) statusList.getSelectedItem();
 
@@ -264,8 +285,8 @@ public class TaskDialog extends JDialog {
         // Update the task
         conn.updateTask(task, element);
 
-        // Refres the task view
-        app.refreshTaskView(conn.getAllTasks());
+        // Refresh the task view
+        app.refreshTaskView(conn.getAllTasksWithElements());
 
         // Cancel and close the dialog
         cancelCliked();
@@ -277,6 +298,12 @@ public class TaskDialog extends JDialog {
     private void cancelCliked(){
         dispose();
         setVisible(false);
+    }
+
+    public static void main(String[] args) {
+        Task t = new Task(-1, "name", 1, 2, new Date(), new Date(), "completed");
+        TaskDialog d = new TaskDialog(null, null, t);
+        d.setVisible(true);
     }
 
 }

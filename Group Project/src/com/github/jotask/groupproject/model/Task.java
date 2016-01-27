@@ -73,6 +73,8 @@ public class Task {
         this.status = status;
     }
 
+
+
     /**
      * Return a task with a string for store them on a file
      *
@@ -159,8 +161,6 @@ public class Task {
             Task returnTask = new Task(id,name,team_id,member_id,start_date,end_date,status);
 
             returnTask.setElements(Element.stringToElements(separate[7]));
-
-            System.out.println(returnTask.getElements().size());
 
             return returnTask;
         } catch (ParseException e) {
@@ -263,4 +263,5 @@ public class Task {
     public ArrayList<Element> getElements() {
         return elements;
     }
+
 }
