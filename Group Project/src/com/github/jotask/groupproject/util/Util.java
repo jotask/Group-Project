@@ -8,9 +8,14 @@ package com.github.jotask.groupproject.util;
  * of this class
  *
  * @author Jose Vives.
- * @since 08/12/2015
+ *
+ * @version 1.2 - Added a separator for when we store things on a file
  */
 public final class Util {
+
+
+    /** Separator for store on the file */
+    public static char SEPARATOR = '#';
 
     /**
      * Private constructor for make  that is impossible make an

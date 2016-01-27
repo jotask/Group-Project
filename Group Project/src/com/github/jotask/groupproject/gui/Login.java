@@ -13,24 +13,38 @@ import static com.github.jotask.groupproject.Application.PROPERTIES_FILE;
 
 /**
  * Login dialog for the login to the connection
+ *
  * @author Jose Vives
- * @version 0.1
+ *
+ * @version 1.8 - New features added
  */
 public class Login extends JDialog {
 
+    /** serial version for this dialog. Is created randomly */
 	private static final long serialVersionUID = -6203552975399889940L;
-	private JPasswordField passwordField;
-	private JTextField usernameField;
-	private JCheckBox remember;
 
-	private Properties properties;
+    /** Password field for the password */
+	private final JPasswordField passwordField;
 
-	/**
-	 * Create the dialog for the login to the connection.
-	 */
+    /** Username field */
+	private final JTextField usernameField;
+
+    /** Check box for rember option */
+	private final JCheckBox remember;
+
+    /** Properties instance */
+	private final Properties properties;
+
+    /**
+     * Constructor for initialize everything
+     *
+     * @param properties
+     *          The properties for get all information
+     */
 	public Login(Properties properties) {
 		this.properties = properties;
 
+        // populate the dialog
 		getContentPane().setBackground(Color.WHITE);
 		setResizable(false);
 		setBackground(Color.WHITE);
@@ -132,92 +146,110 @@ public class Login extends JDialog {
 		// Load previous data if exist
 		{
 			String username = this.properties.getProperty("username");
-			String password = this.properties.getProperty("password");
+			// String password = this.properties.getProperty("password");
 
 			if(!username.isEmpty()){
 				this.remember.setSelected(true);
 				this.usernameField.setText(username);
-				// FIXME
 			}
 
 		}
 
 	}
 
+    /**
+     * This method is call if the register button is clickec
+     * It show a dialog for register a new user
+     */
 	private void register(){
 		new RegisterDialog(properties);
 	}
-	
+
+    /**
+     * This method is called when the login button has clicked
+     * Just prepare everything and create the connection for a online login
+     */
 	private void login(){
 
+        // Get the information from the field
 		String username = usernameField.getText();
 		char[] password = passwordField.getPassword();
 
+        // Check if the username is not empty
 		if(!username.isEmpty()){
 
+            // Create a connection instance
 			Connection connection = new Connection(properties);
             if(!connection.online(username, password)){
                 JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-			//Save options
-			// If remember checkbox is selected and also on the config file the username
-			// from the previous session and the actual session is different we save this
-			// new options.
-			if(this.remember.isSelected() &&
-					!this.properties.getProperty("username").equals(username)){
-				this.properties.setProperty("username", username);
-
-				// Save this values to the config file
-				try {
-					OutputStream fos = new FileOutputStream(PROPERTIES_FILE);
-					this.properties.store(fos, null);
-				} catch (FileNotFoundException e) {
-					// Nothing we can do, because this has been checked before start the program
-				} catch (IOException e) {
-					// Nothing we can do, because this has been checked before start the program
-				}
-
-			}
+            if(remember.isSelected())
+                saveRemember();
 
 			closeDialog();
 
-//			JOptionPane.showMessageDialog(this, "Login", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-			Application app = new Application(connection);
+			new Application(connection);
 
 		}else{
 			JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);
 		}		
 	}
 
-	private void closeDialog(){
-		this.setVisible(false);
-		dispose();
-	}
-
+    /**
+     * This method is called when the offline button has been clicked
+     */
 	private void offline(){
 
+        // Get the information
 		String username = this.usernameField.getText();
 		char[] password = this.passwordField.getPassword();
 
+        // Validate if the fields are not empty
 		if(username.isEmpty()){
-			// Validate the field if is not empty
+			JOptionPane.showMessageDialog(this, "Username is empty. Please fill with one username", "Field Empty", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
-		File userData = new File (username + ".user");
+        if(remember.isSelected())
+            saveRemember();
 
-		if (!userData.exists()) {
-			System.out.println("User data does not exist");
-			return;
-		}
-
+        // Create the connection
 		Connection connection = new Connection(properties);
         connection.offline(username, password);
+
 		closeDialog();
-		Application app = new Application(connection);
+
+		new Application(connection);
 	}
+
+    /**
+     * This method store this login for next quick loggins
+     */
+    private void saveRemember(){
+        //Save options
+        // If remember checkbox is selected and also on the config file the username
+        // from the previous session and the actual session is different we save this
+        // new options.
+        String username = this.usernameField.getText();
+        if(!this.properties.getProperty("username").equals(username)){
+            this.properties.setProperty("username", username);
+
+            // Save this values to the config file
+            try {
+                OutputStream fos = new FileOutputStream(PROPERTIES_FILE);
+                this.properties.store(fos, null);
+            } catch (IOException e) {
+                // Nothing we can do, because this has been checked before start the program
+            }
+        }
+    }
+
+    /** Close the dialog */
+    private void closeDialog(){
+        this.setVisible(false);
+        dispose();
+    }
 
 }

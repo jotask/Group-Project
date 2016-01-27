@@ -12,14 +12,14 @@ import java.util.Properties;
  * all program
  *
  * @author Jose Vives
- * @since 1.0 - Initial version of the file
+ *
  * @version 1.4 - Now just have the basics they need
  *
  */
 public class Application {
 
 	/** Path and the file for the properties */
-	public static final String PROPERTIES_FILE = "resources/config.properties";
+	public static final String PROPERTIES_FILE = "config.properties";
 
 	/** Property variable */
 	private Properties properties;
@@ -27,13 +27,13 @@ public class Application {
 	/**
 	 * Constructor for initialise variables
 	 */
-	public Application() {
+	private Application() {
 
 		{
 			// Init and load properties from the file
 			try {
 				this.properties = new Properties();
-				this.properties.load(new FileInputStream(PROPERTIES_FILE));
+				this.properties.load(new FileInputStream("resources/" + PROPERTIES_FILE));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -55,6 +55,7 @@ public class Application {
 	 * This method is the first methods called when the program start
 	 *
 	 * @param args
+     *      The java arguments for the main method
 	 */
 	public static void main(String[] args) {
 

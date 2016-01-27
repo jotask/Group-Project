@@ -11,59 +11,125 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * Created by Jose Vives on 02/12/2015.
+ * This class retrieve information from the database for the elements
  *
  * @author Jose Vives.
- * @since 02/12/2015
+ *
+ * @version 1.0
  */
 public class ElementDAO extends DAO{
 
     /**
-     * @param db   The actual DataBase instance
+     * Constructor for this class
+     *
+     * @param db
+     *          The actual DataBase instance
      * @param conn
+     *          The connection instance
      */
     public ElementDAO(DataBase db, Connection conn) {
         super(db, conn);
     }
 
+    /**
+     * Get all elements on task from the database
+     *
+     * @param task
+     *      The task that we want all his elements
+     *
+     * @return
+     *      An arrayList of Elements for the selected task
+     */
     public ArrayList<Element> getAllElementOnTask(Task task){
-        ArrayList<Element> elements = new ArrayList<>();
 
+        // Init the instances
+        ArrayList<Element> elements = new ArrayList<>();
         Statement stm = null;
         ResultSet rs = null;
 
+        // Select all element from a selected task
         try {
-
-            String sql = "SELECT * FROM TASK_ELEMENT WHERE TASK_ID=\"" + task.getId() + "\"";
+            String sql = "SELECT * FROM TASK_ELEMENT WHERE TASK_ID = " + task.getId() + ";";
+            stm = conn.createStatement();
             rs = stm.executeQuery(sql);
 
             while(rs.next()){
                 Element element = createElement(rs);
                 elements.add(element);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
             try {
                 close(stm, rs);
             } catch (SQLException e) {
-                // TODO nothing to do
-                e.printStackTrace();
+                // Nothing we can do
             }
         }
         return elements;
     }
 
+    /**
+     * Create an element object from one resulset
+     *
+     * @param rs
+     *      The resultset that have the information
+     *
+     * @return
+     *      The element that has been created
+     *
+     * @throws SQLException
+     *      And exception for some type of error
+     */
     private Element createElement(ResultSet rs) throws SQLException {
 
         int id = rs.getInt("ELEMENT_ID");
         int taskID = rs.getInt("TASK_ID");
-        String name = rs.getString("ELEMENT_NAME");
-        String description = rs.getString("TASK_DESCRIPTION");
-        String comment = rs.getString("TASK_COMMENT");
+        String comment = rs.getString("TASK_DESCRIPTION");
 
-        Element element = new Element(id, taskID, name, description, comment);
+        Element element = new Element(id, taskID, comment);
         return element;
 
+    }
+
+    /**
+     * Add an element to the database
+     *
+     * @param element
+     *      The element we want to add
+     *
+     * @return
+     *      if is successfully added
+     */
+    public boolean addElement(Element element){
+
+        Statement stm = null;
+
+        boolean success;
+
+        // Get the information
+        int taskId = element.getTaskID();
+        String desc = element.getDescription();
+
+        // Create the statement
+        String sql = "INSERT INTO `TASK_ELEMENT` (`TASK_ID`, `TASK_DESCRIPTION`) VALUES ('" + taskId + "', '" + desc + "');";
+
+        // execute query
+        try {
+            stm = conn.createStatement();
+            stm.executeUpdate(sql);
+            success = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            success = false;
+        }finally {
+            try {
+                close(stm);
+            } catch (SQLException e) {
+                // Nothing we can do
+            }
+        }
+        return success;
     }
 }

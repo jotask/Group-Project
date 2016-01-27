@@ -7,9 +7,8 @@ import com.github.jotask.groupproject.connection.dao.TeamDao;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 
+import java.sql.*;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -18,7 +17,8 @@ import java.util.Properties;
  * information for the connection
  *
  * @author Jose Vives
- * @version 0.1
+ *
+ * @version 1.0
  *
  */
 public class DataBase {
@@ -27,12 +27,8 @@ public class DataBase {
 	 * The JBDC we gonna use for the connection for an MySQL server
 	 */
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	
-	/**
-	 * The properties for load all the configuration
-	 */
-	private Properties props;
-	/**
+
+    /**
 	 * The connection between our code and the connection
 	 */
 	private Connection conn;
@@ -48,54 +44,49 @@ public class DataBase {
 	/**
 	 * Constructor the main class, we instantiate and load our configuration from a file.
 	 * And we create the connection between our code and the DataBase server
+     *
+     * @param properties
+     *      The properties for load all the configuration
 	 */
 	public DataBase(Properties properties) {
-
-		this.props = properties;
 		
 		// Load properties from the configuration file
 		String url, user, password;
 		{
 
-			user = props.getProperty("db_user");
+			user = properties.getProperty("db_user");
 
-			password = props.getProperty("db_passwd");
+			password = properties.getProperty("db_passwd");
 
 			// Create the URL
-			StringBuilder DBURL = new StringBuilder();
-			DBURL.append(props.getProperty("db_url"));
-			DBURL.append(props.getProperty("db_server") + ":");
-			DBURL.append(props.getProperty("db_port") + "/");
-			DBURL.append(props.getProperty("db_db"));
-			
-			url = DBURL.toString();
+            url = properties.getProperty("db_url") +
+                    properties.getProperty("db_server") + ":" +
+                    properties.getProperty("db_port") + "/" +
+                    properties.getProperty("db_db");
 
 		}
 		
 		// Create the connection using the mySQL driver and connect to the DataBase server for
 		// instantiate the connection
-		{
-			try {
-				Class.forName(DRIVER);
-				conn = DriverManager.getConnection(url, user, password);
-			} catch (SQLException e) {
-				// TODO Connection not created
-				e.printStackTrace();
-				System.exit(1);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				// TODO Handle the class not found exception
-				System.exit(1);
-			}
-		}
+        {
+            try {
+                Class.forName(DRIVER);
+                conn = DriverManager.getConnection(url, user, password);
 
-        // Initialise all our DAO objects
-		{
-			this.memberDao = new MemberDAO(this, conn);
-			this.elementDAO = new ElementDAO(this, conn);
-			this.taskDAO = new TaskDao(this, conn);
-			this.teamDAO = new TeamDao(this, conn);
-		}
+                // Initialise all our DAO objects
+                {
+                    this.memberDao = new MemberDAO(this, conn);
+                    this.elementDAO = new ElementDAO(this, conn);
+                    this.taskDAO = new TaskDao(this, conn);
+                    this.teamDAO = new TeamDao(this, conn);
+                }
+
+            } catch (Exception e) {
+                //Handle errors for Class.forName
+                e.printStackTrace();
+            }
+        }
+
 		
 	}
 
@@ -158,9 +149,9 @@ public class DataBase {
 		try {
 			this.conn.close();
 		} catch (SQLException e) {
-			// TODO I think is nothing to do here
-			e.printStackTrace();
+			// I think is nothing to do here
 		}
 	}
+
 
 }

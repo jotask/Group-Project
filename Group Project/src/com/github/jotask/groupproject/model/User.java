@@ -4,27 +4,28 @@ package com.github.jotask.groupproject.model;
  * User model class for create users
  *
  * @author Jose Vives
+ *
  * @version 1.0
  */
 public class User {
 	
 	/** The user ID */
-	int id;
+    private int id;
 
 	/** The user username */
-	String surname;
+    private String surname;
 
 	/** The name from the user */
-	String firstName;
+    private String firstName;
 
 	/** The mail from the user */
-	String mail;
+    private String mail;
 
 	/** The user password */
-	String password;
+    private String password;
 
-	public User(int id, String surname, String firstname, String mail){
-		this(id, surname, firstname, mail, "");
+	public User(int id, String surname, String firstName, String mail){
+		this(id, surname, firstName, mail, "");
 	}
 
 	/**
@@ -41,8 +42,7 @@ public class User {
 	 * @param password
 	 * 			The password from the user
 	 */
-
-	public User(int id, String surname, String firstName, String mail, String password) {
+    private User(int id, String surname, String firstName, String mail, String password) {
 		this.id = id;
 		this.surname = surname;
 		this.firstName = firstName;
@@ -150,8 +150,4 @@ public class User {
 		this.password = password;
 	}
 
-    @Override
-    public String toString() {
-        return "id: " + id + " f:" + firstName + " s: " + surname + " M: " + mail;
-    }
 }

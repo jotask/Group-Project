@@ -15,7 +15,8 @@ import java.util.ArrayList;
  * DataBase and our connection we established
  * 
  * @author Jose Vives
- * @version 0.1
+ *
+ * @version 1.0
  *
  */
 public class MemberDAO extends DAO {
@@ -32,7 +33,6 @@ public class MemberDAO extends DAO {
 	}
 	
 	/**
-	 * 
 	 * @param username
 	 * 				The username 
 	 * @param password
@@ -50,8 +50,8 @@ public class MemberDAO extends DAO {
 			String sql = "SELECT * FROM MEMBER WHERE FORENAME=\"" + username + "\"";
 			rs = stm.executeQuery(sql);
 
-			// TODO implement password login
-			// TODO implement a a encryption for the password
+			// Implement password login
+			// Implement a a encryption for the password
 			password = MD5.encrypt(password.toString()).toCharArray();
 			
 			while(rs.next()){
@@ -66,13 +66,12 @@ public class MemberDAO extends DAO {
 				}
 			}
 		}catch(SQLException sqlex){
-			// TODO SQLException
+			// SQLException
 			sqlex.printStackTrace();
 		}finally{
 			try {
 				close(stm);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -100,64 +99,60 @@ public class MemberDAO extends DAO {
 			stm.executeUpdate(sql);
 			success = true;
 		} catch (SQLException e) {
-			// TODO not created handle
+			// not created handle
 			e.printStackTrace();
 			success = false;
 		}finally {
 			try {
 				close(stm);
 			} catch (SQLException e) {
-				// TODO Nothing we can do
+                // Nothing to do
 			}
 		}
 		return success;
 	}
 
-    public void printAllMember(){
-        // FIXME delete this method
-        // TODO get all tasks from connection
-        ArrayList<User> users = new ArrayList<>();
+	/**
+	 * Used for unit testing to grab a list of registered users
+	 *
+	 * @return
+	 *      A list of all the users in the database
+	 */
 
-        Statement stm = null;
-        ResultSet rs = null;
+	public ArrayList<String> getAllUser(){
 
-        try {
+		ArrayList<String> Users = new ArrayList<>();
 
-            String sql = "SELECT * FROM MEMBER";
-            stm = conn.createStatement();
-            rs = stm.executeQuery(sql);
+		Statement stm = null;
+		ResultSet rs = null;
 
-            while(rs.next()){
-                User task = convertToUser(rs);
-                users.add(task);
-            }
+		try {
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                close(stm, rs);
-            } catch (SQLException e) {
-                // TODO nothing to do
-                e.printStackTrace();
-            }
-        }
+			String sql = "SELECT * FROM MEMBER";
+			stm = conn.createStatement();
+			rs = stm.executeQuery(sql);
 
-        for(User u: users){
-            printUser(u);
-        }
+			while(rs.next()){
+				Users.add(getName(rs));
+			}
 
-    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				close(stm,rs);
+			} catch (SQLException e) {
+				// Nothing to do
+			}
+		}
 
-    private void printUser(User u){
-        // FIXME delete this method
-        int id = u.getId();
-        String first = u.getFirstName();
-        String last = u.getSurname();
-        String mail = u.getMail();
-        String p = u.getPassword();
+		return Users;
 
-        System.out.printf("ID: " + id + " F: " + first + " S: " + last + " M: " + mail + " P: " + p + "\n");
-    }
+	}
+
+	private String getName(ResultSet rs) throws SQLException{
+		return rs.getString("FORENAME");
+	}
+
 
 }
