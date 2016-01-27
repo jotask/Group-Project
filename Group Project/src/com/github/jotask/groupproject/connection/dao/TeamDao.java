@@ -10,22 +10,35 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * Created by Jose Vives on 01/12/2015.
+ * Team DAO for retrieve information from the database for objects
  *
  * @author Jose Vives.
- * @since 01/12/2015
+ *
+ * @version 1.0
  */
 public class TeamDao extends  DAO{
+
     /**
-     * @param db   The actual DataBase instance
+     * Constructor for a team
+     *
+     * @param db
+     *      The actual DataBase instance
      * @param conn
+     *      The connection instance
      */
     public TeamDao(DataBase db, Connection conn) {
         super(db, conn);
     }
 
+    /**
+     * Get all team on the database
+     *
+     * @return
+     *      An ArrayList of all Teams
+     *
+     */
     public ArrayList<Team> getAllTeam(){
-        // TODO get all tasks from connection
+
         ArrayList<Team> teams = new ArrayList<>();
 
         Statement stm = null;
@@ -46,13 +59,24 @@ public class TeamDao extends  DAO{
             try {
                 close(stm, rs);
             } catch (SQLException e) {
-                // TODO nothing to do
-                e.printStackTrace();
+                // Nothing to do
             }
         }
         return teams;
     }
 
+    /**
+     * Convert one resultset to a team
+     *
+     * @param rs
+     *      The resultset were we want retrieve the information
+     *
+     * @return
+     *      The team created
+     *
+     * @throws SQLException
+     *      The SQL exception that holds the error message
+     */
     private Team createTeam(ResultSet rs) throws SQLException {
 
         int id = rs.getInt("team_id");

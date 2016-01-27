@@ -10,7 +10,9 @@ import com.github.jotask.groupproject.connection.DataBase;
 /**
  * Class for store the connection instance and the reference to the actual connection
  * Also have methods for close connections
+ *
  * @author Jose Vives
+ *
  * @version 1.0
  */
 public abstract class DAO {
@@ -52,7 +54,7 @@ public abstract class DAO {
 	 * @param stm
 	 * 			The statement for close
 	 * @param rs
-	 * 			The ResulSet for close
+	 * 			The ResultSet for close
 	 * @throws SQLException
 	 */
 	protected void close(Statement stm , ResultSet rs) throws SQLException{

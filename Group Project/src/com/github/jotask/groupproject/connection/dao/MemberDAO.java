@@ -15,7 +15,8 @@ import java.util.ArrayList;
  * DataBase and our connection we established
  * 
  * @author Jose Vives
- * @version 0.1
+ *
+ * @version 1.0
  *
  */
 public class MemberDAO extends DAO {
@@ -32,7 +33,6 @@ public class MemberDAO extends DAO {
 	}
 	
 	/**
-	 * 
 	 * @param username
 	 * 				The username 
 	 * @param password
@@ -50,8 +50,8 @@ public class MemberDAO extends DAO {
 			String sql = "SELECT * FROM MEMBER WHERE FORENAME=\"" + username + "\"";
 			rs = stm.executeQuery(sql);
 
-			// TODO implement password login
-			// TODO implement a a encryption for the password
+			// Implement password login
+			// Implement a a encryption for the password
 			password = MD5.encrypt(password.toString()).toCharArray();
 			
 			while(rs.next()){

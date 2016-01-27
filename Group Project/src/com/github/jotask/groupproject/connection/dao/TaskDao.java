@@ -10,36 +10,49 @@ import java.util.*;
 import java.util.Date;
 
 /**
- * Created by Jose Vives on 01/12/2015.
+ * TAsk DAO for retrieve information from the database for objects
  *
  * @author Jose Vives.
- * @since 01/12/2015
+ *
+ * @version 1.1
  */
 public class TaskDao extends DAO{
 
     /**
-     * @param db   The actual DataBase instance
+     * Constructor for this class
+     *
+     * @param db
+     *          The actual DataBase instance
      * @param conn
+     *          The connection instance
      */
     public TaskDao(DataBase db, Connection conn) {
         super(db, conn);
     }
 
+    /**
+     * Get all task from one selected user
+     *
+     * @param user
+     *      The user we want all his tasks
+     *
+     * @return
+     *      An ArrayList of Task from the selected user
+     */
     public ArrayList<Task> getAllTasks(User user){
-        // TODO get all tasks from connection
-        ArrayList<Task> tasks = new ArrayList<>();
 
         Statement stm = null;
         ResultSet rs = null;
 
-        try {
+        ArrayList<Task> tasks = new ArrayList<>();
 
+        try {
             String sql = "SELECT * FROM TASK WHERE MEMBER_ID=\"" + user.getId() + "\"";
             stm = conn.createStatement();
             rs = stm.executeQuery(sql);
 
             while(rs.next()){
-                Task task = getTask(rs);
+                Task task = converTask(rs);
                 tasks.add(task);
             }
 
@@ -49,8 +62,7 @@ public class TaskDao extends DAO{
             try {
                 close(stm, rs);
             } catch (SQLException e) {
-                // TODO nothing to do
-                e.printStackTrace();
+                // Nothing to do
             }
         }
 
@@ -58,6 +70,15 @@ public class TaskDao extends DAO{
 
     }
 
+    /**
+     * Get a task by his ID
+     *
+     * @param id
+     *      The id from the task we want
+     *
+     * @return
+     *      The task requested
+     */
     public Task getTask(int id){
 
         Task task = null;
@@ -72,7 +93,7 @@ public class TaskDao extends DAO{
             rs = stm.executeQuery(sql);
 
             while (rs.next())
-                task = getTask(rs);
+                task = converTask(rs);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,15 +101,26 @@ public class TaskDao extends DAO{
             try {
                 close(stm, rs);
             } catch (SQLException e) {
-                // TODO nothing to do
-                e.printStackTrace();
+                // Nothing to do
             }
         }
 
         return task;
     }
 
-    private Task getTask(ResultSet rs) throws SQLException {
+    /**
+     * Convert one task from one resultset
+     *
+     * @param rs
+     *      The result that we want the information
+     *
+     * @return
+     *      The task created
+     *
+     * @throws SQLException
+     *      The SQL exception that holds the error message
+     */
+    private Task converTask(ResultSet rs) throws SQLException {
 
         int id = rs.getInt("task_id");
         String name = rs.getString("task_name");
@@ -101,6 +133,15 @@ public class TaskDao extends DAO{
         return new Task(id, name, team_id, member_id, startDate, endDate, status);
     }
 
+    /**
+     * Update one task on the database
+     *
+     * @param task
+     *      The task we want update
+     *
+     * @throws SQLException
+     *      The SQL exception that holds the error message
+     */
     public void updateTask(Task task) throws SQLException {
 
         PreparedStatement stm = null;
