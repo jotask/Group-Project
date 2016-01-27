@@ -84,15 +84,6 @@ public class Connection {
 
     }
 
-    public void close(){
-        if(this.thread != null){
-            thread.close();
-        }
-        if(this.dataBase != null){
-            dataBase.close();
-        }
-    }
-
     public User getUser(){
         return this.user;
     }
@@ -171,5 +162,17 @@ public class Connection {
         return tasks;
     }
 
+    public void close(){
+        if(this.thread != null){
+            thread.close();
+        }
+        if(this.dataBase != null){
+            dataBase.close();
+        }
+        if(thread != null){
+            thread.close();
+        }
+        System.out.println("closing");
+    }
 
 }
