@@ -248,14 +248,6 @@ public class Login extends JDialog {
             }
         }
 
-        // File for store for information
-		File userData = new File (username + ".user");
-
-		if (!userData.exists()) {
-			System.out.println("User data does not exist");
-			return;
-		}
-
         // Create the connection
 		Connection connection = new Connection(properties);
         connection.offline(username, password);

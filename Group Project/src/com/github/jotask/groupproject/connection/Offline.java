@@ -16,6 +16,8 @@ import java.util.ArrayList;
  */
 public class Offline {
 
+    private static final String PATH = "resources/data/";
+
     /** The user that we are logged */
     private User user;
 
@@ -45,7 +47,7 @@ public class Offline {
         // TODO load elements for tasks
 
         // Try to read a file
-        File userData = new File(forename + ".user");
+        File userData = new File(PATH + forename + ".user");
         try (BufferedReader br = new BufferedReader(new FileReader(userData))){
 
             String sCurrentLine;
@@ -75,7 +77,7 @@ public class Offline {
     public void saveToFile(){
 
         // Find the file if exist
-        File userData = new File(user.getFirstName()+".user");
+        File userData = new File(PATH + user.getFirstName()+".user");
 
         // If not exist create a new one
         if (!userData.exists()) {
