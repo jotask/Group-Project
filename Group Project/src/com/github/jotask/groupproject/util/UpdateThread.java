@@ -14,7 +14,7 @@ import java.util.TimerTask;
  * @author Jose Vives.
  * @author Jack Thomson.
  *
- * @since 1.3 - Now close the thread when we exit the application
+ * @version 1.3 - Now close the thread when we exit the application
  */
 public class UpdateThread{
 
