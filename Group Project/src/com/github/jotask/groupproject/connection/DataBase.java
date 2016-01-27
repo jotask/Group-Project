@@ -86,6 +86,8 @@ public class DataBase {
 				e.printStackTrace();
 				// TODO Handle the class not found exception
 				System.exit(1);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 
