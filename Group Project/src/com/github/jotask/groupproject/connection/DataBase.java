@@ -27,12 +27,8 @@ public class DataBase {
 	 * The JBDC we gonna use for the connection for an MySQL server
 	 */
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
-	
-	/**
-	 * The properties for load all the configuration
-	 */
-	private Properties props;
-	/**
+
+    /**
 	 * The connection between our code and the connection
 	 */
 	private Connection conn;
@@ -50,28 +46,23 @@ public class DataBase {
 	 * And we create the connection between our code and the DataBase server
      *
      * @param properties
-     *      The properties for load all the information needed
+     *      The properties for load all the configuration
 	 */
 	public DataBase(Properties properties) {
-
-		this.props = properties;
 		
 		// Load properties from the configuration file
 		String url, user, password;
 		{
 
-			user = props.getProperty("db_user");
+			user = properties.getProperty("db_user");
 
-			password = props.getProperty("db_passwd");
+			password = properties.getProperty("db_passwd");
 
 			// Create the URL
-			StringBuilder DBURL = new StringBuilder();
-			DBURL.append(props.getProperty("db_url"));
-			DBURL.append(props.getProperty("db_server") + ":");
-			DBURL.append(props.getProperty("db_port") + "/");
-			DBURL.append(props.getProperty("db_db"));
-			
-			url = DBURL.toString();
+            url = properties.getProperty("db_url") +
+                    properties.getProperty("db_server") + ":" +
+                    properties.getProperty("db_port") + "/" +
+                    properties.getProperty("db_db");
 
 		}
 		
@@ -90,9 +81,6 @@ public class DataBase {
                     this.teamDAO = new TeamDao(this, conn);
                 }
 
-            } catch (SQLException se) {
-                //Handle errors for JDBC
-                se.printStackTrace();
             } catch (Exception e) {
                 //Handle errors for Class.forName
                 e.printStackTrace();

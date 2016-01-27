@@ -25,10 +25,10 @@ public class Application extends JFrame{
     private JTable table;
 
     /** Instance for this istance */
-    private Application instance;
+    private final Application instance;
 
     /** Connection instance for retrieve all properties */
-    private Connection connection;
+    private final Connection connection;
 
     /**
      * Constructor for this class

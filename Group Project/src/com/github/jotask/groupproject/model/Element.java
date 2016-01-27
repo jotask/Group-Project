@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Element {
 
     /** The int for this element */
-    private int id;
+    private final int id;
 
     /** The task id that this element belows */
     private int taskID;

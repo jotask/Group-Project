@@ -13,10 +13,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Dialog for update a task. They show us all information for one task
@@ -29,37 +29,37 @@ import java.util.*;
 public class TaskDialog extends JDialog {
 
     /** The application that has create this dialog */
-    private Application app;
+    private final Application app;
 
     /** The connection for retrieve and update all information */
-    private Connection conn;
+    private final Connection conn;
 
     /** The JPanel for this dialog */
-    private JPanel contentPanel;
+    private final JPanel contentPanel;
 
     /** The JTexField that holds the task id */
-    private JTextField taskId;
+    private final JTextField taskId;
 
     /** The JTexField that holds the task name */
-    private JTextField taskName;
+    private final JTextField taskName;
 
     /** The JTexField that holds the team id */
-    private JTextField teamId;
+    private final JTextField teamId;
 
     /** The JTexField that holds the member id */
-    private JTextField memberId;
+    private final JTextField memberId;
 
     /** The JDatePicker that holds the start date */
-    private JDatePicker startDate;
+    private final JDatePicker startDate;
 
     /** The JDatePicker that holds the end date */
-    private JDatePicker endDate;
+    private final JDatePicker endDate;
 
     /** The JComboBox that holds the task status */
-    private JComboBox statusList;
+    private final JComboBox statusList;
 
     /** The JTexField that holds the element field */
-    private JTextField elementField;
+    private final JTextField elementField;
 
     /**
      * Constructor for a dialog

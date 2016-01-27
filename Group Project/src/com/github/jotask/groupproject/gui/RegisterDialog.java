@@ -18,16 +18,16 @@ import java.util.Properties;
 public class RegisterDialog extends JDialog {
 
     /** Database instance */
-    private DataBase db;
+    private final DataBase db;
 
     /** JTextField for the forename */
-    private JTextField forenameField;
+    private final JTextField forenameField;
 
     /** JTextField for the surename */
-    private JTextField surenameField;
+    private final JTextField surenameField;
 
     /** JTextField for the mail */
-    private JTextField mailField;
+    private final JTextField mailField;
 
     /**
      * Constructor for this register a dialog. Initialize and

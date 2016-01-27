@@ -27,7 +27,7 @@ public class Application {
 	/**
 	 * Constructor for initialise variables
 	 */
-	public Application() {
+	private Application() {
 
 		{
 			// Init and load properties from the file

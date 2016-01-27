@@ -22,7 +22,7 @@ import java.util.Locale;
 public class Task {
 
     /** The task id */
-    private int id;
+    private final int id;
 
     /** The task name */
     private String name;

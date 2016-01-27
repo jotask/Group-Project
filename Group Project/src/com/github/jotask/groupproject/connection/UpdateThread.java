@@ -1,4 +1,4 @@
-package com.github.jotask.groupproject.util;
+package com.github.jotask.groupproject.connection;
 
 import com.github.jotask.groupproject.connection.Connection;
 import com.github.jotask.groupproject.connection.Offline;

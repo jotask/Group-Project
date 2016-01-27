@@ -3,9 +3,7 @@ package com.github.jotask.groupproject.connection;
 import com.github.jotask.groupproject.model.Element;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
-import com.github.jotask.groupproject.util.UpdateThread;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -23,7 +21,7 @@ public class Connection {
     private static final long SECONDS = 300;
 
     /** Properties instance */
-    private Properties properties;
+    private final Properties properties;
 
     /** Know if we are working online or offline */
     private boolean isOnline;
@@ -117,9 +115,6 @@ public class Connection {
 
         // Get the user that we have login
         this.user = offline.getUser();
-
-        // Set that we have a offline connection
-        this.isOnline = false;
 
         return isOnline;
 
@@ -245,14 +240,6 @@ public class Connection {
             dataBase.close();
         }
     }
-
-    /**
-     * Get the database instance
-     *
-     * @return
-     *      Get the database instance
-     */
-    public DataBase getDataBase() { return dataBase; }
 
     /**
      * Get te offline instance

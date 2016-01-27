@@ -41,7 +41,7 @@ public class TaskTableModel extends AbstractTableModel{
     public static final int STATUS_COL = 5;
 
     /** The names for all the columns for the table */
-    private String[] columnsNames = {"Id", "Name", "Team", "Start Date", "End Date", "Status"};
+    private final String[] columnsNames = {"Id", "Name", "Team", "Start Date", "End Date", "Status"};
 
     /** An instance of all tasks */
     private List<Task> tasks;
@@ -127,7 +127,7 @@ public class TaskTableModel extends AbstractTableModel{
      *      The class for the selected column
      */
     @Override
-    public Class<? extends Object> getColumnClass(int columnIndex) {
+    public Class<?> getColumnClass(int columnIndex) {
         return getValueAt(0, columnIndex).getClass();
     }
 

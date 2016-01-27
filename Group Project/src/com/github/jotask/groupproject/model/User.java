@@ -10,22 +10,22 @@ package com.github.jotask.groupproject.model;
 public class User {
 	
 	/** The user ID */
-	int id;
+    private int id;
 
 	/** The user username */
-	String surname;
+    private String surname;
 
 	/** The name from the user */
-	String firstName;
+    private String firstName;
 
 	/** The mail from the user */
-	String mail;
+    private String mail;
 
 	/** The user password */
-	String password;
+    private String password;
 
-	public User(int id, String surname, String firstname, String mail){
-		this(id, surname, firstname, mail, "");
+	public User(int id, String surname, String firstName, String mail){
+		this(id, surname, firstName, mail, "");
 	}
 
 	/**
@@ -42,8 +42,7 @@ public class User {
 	 * @param password
 	 * 			The password from the user
 	 */
-
-	public User(int id, String surname, String firstName, String mail, String password) {
+    private User(int id, String surname, String firstName, String mail, String password) {
 		this.id = id;
 		this.surname = surname;
 		this.firstName = firstName;

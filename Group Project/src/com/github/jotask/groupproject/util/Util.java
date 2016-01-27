@@ -1,8 +1,5 @@
 package com.github.jotask.groupproject.util;
 
-import javax.swing.*;
-import java.util.Calendar;
-
 /**
  * This class is for hold utils methods that can be used in any part
  *
@@ -47,18 +44,6 @@ public final class Util {
      */
     public static java.util.Date toJavaDate(java.sql.Date sqlDate){
         return new java.util.Date(sqlDate.getTime());
-    }
-
-    // TODO
-
-    public static java.sql.Date calendarToDate(Calendar calendar) {
-        return new java.sql.Date(calendar.getTime().getTime());
-    }
-
-    public static Calendar sqlToCalendar(java.sql.Date date){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar;
     }
 
 }
