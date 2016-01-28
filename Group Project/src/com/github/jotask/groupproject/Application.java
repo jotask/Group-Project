@@ -13,7 +13,7 @@ import java.util.Properties;
  *
  * @author Jose Vives
  *
- * @version 1.4 - Now just have the basics they need
+ * @version 1.4 - Now just have the basics they needed
  *
  */
 public class Application {
