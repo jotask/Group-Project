@@ -1,7 +1,7 @@
 package com.github.jotask.groupproject.connection;
 
-import com.github.jotask.groupproject.connection.dao.ElementDAO;
-import com.github.jotask.groupproject.connection.dao.MemberDAO;
+import com.github.jotask.groupproject.connection.dao.ElementDao;
+import com.github.jotask.groupproject.connection.dao.MemberDao;
 import com.github.jotask.groupproject.connection.dao.TaskDao;
 import com.github.jotask.groupproject.connection.dao.TeamDao;
 import com.github.jotask.groupproject.model.Task;
@@ -36,10 +36,10 @@ public class DataBase {
 	/**
 	 * Instance for the userDAO object
 	 */
-	private MemberDAO memberDao;
+	private MemberDao memberDao;
 	private TaskDao taskDAO;
 	private TeamDao teamDAO;
-	private ElementDAO elementDAO;
+	private ElementDao elementDAO;
 	
 	/**
 	 * Constructor the main class, we instantiate and load our configuration from a file.
@@ -73,10 +73,10 @@ public class DataBase {
                 Class.forName(DRIVER);
                 conn = DriverManager.getConnection(url, user, password);
 
-                // Initialise all our DAO objects
+                // Initialise all our Dao objects
                 {
-                    this.memberDao = new MemberDAO(this, conn);
-                    this.elementDAO = new ElementDAO(this, conn);
+                    this.memberDao = new MemberDao(this, conn);
+                    this.elementDAO = new ElementDao(this, conn);
                     this.taskDAO = new TaskDao(this, conn);
                     this.teamDAO = new TeamDao(this, conn);
                 }
@@ -103,17 +103,17 @@ public class DataBase {
     }
 
     /**
-     * Get the DAO object for member
+     * Get the Dao object for member
      *
      * @return
      *      The memberDAO object
      */
-	public MemberDAO getMemberDao() {
+	public MemberDao getMemberDao() {
 		return memberDao;
 	}
 
     /**
-     * Get the DAO object for Task
+     * Get the Dao object for Task
      *
      * @return
      *      The taskDAO Object
@@ -123,7 +123,7 @@ public class DataBase {
 	}
 
     /**
-     * Get the DAO object for team
+     * Get the Dao object for team
      *
      * @return
      *      The teamDAO Object
@@ -133,12 +133,12 @@ public class DataBase {
 	}
 
     /**
-     * Get the DAO object for element
+     * Get the Dao object for element
      *
      * @return
      *      The elementDAO object
      */
-	public ElementDAO getElementDAO() {
+	public ElementDao getElementDAO() {
 		return elementDAO;
 	}
 

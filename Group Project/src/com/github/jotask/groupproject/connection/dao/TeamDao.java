@@ -10,13 +10,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * Team DAO for retrieve information from the database for objects
+ * Team Dao for retrieve information from the database for objects
  *
  * @author Jose Vives.
  *
  * @version 1.0
  */
-public class TeamDao extends  DAO{
+public class TeamDao extends Dao {
 
     /**
      * Constructor for a team

@@ -10,13 +10,13 @@ import java.util.*;
 import java.util.Date;
 
 /**
- * TAsk DAO for retrieve information from the database for objects
+ * TAsk Dao for retrieve information from the database for objects
  *
  * @author Jose Vives.
  *
  * @version 1.1
  */
-public class TaskDao extends DAO{
+public class TaskDao extends Dao {
 
     /**
      * Constructor for this class
