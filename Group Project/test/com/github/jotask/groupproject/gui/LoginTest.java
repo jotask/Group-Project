@@ -2,7 +2,7 @@ package com.github.jotask.groupproject.gui;
 
 
 import com.github.jotask.groupproject.connection.DataBase;
-import com.github.jotask.groupproject.connection.dao.MemberDAO;
+import com.github.jotask.groupproject.connection.dao.MemberDao;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -51,7 +51,7 @@ public class LoginTest {
 
             Connection conn = (Connection) DriverManager.getConnection(url, user, password);
 
-            MemberDAO memberDAO = new MemberDAO(database,conn);
+            MemberDao memberDAO = new MemberDao(database,conn);
             names = memberDAO.getAllUser();
         } catch (IOException e) {
             e.printStackTrace();

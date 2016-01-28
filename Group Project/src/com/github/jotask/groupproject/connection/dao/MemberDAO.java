@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * @version 1.0
  *
  */
-public class MemberDAO extends DAO {
+public class MemberDao extends Dao {
 
 	/**
 	 * Constructor for the class
@@ -28,7 +28,7 @@ public class MemberDAO extends DAO {
 	 * @param conn
 	 * 			The Connection instance
 	 */
-	public MemberDAO(DataBase db, Connection conn) {
+	public MemberDao(DataBase db, Connection conn) {
 		super(db, conn);
 	}
 	

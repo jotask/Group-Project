@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @version 1.0
  */
-public class ElementDAO extends DAO{
+public class ElementDao extends Dao{
 
     /**
      * Constructor for this class
@@ -25,7 +25,7 @@ public class ElementDAO extends DAO{
      * @param conn
      *          The connection instance
      */
-    public ElementDAO(DataBase db, Connection conn) {
+    public ElementDao(DataBase db, Connection conn) {
         super(db, conn);
     }
 
