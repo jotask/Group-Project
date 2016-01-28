@@ -19,13 +19,13 @@ import java.util.ArrayList;
  * @version 1.3 - new GUI
  *
  */
-public class Application extends JFrame{
+public class ApplicationGUI extends JFrame{
 
     /** Table that hold all tasks */
     private JTable table;
 
     /** Instance for this istance */
-    private final Application instance;
+    private final ApplicationGUI instance;
 
     /** Connection instance for retrieve all properties */
     private final Connection connection;
@@ -37,7 +37,7 @@ public class Application extends JFrame{
      * @param connection
      *      The connection instance
      */
-    public Application(Connection connection) {
+    public ApplicationGUI(Connection connection) {
     	setBackground(new Color(240, 240, 240));
         this.connection = connection;
         instance = this;

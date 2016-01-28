@@ -29,7 +29,7 @@ import java.util.GregorianCalendar;
 public class TaskDialog extends JDialog {
 
     /** The application that has create this dialog */
-    private final Application app;
+    private final ApplicationGUI app;
 
     /** The connection for retrieve and update all information */
     private final Connection conn;
@@ -73,7 +73,7 @@ public class TaskDialog extends JDialog {
      * @param task
      *      The task tat we want populate this dialog
      */
-    public TaskDialog(Application app, Connection conn, final Task task) {
+    public TaskDialog(ApplicationGUI app, Connection conn, final Task task) {
         this.app = app;
         this.conn = conn;
 

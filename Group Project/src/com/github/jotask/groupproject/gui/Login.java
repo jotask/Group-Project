@@ -190,7 +190,7 @@ public class Login extends JDialog {
 
 			closeDialog();
 
-			new Application(connection);
+			new ApplicationGUI(connection);
 
 		}else{
 			JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);
@@ -221,7 +221,7 @@ public class Login extends JDialog {
 
 		closeDialog();
 
-		new Application(connection);
+		new ApplicationGUI(connection);
 	}
 
     /**
