@@ -39,7 +39,7 @@
 //            // Init and load properties from the file
 //            try {
 //                this.properties = new Properties();
-//                this.properties.load(new FileInputStream("resources/" + Application.PROPERTIES_FILE));
+//                this.properties.load(new FileInputStream("resources/" + ApplicationGUI.PROPERTIES_FILE));
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
