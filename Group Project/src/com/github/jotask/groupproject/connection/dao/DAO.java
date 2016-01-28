@@ -15,7 +15,7 @@ import com.github.jotask.groupproject.connection.DataBase;
  *
  * @version 1.0
  */
-public abstract class DAO {
+public abstract class Dao {
 	
 	/**
 	 * DataBase reference
@@ -34,7 +34,7 @@ public abstract class DAO {
 	 * @param conn
 	 * 			The Connection we have established between the code and the server
 	 */
-	protected DAO(DataBase db, Connection conn){
+	protected Dao(DataBase db, Connection conn){
 		this.db = db;
 		this.conn = conn;
 	}

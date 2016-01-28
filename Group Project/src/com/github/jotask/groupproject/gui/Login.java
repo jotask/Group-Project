@@ -238,7 +238,7 @@ public class Login extends JDialog {
 
             // Save this values to the config file
             try {
-                OutputStream fos = new FileOutputStream(PROPERTIES_FILE);
+                OutputStream fos = new FileOutputStream("resources/" + PROPERTIES_FILE);
                 this.properties.store(fos, null);
             } catch (IOException e) {
                 // Nothing we can do, because this has been checked before start the program
