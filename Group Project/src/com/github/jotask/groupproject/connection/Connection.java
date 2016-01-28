@@ -71,8 +71,6 @@ public class Connection {
             return false;
         }
 
-        // TODO check if we need to update the database with all previous offline work
-
         // We set if we are online. At this point we have a connection between the database and the source code
         this.isOnline = true;
 
@@ -236,7 +234,6 @@ public class Connection {
     }
 
     private void syncData(ArrayList<Task> tasks){
-        System.out.println("sync");
         for(Task t: tasks){
             try {
                 dataBase.getTaskDAO().updateTask(t);
