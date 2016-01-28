@@ -26,10 +26,9 @@ public class LoginTest {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
 
-
-    @org.junit.Test
-    public void incorrectLogin() {
+    private ArrayList<String> grabNames() {
         Properties properties = new Properties();
+        ArrayList<String> names = new ArrayList<String>();
 
         try {
             properties.load(new FileInputStream(PROPERTIES_FILE));
@@ -53,21 +52,26 @@ public class LoginTest {
             Connection conn = (Connection) DriverManager.getConnection(url, user, password);
 
             MemberDAO memberDAO = new MemberDAO(database,conn);
-
-            ArrayList<String> names = memberDAO.getAllUser();
-
-            for (String s : names) {
-                System.out.println("Name : " + s);
-            }
-
-
-
+            names = memberDAO.getAllUser();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        return names;
+    }
+
+
+
+    @org.junit.Test
+    public void incorrectLogin() {
+        ArrayList<String> names = grabNames();
+        for (int i = 0; i < testFreq; i ++) {
+            String testString = Long.toHexString(Double.doubleToLongBits(Math.random()));
+
         }
     }
 
