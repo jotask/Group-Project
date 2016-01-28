@@ -3,9 +3,7 @@ package com.github.jotask.groupproject.connection;
 import com.github.jotask.groupproject.model.Element;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
-import com.github.jotask.groupproject.util.UpdateThread;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -23,7 +21,7 @@ public class Connection {
     private static final long SECONDS = 300;
 
     /** Properties instance */
-    private Properties properties;
+    private final Properties properties;
 
     /** Know if we are working online or offline */
     private boolean isOnline;
@@ -73,13 +71,18 @@ public class Connection {
             return false;
         }
 
-        // TODO check if we need to update the database with all previous work
-
         // We set if we are online. At this point we have a connection between the database and the source code
         this.isOnline = true;
 
         // We initialize a offline object for store information on the file
         this.offline = new Offline(user);
+
+        // Load previous data to the database
+        this.offline.loadFromFile(user.getFirstName());
+        ArrayList<Task> oldTasks = this.offline.getTasks();
+        if(oldTasks != null){
+            syncData(oldTasks);
+        }
 
         // We get all task for this users and we save the tasks on the file
         ArrayList<Task> tasks = dataBase.getTasks(user);
@@ -118,9 +121,6 @@ public class Connection {
         // Get the user that we have login
         this.user = offline.getUser();
 
-        // Set that we have a offline connection
-        this.isOnline = false;
-
         return isOnline;
 
     }
@@ -135,14 +135,14 @@ public class Connection {
      *      the task that we requested
      */
     public Task getTask(int taskID) {
-        Task task = null;
+        Task task;
         if(this.isOnline){
             task = dataBase.getTaskDAO().getTask(taskID);
             if(task != null){
                 task.setElements(getElements(task));
             }
         }else{
-            // TODO offline get task by id
+            task = offline.getTask(taskID);
         }
         return task;
     }
@@ -153,7 +153,7 @@ public class Connection {
      * @return
      *      An arrayList with all task from the selected user
      */
-    public ArrayList<Task> getAllTasks() {
+    private ArrayList<Task> getAllTasks() {
         ArrayList<Task> tasks;
         if(this.isOnline){
             tasks = dataBase.getTasks(user);
@@ -192,7 +192,7 @@ public class Connection {
             return true;
 
         }else{
-            // TODO update a task offline
+            offline.updateTask(task, element);
         }
         return false;
     }
@@ -208,12 +208,12 @@ public class Connection {
      */
     private ArrayList<Element> getElements(Task task){
 
-        ArrayList<Element> elements = null;
+        ArrayList<Element> elements;
 
         if(isOnline){
             elements = dataBase.getElementDAO().getAllElementOnTask(task);
         }else{
-            // TODO get all elements from the selected task offline
+            elements = offline.getAllElementOnTask(task);
         }
         return elements;
     }
@@ -233,8 +233,23 @@ public class Connection {
         return tasks;
     }
 
+    private void syncData(ArrayList<Task> tasks){
+        for(Task t: tasks){
+            try {
+                dataBase.getTaskDAO().updateTask(t);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            for(Element e: t.getElements()){
+                if(!dataBase.getElementDAO().existElement(e)) {
+                    dataBase.getElementDAO().addElement(e);
+                }
+            }
+        }
+    }
+
     /**
-     * Close all connection and close the thread
+     * Close all connection and close/stop the thread
      */
     public void close(){
         if(this.thread != null){
@@ -244,14 +259,6 @@ public class Connection {
             dataBase.close();
         }
     }
-
-    /**
-     * Get the database instance
-     *
-     * @return
-     *      Get the database instance
-     */
-    public DataBase getDataBase() { return dataBase; }
 
     /**
      * Get te offline instance

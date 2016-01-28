@@ -4,16 +4,19 @@ import com.github.jotask.groupproject.connection.Connection;
 import com.github.jotask.groupproject.model.Element;
 import com.github.jotask.groupproject.model.Task;
 import net.miginfocom.swing.MigLayout;
+import org.jdatepicker.DateModel;
+import org.jdatepicker.JDateComponentFactory;
+import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Dialog for update a task. They show us all information for one task
@@ -26,37 +29,37 @@ import java.util.Date;
 public class TaskDialog extends JDialog {
 
     /** The application that has create this dialog */
-    private Application app;
+    private final Application app;
 
     /** The connection for retrieve and update all information */
-    private Connection conn;
+    private final Connection conn;
 
     /** The JPanel for this dialog */
-    private final JPanel contentPanel = new JPanel();
+    private final JPanel contentPanel;
 
     /** The JTexField that holds the task id */
-    private JTextField taskId;
+    private final JTextField taskId;
 
     /** The JTexField that holds the task name */
-    private JTextField taskName;
+    private final JTextField taskName;
 
     /** The JTexField that holds the team id */
-    private JTextField teamId;
+    private final JTextField teamId;
 
     /** The JTexField that holds the member id */
-    private JTextField memberId;
+    private final JTextField memberId;
 
-    /** The JTexField that holds the start date */
-    private JTextField startDate;
+    /** The JDatePicker that holds the start date */
+    private final JDatePicker startDate;
 
-    /** The JTexField that holds the end date */
-    private JTextField endDate;
+    /** The JDatePicker that holds the end date */
+    private final JDatePicker endDate;
 
     /** The JComboBox that holds the task status */
-    private JComboBox statusList;
+    private final JComboBox statusList;
 
     /** The JTexField that holds the element field */
-    private JTextField elementField;
+    private final JTextField elementField;
 
     /**
      * Constructor for a dialog
@@ -74,7 +77,10 @@ public class TaskDialog extends JDialog {
         this.app = app;
         this.conn = conn;
 
+        contentPanel = new JPanel();
+
         setTitle("Update task");
+        setResizable(false);
 
         int counter = 0;
 
@@ -123,8 +129,8 @@ public class TaskDialog extends JDialog {
         }
         counter++;
         {
-            JLabel lblMemberid = new JLabel("MemberID:");
-            contentPanel.add(lblMemberid, "cell 0 " + counter + ",alignx trailing");
+            JLabel lblMemberId = new JLabel("MemberID:");
+            contentPanel.add(lblMemberId, "cell 0 " + counter + ",alignx trailing");
         }
         {
             memberId = new JTextField();
@@ -139,24 +145,31 @@ public class TaskDialog extends JDialog {
             contentPanel.add(lblStartdate, "cell 0 " + counter + ",alignx trailing");
         }
         {
-            startDate = new JTextField();
-            contentPanel.add(startDate, "cell 1 " + counter + ",growx");
-            startDate.setColumns(10);
-            //TODO Delete this
-            java.util.Date d = new java.util.Date();
-            startDate.setText(new Timestamp(new java.util.Date().getTime()).toString());
+            Date dateT = task.getStartDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateT);
+            startDate = new JDateComponentFactory().createJDatePicker();
+            DateModel date = startDate.getModel();
+            date.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+            date.setMonth(calendar.get(Calendar.MONTH));
+            date.setYear(calendar.get(Calendar.YEAR));
+            contentPanel.add((Component) startDate, "cell 1 " + counter + ",growx");
         }
         counter++;
         {
-            JLabel lblEnddate = new JLabel("EndDate:");
-            contentPanel.add(lblEnddate, "cell 0 " + counter + ",alignx trailing");
+            JLabel lblEndDate = new JLabel("EndDate:");
+            contentPanel.add(lblEndDate, "cell 0 " + counter + ",alignx trailing");
         }
         {
-            endDate = new JTextField();
-            contentPanel.add(endDate, "cell 1 " + counter + ",growx");
-            endDate.setColumns(10);
-            // TODO Delete this
-            endDate.setText(task.getEndDate().toString());
+            Date dateT = task.getEndDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateT);
+            endDate = new JDateComponentFactory().createJDatePicker();
+            DateModel date = endDate.getModel();
+            date.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+            date.setMonth(calendar.get(Calendar.MONTH));
+            date.setYear(calendar.get(Calendar.YEAR));
+            contentPanel.add((Component) endDate, "cell 1 " + counter + ",growx");
         }
         counter++;
         {
@@ -167,7 +180,7 @@ public class TaskDialog extends JDialog {
             String[] statusString = { "completed", "abandoned", "allocated" };
             statusList = new JComboBox(statusString);
             contentPanel.add(statusList, "cell 1 " + counter + ",growx");
-            // FIXME set the default value to the actual value for tat task
+            statusList.setSelectedItem(task.getStatus());
         }
         counter++;
         {
@@ -175,15 +188,27 @@ public class TaskDialog extends JDialog {
             contentPanel.add(lblElement, "cell 0 " + counter + ",alignx trailing");
         }
         {
-            // FIXME
+            ArrayList<String> list = new ArrayList<>();
             ArrayList<Element> elements = task.getElements();
             if(elements != null) {
                 for (Element e : elements) {
-                    counter++;
-                    JLabel tmp = new JLabel(e.getDescription());
-                    contentPanel.add(tmp, "cell 1 " + counter + ",alignx trailing");
+                    list.add(e.getDescription() + "   ");
                 }
             }
+            JList l = new JList(list.toArray());
+            l.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+            l.setBackground(contentPanel.getBackground());
+
+            JScrollPane scrollPane = new JScrollPane(l);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.setPreferredSize(new Dimension(350,400));
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+            JScrollBar bar = scrollPane.getVerticalScrollBar();
+            bar.setValue(bar.getMaximum());
+
+            contentPanel.add(scrollPane, "cell 1 " + counter + ",alignx trailing");
         }
         counter++;
         {
@@ -235,7 +260,6 @@ public class TaskDialog extends JDialog {
 
         // Check if the elementField if empty
         if(elementField.getText().isEmpty()){
-            // TODO add a pop error. An elementField can't be empty i think
             JOptionPane.showMessageDialog(this, "If you update one task, you need to enter the element description", "Field Empty", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -249,13 +273,15 @@ public class TaskDialog extends JDialog {
         String memberID = memberId.getText();
         int member_id = Integer.parseInt(memberID);
 
-        // FIXME Get actual values for this fields
-        Date startDateTime = new Date();
-        Date endDateTime = new Date();
+        GregorianCalendar gcS = (GregorianCalendar) startDate.getModel().getValue();
+        Date startDateTime = new Date(gcS.getTime().getTime());
+
+        GregorianCalendar gcE = (GregorianCalendar) endDate.getModel().getValue();
+        Date endDateTime = new Date(gcE.getTime().getTime());
 
         String status = (String) statusList.getSelectedItem();
 
-        // Create a new task for update all iformation
+        // Create a new task for update all information
         Task task = new Task(id, name, team_id, member_id, startDateTime, endDateTime, status);
 
         // Create an element for this update
@@ -264,8 +290,8 @@ public class TaskDialog extends JDialog {
         // Update the task
         conn.updateTask(task, element);
 
-        // Refres the task view
-        app.refreshTaskView(conn.getAllTasks());
+        // Refresh the task view
+        app.refreshTaskView(conn.getAllTasksWithElements());
 
         // Cancel and close the dialog
         cancelCliked();

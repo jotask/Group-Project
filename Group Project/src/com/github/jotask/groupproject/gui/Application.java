@@ -25,10 +25,10 @@ public class Application extends JFrame{
     private JTable table;
 
     /** Instance for this istance */
-    private Application instance;
+    private final Application instance;
 
     /** Connection instance for retrieve all properties */
-    private Connection connection;
+    private final Connection connection;
 
     /**
      * Constructor for this class
@@ -44,7 +44,7 @@ public class Application extends JFrame{
         initialize();
 
         // refresh the table with all task
-        this.refreshTaskView(connection.getAllTasks());
+        this.refreshTaskView(connection.getAllTasksWithElements());
     }
 
     /**

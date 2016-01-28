@@ -1,7 +1,5 @@
 package com.github.jotask.groupproject.util;
 
-import javax.swing.*;
-
 /**
  * This class is for hold utils methods that can be used in any part
  *

@@ -10,7 +10,7 @@ package com.github.jotask.groupproject.model;
 public class Team {
 
     /** Id for this team */
-    private int id;
+    private final int id;
 
     /** The team name */
     private String name;

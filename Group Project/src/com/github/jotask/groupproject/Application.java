@@ -13,13 +13,13 @@ import java.util.Properties;
  *
  * @author Jose Vives
  *
- * @version 1.4 - Now just have the basics they need
+ * @version 1.4 - Now just have the basics they needed
  *
  */
 public class Application {
 
 	/** Path and the file for the properties */
-	public static final String PROPERTIES_FILE = "resources/config.properties";
+	public static final String PROPERTIES_FILE = "config.properties";
 
 	/** Property variable */
 	private Properties properties;
@@ -27,13 +27,13 @@ public class Application {
 	/**
 	 * Constructor for initialise variables
 	 */
-	public Application() {
+	private Application() {
 
 		{
 			// Init and load properties from the file
 			try {
 				this.properties = new Properties();
-				this.properties.load(new FileInputStream(PROPERTIES_FILE));
+				this.properties.load(new FileInputStream("resources/" + PROPERTIES_FILE));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

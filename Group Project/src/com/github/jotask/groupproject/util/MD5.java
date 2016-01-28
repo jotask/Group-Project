@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * Static class for encrypt a string for security proposes
- * Code bellows to the follow webpage
+ * Code bellows to the follow web page
  * http://www.java2s.com/Code/Java/Security/UseMD5toencryptastring.htm
  *
  * @author Jose Vives
@@ -42,13 +42,12 @@ public class MD5 {
 
         digester.update(str.getBytes());
         byte[] hash = digester.digest();
-        StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < hash.length; i++) {
-            if ((0xff & hash[i]) < 0x10) {
-                hexString.append("0" + Integer.toHexString((0xFF & hash[i])));
-            }
-            else {
-                hexString.append(Integer.toHexString(0xFF & hash[i]));
+        StringBuilder hexString = new StringBuilder();
+        for (byte aHash : hash) {
+            if ((0xff & aHash) < 0x10) {
+                hexString.append("0").append(Integer.toHexString((0xFF & aHash)));
+            } else {
+                hexString.append(Integer.toHexString(0xFF & aHash));
             }
         }
         return hexString.toString();

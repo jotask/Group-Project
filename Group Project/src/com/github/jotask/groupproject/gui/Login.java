@@ -24,16 +24,16 @@ public class Login extends JDialog {
 	private static final long serialVersionUID = -6203552975399889940L;
 
     /** Password field for the password */
-	private JPasswordField passwordField;
+	private final JPasswordField passwordField;
 
     /** Username field */
-	private JTextField usernameField;
+	private final JTextField usernameField;
 
     /** Check box for rember option */
-	private JCheckBox remember;
+	private final JCheckBox remember;
 
     /** Properties instance */
-	private Properties properties;
+	private final Properties properties;
 
     /**
      * Constructor for initialize everything
@@ -146,12 +146,11 @@ public class Login extends JDialog {
 		// Load previous data if exist
 		{
 			String username = this.properties.getProperty("username");
-			String password = this.properties.getProperty("password");
+			// String password = this.properties.getProperty("password");
 
 			if(!username.isEmpty()){
 				this.remember.setSelected(true);
 				this.usernameField.setText(username);
-				// FIXME
 			}
 
 		}
@@ -186,28 +185,12 @@ public class Login extends JDialog {
                 return;
             }
 
-			//Save options
-			// If remember checkbox is selected and also on the config file the username
-			// from the previous session and the actual session is different we save this
-			// new options.
-			if(this.remember.isSelected() &&
-					!this.properties.getProperty("username").equals(username)){
-				this.properties.setProperty("username", username);
-
-				// Save this values to the config file
-				try {
-					OutputStream fos = new FileOutputStream(PROPERTIES_FILE);
-					this.properties.store(fos, null);
-				} catch (FileNotFoundException e) {
-					// Nothing we can do, because this has been checked before start the program
-				} catch (IOException e) {
-					// Nothing we can do, because this has been checked before start the program
-				}
-			}
+            if(remember.isSelected())
+                saveRemember();
 
 			closeDialog();
 
-			Application app = new Application(connection);
+			new Application(connection);
 
 		}else{
 			JOptionPane.showMessageDialog(this, "Username or password not correct", "Error", JOptionPane.ERROR_MESSAGE);
@@ -229,31 +212,39 @@ public class Login extends JDialog {
 			return;
 		}
 
+        if(remember.isSelected())
+            saveRemember();
+
+        // Create the connection
+		Connection connection = new Connection(properties);
+        connection.offline(username, password);
+
+		closeDialog();
+
+		new Application(connection);
+	}
+
+    /**
+     * This method store this login for next quick loggins
+     */
+    private void saveRemember(){
         //Save options
         // If remember checkbox is selected and also on the config file the username
         // from the previous session and the actual session is different we save this
         // new options.
-        if(this.remember.isSelected() &&
-                !this.properties.getProperty("username").equals(username)){
+        String username = this.usernameField.getText();
+        if(!this.properties.getProperty("username").equals(username)){
             this.properties.setProperty("username", username);
 
             // Save this values to the config file
             try {
                 OutputStream fos = new FileOutputStream(PROPERTIES_FILE);
                 this.properties.store(fos, null);
-            } catch (FileNotFoundException e) {
-                // Nothing we can do, because this has been checked before start the program
             } catch (IOException e) {
                 // Nothing we can do, because this has been checked before start the program
             }
         }
-
-        // Create the connection
-		Connection connection = new Connection(properties);
-        connection.offline(username, password);
-		closeDialog();
-		Application app = new Application(connection);
-	}
+    }
 
     /** Close the dialog */
     private void closeDialog(){

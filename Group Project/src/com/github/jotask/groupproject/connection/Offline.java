@@ -1,5 +1,6 @@
 package com.github.jotask.groupproject.connection;
 
+import com.github.jotask.groupproject.model.Element;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
 
@@ -44,8 +45,6 @@ public class Offline {
      */
     public boolean loadFromFile(String forename){
 
-        // TODO load elements for tasks
-
         // Try to read a file
         File userData = new File(PATH + forename + ".user");
         try (BufferedReader br = new BufferedReader(new FileReader(userData))){
@@ -65,7 +64,7 @@ public class Offline {
             }
             return true;
 
-        } catch (IOException e) {
+    } catch (IOException e) {
             // The file doesn't exist so we can't do to much
         }
         return false;
@@ -107,6 +106,75 @@ public class Offline {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * Get all elements for a specified task
+     *
+     * @param task
+     *      The task we want his elements
+     *
+     * @return
+     *      All the elements for the selected task
+     */
+    public ArrayList<Element> getAllElementOnTask(Task task) {
+
+        if(tasks != null){
+            for (Task t: tasks){
+                if(t.getId() == task.getId()){
+                    return t.getElements();
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Update a task
+     * We add the new element to the task it self
+     * and we save the changes on the file
+     *
+     * @param task
+     *      The task updated
+     *
+     * @param element
+     *      The element to add
+     */
+    public void updateTask(Task task, Element element) {
+            if(tasks != null){
+                Task tmp = getTask(task.getId());
+                tmp.getElements().add(element);
+
+                for(int i = 0; i < tasks.size(); i++){
+                    Task tmpT = tasks.get(i);
+                    if(tmpT.getId() == tmp.getId()){
+                        tasks.set(i, tmp);
+                    }
+                }
+
+                saveToFile();
+
+            }
+    }
+
+    /**
+     * Get a task by his ID
+     *
+     * @param taskID
+     *      The id for the task we want search
+     *
+     * @return
+     *      The task selected
+     */
+    public Task getTask(int taskID) {
+        if(tasks != null){
+            for(Task t: tasks){
+                if(t.getId() == taskID){
+                    return t;
+                }
+            }
+        }
+        return null;
     }
 
     /**
