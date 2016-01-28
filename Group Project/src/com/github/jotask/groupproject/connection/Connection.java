@@ -79,6 +79,13 @@ public class Connection {
         // We initialize a offline object for store information on the file
         this.offline = new Offline(user);
 
+        // Load previous data to the database
+        this.offline.loadFromFile(user.getFirstName());
+        ArrayList<Task> oldTasks = this.offline.getTasks();
+        if(oldTasks != null){
+            syncData(oldTasks);
+        }
+
         // We get all task for this users and we save the tasks on the file
         ArrayList<Task> tasks = dataBase.getTasks(user);
         for(Task t: tasks){
@@ -228,8 +235,24 @@ public class Connection {
         return tasks;
     }
 
+    private void syncData(ArrayList<Task> tasks){
+        System.out.println("sync");
+        for(Task t: tasks){
+            try {
+                dataBase.getTaskDAO().updateTask(t);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            for(Element e: t.getElements()){
+                if(!dataBase.getElementDAO().existElement(e)) {
+                    dataBase.getElementDAO().addElement(e);
+                }
+            }
+        }
+    }
+
     /**
-     * Close all connection and close the thread
+     * Close all connection and close/stop the thread
      */
     public void close(){
         if(this.thread != null){

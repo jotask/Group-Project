@@ -3,11 +3,9 @@ package com.github.jotask.groupproject.connection.dao;
 import com.github.jotask.groupproject.connection.DataBase;
 import com.github.jotask.groupproject.model.Element;
 import com.github.jotask.groupproject.model.Task;
+import com.github.jotask.groupproject.util.Util;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -132,4 +130,37 @@ public class ElementDAO extends DAO{
         }
         return success;
     }
+
+    public boolean existElement(Element e){
+
+        String sql = "SELECT EXISTS(SELECT 1 FROM TASK_ELEMENT WHERE ELEMENT_ID ='" + e.getId() + "' LIMIT 1) ";
+
+        Statement stm = null;
+        ResultSet rs = null;
+
+        boolean exist = false;
+
+        try {
+            stm = conn.createStatement();
+            rs = stm.executeQuery(sql);
+
+            while(rs.next()){
+                exist = true;
+                break;
+            }
+
+        }catch (SQLException eee){
+            eee.printStackTrace();
+        }finally {
+            try {
+                close(stm, rs);
+            } catch (SQLException e1) {
+                // Nothing to do
+            }
+        }
+
+        return exist;
+
+    }
+
 }
