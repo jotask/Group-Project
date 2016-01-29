@@ -111,6 +111,7 @@ public class TaskDialog extends JDialog {
         }
         {
             taskName = new JTextField();
+            taskName.setEditable(false);
             contentPanel.add(taskName, "cell 1 " + counter + ",growx");
             taskName.setColumns(10);
             taskName.setText(task.getName());
@@ -165,6 +166,9 @@ public class TaskDialog extends JDialog {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(dateT);
             endDate = new JDateComponentFactory().createJDatePicker();
+            endDate.setButtonFocusable(false);
+            endDate.setTextEditable(false);
+
             DateModel date = endDate.getModel();
             date.setDay(calendar.get(Calendar.DAY_OF_MONTH));
             date.setMonth(calendar.get(Calendar.MONTH));
