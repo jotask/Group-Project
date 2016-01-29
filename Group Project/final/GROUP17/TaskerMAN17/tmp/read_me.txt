@@ -1,0 +1,1 @@
+used to store the session variables so no files are created in here until the system is ran

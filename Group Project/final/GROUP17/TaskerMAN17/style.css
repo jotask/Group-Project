@@ -1,0 +1,188 @@
+#header{
+	background-color: rgb(190,190,190);
+	color: grey;
+	height: 120px;
+	text-align: center;
+	width: 100%;
+	border-radius: 5px;
+}
+#largeHeading{
+	font-size: 100px;
+}
+#nav{
+	background-color: rgb(90,90,90);
+	border: 2px solid;
+	border-color: dark blue;
+	width: 18%;
+	height: 800px;
+	float: left;
+	text-align: center;
+	border-radius: 5px;
+}
+#main{
+	width: 80%;
+	background-color: rgb(190,190,190);
+	border: 2px solid;
+	border-radius: 5px;
+	border-color: dark blue;
+	margin-left: 19%;
+	padding-bottom: 100px;
+}
+#innerMain{
+	width: 90%;
+	background-color: rgb(90,90,90);
+	color: white;
+	margin: auto;
+	border-radius: 5px;
+	padding-bottom: 50px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+body{
+	background-color: black;
+	text-align: center;
+	border-radius: 5px;
+	border: none;
+}
+#nav1{
+	background-color: rgb(190,190,190);
+	border: 2px solid;
+	width: 90%;
+	height: 40px;
+	border-color: dark blue;
+	text-align: center;
+	border-radius: 5px;
+	margin: auto;
+	clear: both;
+	margin-top: 5px;
+}
+#nav2{
+	background-color: rgb(190,190,190);
+	border: 2px solid;
+	width: 90%;
+	height: 40px;
+	border-color: dark blue;
+	text-align: center;
+	border-radius: 5px;
+	margin: auto;
+	clear: both;
+	margin-top: 5px;
+}
+#nav3{
+	background-color: rgb(190,190,190);
+	border: 2px solid;
+	width: 90%;
+	height: 40px;
+	border-color: dark blue;
+	text-align: center;
+	border-radius: 5px;
+	margin: auto;
+	clear: both;
+	margin-top: 5px;
+}
+#nav4{
+	background-color: rgb(190,190,190);
+	border: 2px solid;
+	width: 90%;
+	height: 40px;
+	border-color: dark blue;
+	text-align: center;
+	border-radius: 5px;
+	margin: auto;
+	clear: both;
+	margin-top: 5px;
+}
+#nav5{
+	background-color: rgb(190,190,190);
+	border: 2px solid;
+	width: 90%;
+	height: 40px;
+	border-color: dark blue;
+	text-align: center;
+	border-radius: 5px;
+	margin: auto;
+	clear: both;
+	margin-top: 5px;
+}
+#nav6{
+	background-color: rgb(190,190,190);
+	border: 2px solid;
+	width: 90%;
+	height: 40px;
+	border-color: dark blue;
+	text-align: center;
+	border-radius: 5px;
+	margin: auto;
+	clear: both;
+	margin-top: 5px;
+}
+table{
+	margin: auto;
+	text-align: center;
+}
+th{
+	background-color: rgb(90,130,240);
+	border: 2px solid;
+	border-color: rgb(255,255,255);
+	
+}
+td{
+	background-color: rgb(200,200,200);
+	color: rgb(0,0,0);
+	border: 2px solid;
+	border-color: rgb(255,255,255);
+}
+#newTeamMember{
+	width: 25%;
+	background-color: rgb(90,130,240);
+	color: white;
+	margin: auto;
+	border-radius: 5px;
+	float: left;
+	margin-top: 15px;
+	margin-left: 5%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+#updateTeamMember{
+	width: 25%;
+	background-color: rgb(90,130,240);
+	color: white;
+	margin: auto;
+	border-radius: 5px;
+	float: left;
+	margin-top: 15px;
+	margin-left: 5%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+#deleteTeamMember{
+	width: 25%;
+	background-color: rgb(90,130,240);
+	color: white;
+	margin: auto;
+	border-radius: 5px;
+	float: left;
+	margin-top: 15px;
+	margin-left: 5%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+#nextButton{
+	width: 25%;
+	background-color: rgb(60,100,200);
+	margin-left: 10%;
+	float: left;
+	margin-top: 5px;
+	padding-top: 4px;
+}
+#cancelButton{
+	width:  25%;
+	background-color: rgb(60,100,200);
+	margin-right: 10%;
+	float: right;
+	margin-top: 5px;
+	padding-top: 4px;
+}
+form{
+	margin-bottom: 4px;
