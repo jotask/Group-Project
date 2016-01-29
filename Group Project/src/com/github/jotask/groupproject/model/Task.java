@@ -6,8 +6,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 
 /**
@@ -92,9 +92,9 @@ public class Task {
         output += Util.SEPARATOR;
         output += member_id;
         output += Util.SEPARATOR;
-        output += startDate;
+        output += dateToString(startDate);
         output += Util.SEPARATOR;
-        output += endDate;
+        output += dateToString(endDate);
         output += Util.SEPARATOR;
         output += status;
         output += Util.SEPARATOR;
@@ -139,7 +139,9 @@ public class Task {
          * for parsing and object creation
          */
         String[] separate = str.split(Character.toString(Util.SEPARATOR));
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         /**
          * Parsing the strings into the correct format
@@ -150,24 +152,27 @@ public class Task {
         }
 
         try {
-            int id = Integer.parseInt(separate[0]);
+            Date start_date = Util.toSQLDate(format.parse(separate[4]));
+            System.out.println(start_date.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        int id = Integer.parseInt(separate[0]);
             String name = separate[1];
             int team_id = Integer.parseInt(separate[2]);
             int member_id = Integer.parseInt(separate[3]);
-            Date start_date = format.parse(separate[4]);
-            Date end_date = format.parse(separate[5]);
+            Date start_date = stringToDate(separate[4]);
+            Date end_date = stringToDate(separate[5]);
             String status = separate[6];
+
 
             Task returnTask = new Task(id,name,team_id,member_id,start_date,end_date,status);
 
             returnTask.setElements(Element.stringToElements(separate[7]));
 
             return returnTask;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
     /**
@@ -262,6 +267,33 @@ public class Task {
      */
     public ArrayList<Element> getElements() {
         return elements;
+    }
+
+    private String dateToString(Date date){
+        String tmp = date.toString();
+        return tmp;
+    }
+
+    private static Date stringToDate(String s){
+
+        String[] separate = s.split(Character.toString('-'));
+
+        Calendar calendar = Calendar.getInstance();
+
+        int year = Integer.parseInt(separate[0]);
+        int month = Integer.parseInt(separate[1]);
+        int day = Integer.parseInt(separate[2]);
+
+        calendar.set(year, month, day);
+
+        Date d = calendar.getTime();
+
+        System.out.println("Y: " + year + " M: " + month + " D: " + day);
+
+        System.out.println(d.toString());
+
+        return d;
+
     }
 
 }

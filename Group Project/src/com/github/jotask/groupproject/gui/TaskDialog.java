@@ -149,7 +149,6 @@ public class TaskDialog extends JDialog {
             startDate.setEditable(false);
             contentPanel.add(startDate, "cell 1 " + counter + ",growx");
             startDate.setColumns(10);
-            //TODO Delete this
             java.util.Date d = new java.util.Date();
             startDate.setText(task.getStartDate().toString());
         }
@@ -274,13 +273,13 @@ public class TaskDialog extends JDialog {
         String status = (String) statusList.getSelectedItem();
 
         // Create a new task for update all information
-        Task task = new Task(id, name, team_id, member_id, startDateTime, endDateTime, status);
+        Task tmp = new Task(id, name, team_id, member_id, startDateTime, endDateTime, status);
 
         // Create an element for this update
-        Element element = new Element(-1, task.getId(), elementField.getText());
+        Element element = new Element(-1, tmp.getId(), elementField.getText());
 
         // Update the task
-        conn.updateTask(task, element);
+        conn.updateTask(tmp, element);
 
         // Refresh the task view
         app.refreshTaskView(conn.getAllTasksWithElements());

@@ -142,15 +142,23 @@ public class Offline {
      */
     public void updateTask(Task task, Element element) {
             if(tasks != null){
-                Task tmp = getTask(task.getId());
-                tmp.getElements().add(element);
 
-                for(int i = 0; i < tasks.size(); i++){
-                    Task tmpT = tasks.get(i);
-                    if(tmpT.getId() == tmp.getId()){
-                        tasks.set(i, tmp);
+                ArrayList<Element> elements = task.getElements();
+                if(elements == null){
+                    elements = new ArrayList<>();
+                }
+
+                task.setElements(elements);
+
+                // Get task from array
+                int index = 0;
+                for(Task t: tasks){
+                    if(t.getId() == task.getId()){
+                        index = tasks.indexOf(t);
                     }
                 }
+
+                tasks.set(index, task);
 
                 saveToFile();
 
