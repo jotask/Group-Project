@@ -2,7 +2,10 @@ package com.github.jotask.groupproject.connection;
 
 import com.github.jotask.groupproject.connection.Connection;
 import com.github.jotask.groupproject.connection.Offline;
+import com.github.jotask.groupproject.gui.ApplicationGUI;
+import com.github.jotask.groupproject.model.Task;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -80,8 +83,12 @@ public class UpdateThread{
         @Override
         public void run() {
             Offline offline = connection.getOffline();
-            offline.setTasks(connection.getAllTasksWithElements());
+            ArrayList<Task> tasks = connection.getAllTasksWithElements();
+            offline.setTasks(tasks);
             offline.saveToFile();
+            ApplicationGUI app = connection.getApp();
+            if(app != null && tasks != null)
+                app.refreshTaskView(tasks);
         }
 
     }

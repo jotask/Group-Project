@@ -47,7 +47,7 @@ public class TaskDao extends Dao {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM TASK WHERE MEMBER_ID=\"" + user.getId() + "\"";
+            String sql = "SELECT * FROM TASK WHERE MEMBER_ID=\"" + user.getId() + "\" AND TASK_STATUS <> 'abandoned'";
             stm = conn.createStatement();
             rs = stm.executeQuery(sql);
 

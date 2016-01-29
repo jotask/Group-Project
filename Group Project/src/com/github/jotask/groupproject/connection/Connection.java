@@ -1,5 +1,7 @@
 package com.github.jotask.groupproject.connection;
 
+import com.github.jotask.groupproject.Application;
+import com.github.jotask.groupproject.gui.ApplicationGUI;
 import com.github.jotask.groupproject.model.Element;
 import com.github.jotask.groupproject.model.Task;
 import com.github.jotask.groupproject.model.User;
@@ -18,7 +20,7 @@ import java.util.Properties;
 public class Connection {
 
     /** Seconds delay */
-    private static final long SECONDS = 300;
+    private final long SECONDS;
 
     /** Properties instance */
     private final Properties properties;
@@ -38,6 +40,9 @@ public class Connection {
     /** Offline instance */
     private Offline offline;
 
+    /** Application instance */
+    private ApplicationGUI app;
+
     /**
      * Constructor for this class. Just it save the instance of properties
      *
@@ -46,6 +51,10 @@ public class Connection {
      */
     public Connection(Properties properties) {
         this.properties = properties;
+
+        String d = this.properties.getProperty("updateDelay");
+        SECONDS = Integer.parseInt(d);
+
     }
 
     /**
@@ -280,4 +289,23 @@ public class Connection {
         return this.user;
     }
 
+    /**
+     * Set the application
+     *
+     * @param app
+     *      The application to be honest
+     */
+    public void setApp(ApplicationGUI app) {
+        this.app = app;
+    }
+
+    /**
+     * Get the application instance
+     *
+     * @return
+     *      The application instance
+     */
+    public ApplicationGUI getApp() {
+        return app;
+    }
 }

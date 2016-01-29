@@ -41,6 +41,7 @@ public class ApplicationGUI extends JFrame{
     	setBackground(new Color(240, 240, 240));
         this.connection = connection;
         instance = this;
+        connection.setApp(instance);
         initialize();
 
         // refresh the table with all task
