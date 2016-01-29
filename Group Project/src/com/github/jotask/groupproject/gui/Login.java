@@ -82,7 +82,7 @@ public class Login extends JDialog {
 			remember = new JCheckBox("Remember");
 			remember.setBackground(Color.WHITE);
 			remember.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
-			remember.setBounds(171, 164, 73, 30);
+			remember.setBounds(200, 167, 100, 23);
 			getContentPane().add(remember);
 		}
 		{
@@ -102,7 +102,7 @@ public class Login extends JDialog {
 		{
 			JButton loginBtn = new JButton("Login");
 			loginBtn.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
-			loginBtn.setBounds(254, 167, 57, 23);
+			loginBtn.setBounds(318, 167, 73, 23);
 			loginBtn.setBorder(null);
 			loginBtn.setBackground(new Color(192,192,192));
 			getContentPane().add(loginBtn);
@@ -114,34 +114,34 @@ public class Login extends JDialog {
 			loginBtn.setActionCommand("OK");
 			getRootPane().setDefaultButton(loginBtn);
 		}
-		{
-			JButton register = new JButton("Register");
-			register.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
-			register.setBounds(318, 167, 73, 23);
-			register.setBorder(null);
-			register.setBackground(new Color(192,192,192));
-			getContentPane().add(register);
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
-				cancelButton.setBounds(11, 167, 65, 23);
-				cancelButton.setBorder(null);
-				cancelButton.setBackground(new Color(192,192,192));
-				getContentPane().add(cancelButton);
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						setVisible(false);
-						dispose();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-			}
-			register.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e){
-					register();
-				}
-			});
-		}
+//		{
+//			JButton register = new JButton("Register");
+//			register.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
+//			register.setBounds(318, 167, 73, 23);
+//			register.setBorder(null);
+//			register.setBackground(new Color(192,192,192));
+//			getContentPane().add(register);
+//			register.addActionListener(new ActionListener(){
+//				public void actionPerformed(ActionEvent e){
+//					register();
+//				}
+//			});
+//		}
+        {
+            JButton cancelButton = new JButton("Cancel");
+            cancelButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
+            cancelButton.setBounds(11, 167, 65, 23);
+            cancelButton.setBorder(null);
+            cancelButton.setBackground(new Color(192,192,192));
+            getContentPane().add(cancelButton);
+            cancelButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setVisible(false);
+                    dispose();
+                }
+            });
+            cancelButton.setActionCommand("Cancel");
+        }
 
 		// Load previous data if exist
 		{
