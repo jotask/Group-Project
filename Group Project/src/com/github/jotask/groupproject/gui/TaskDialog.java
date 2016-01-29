@@ -49,11 +49,11 @@ public class TaskDialog extends JDialog {
     /** The JTexField that holds the member id */
     private final JTextField memberId;
 
-    /** The JDatePicker that holds the start date */
-    private final JDatePicker startDate;
+    /** The JTextField that holds the start date */
+    private final JTextField startDate;
 
-    /** The JDatePicker that holds the end date */
-    private final JDatePicker endDate;
+    /** The JTextField that holds the end date */
+    private final JTextField endDate;
 
     /** The JComboBox that holds the task status */
     private final JComboBox statusList;
@@ -146,15 +146,12 @@ public class TaskDialog extends JDialog {
             contentPanel.add(lblStartdate, "cell 0 " + counter + ",alignx trailing");
         }
         {
-            Date dateT = task.getStartDate();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(dateT);
-            startDate = new JDateComponentFactory().createJDatePicker();
-            DateModel date = startDate.getModel();
-            date.setDay(calendar.get(Calendar.DAY_OF_MONTH));
-            date.setMonth(calendar.get(Calendar.MONTH));
-            date.setYear(calendar.get(Calendar.YEAR));
-            contentPanel.add((Component) startDate, "cell 1 " + counter + ",growx");
+            startDate = new JTextField();
+            contentPanel.add(startDate, "cell 1 " + counter + ",growx");
+            startDate.setColumns(10);
+            //TODO Delete this
+            java.util.Date d = new java.util.Date();
+            startDate.setText(task.getStartDate().toString());
         }
         counter++;
         {
@@ -162,18 +159,11 @@ public class TaskDialog extends JDialog {
             contentPanel.add(lblEndDate, "cell 0 " + counter + ",alignx trailing");
         }
         {
-            Date dateT = task.getEndDate();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(dateT);
-            endDate = new JDateComponentFactory().createJDatePicker();
-            endDate.setButtonFocusable(false);
-            endDate.setTextEditable(false);
-
-            DateModel date = endDate.getModel();
-            date.setDay(calendar.get(Calendar.DAY_OF_MONTH));
-            date.setMonth(calendar.get(Calendar.MONTH));
-            date.setYear(calendar.get(Calendar.YEAR));
-            contentPanel.add((Component) endDate, "cell 1 " + counter + ",growx");
+            endDate = new JTextField();
+            contentPanel.add(endDate, "cell 1 " + counter + ",growx");
+            endDate.setColumns(10);
+            // TODO Delete this
+            endDate.setText(task.getEndDate().toString());
         }
         counter++;
         {
@@ -277,11 +267,8 @@ public class TaskDialog extends JDialog {
         String memberID = memberId.getText();
         int member_id = Integer.parseInt(memberID);
 
-        GregorianCalendar gcS = (GregorianCalendar) startDate.getModel().getValue();
-        Date startDateTime = new Date(gcS.getTime().getTime());
-
-        GregorianCalendar gcE = (GregorianCalendar) endDate.getModel().getValue();
-        Date endDateTime = new Date(gcE.getTime().getTime());
+        Date startDateTime = new Date();
+        Date endDateTime = new Date();
 
         String status = (String) statusList.getSelectedItem();
 

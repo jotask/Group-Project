@@ -57,7 +57,7 @@ public class Login extends JDialog {
 			JLabel lblPassword = new JLabel("Password:");
 			lblPassword.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 			lblPassword.setBounds(10, 92, 66, 20);
-			getContentPane().add(lblPassword);
+//			getContentPane().add(lblPassword);
 		}
 		{
 			usernameField = new JTextField();
@@ -76,7 +76,7 @@ public class Login extends JDialog {
 			passwordField = new JPasswordField();
 			passwordField.setToolTipText("Enter password");
 			passwordField.setBounds(90, 93, 373, 20);
-			getContentPane().add(passwordField);
+//			getContentPane().add(passwordField);
 		}
 		{
 			remember = new JCheckBox("Remember");
