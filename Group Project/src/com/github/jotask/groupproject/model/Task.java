@@ -141,7 +141,6 @@ public class Task {
         String[] separate = str.split(Character.toString(Util.SEPARATOR));
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         /**
          * Parsing the strings into the correct format
@@ -153,27 +152,24 @@ public class Task {
 
         try {
             Date start_date = Util.toSQLDate(format.parse(separate[4]));
-            System.out.println(start_date.toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        // FIXME
-
         int id = Integer.parseInt(separate[0]);
-            String name = separate[1];
-            int team_id = Integer.parseInt(separate[2]);
-            int member_id = Integer.parseInt(separate[3]);
-            Date start_date = stringToDate(separate[4]);
-            Date end_date = stringToDate(separate[5]);
-            String status = separate[6];
+        String name = separate[1];
+        int team_id = Integer.parseInt(separate[2]);
+        int member_id = Integer.parseInt(separate[3]);
+        Date start_date = stringToDate(separate[4]);
+        Date end_date = stringToDate(separate[5]);
+        String status = separate[6];
 
 
-            Task returnTask = new Task(id,name,team_id,member_id,start_date,end_date,status);
+        Task returnTask = new Task(id,name,team_id,member_id,start_date,end_date,status);
 
-            returnTask.setElements(Element.stringToElements(separate[7]));
+        returnTask.setElements(Element.stringToElements(separate[7]));
 
-            return returnTask;
+        return returnTask;
     }
 
     /**
@@ -277,23 +273,19 @@ public class Task {
 
     private static Date stringToDate(String s){
 
-        String[] separate = s.split(Character.toString('-'));
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        Calendar calendar = Calendar.getInstance();
+        Date d = null;
+        try {
+            d = format.parse(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        int year = Integer.parseInt(separate[0]);
-        int month = Integer.parseInt(separate[1]);
-        int day = Integer.parseInt(separate[2]);
 
-        calendar.set(year, month, day);
+        java.sql.Date date = new java.sql.Date(d.getTime());
 
-        Date d = calendar.getTime();
-
-        System.out.println("Y: " + year + " M: " + month + " D: " + day);
-
-        System.out.println(d.toString());
-
-        return d;
+        return date;
 
     }
 

@@ -250,7 +250,7 @@ public class Connection {
                 e.printStackTrace();
             }
             for(Element e: t.getElements()){
-                if(!dataBase.getElementDAO().existElement(e)) {
+                if(e.getId() == -1){
                     dataBase.getElementDAO().addElement(e);
                 }
             }

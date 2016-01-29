@@ -274,6 +274,7 @@ public class TaskDialog extends JDialog {
 
         // Create a new task for update all information
         Task tmp = new Task(id, name, team_id, member_id, startDateTime, endDateTime, status);
+        tmp.setElements(task.getElements());
 
         // Create an element for this update
         Element element = new Element(-1, tmp.getId(), elementField.getText());

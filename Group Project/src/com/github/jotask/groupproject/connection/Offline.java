@@ -148,6 +148,7 @@ public class Offline {
                     elements = new ArrayList<>();
                 }
 
+                elements.add(element);
                 task.setElements(elements);
 
                 // Get task from array
