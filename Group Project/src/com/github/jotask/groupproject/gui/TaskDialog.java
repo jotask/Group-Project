@@ -61,6 +61,8 @@ public class TaskDialog extends JDialog {
     /** The JTexField that holds the element field */
     private final JTextField elementField;
 
+    private final Task task;
+
     /**
      * Constructor for a dialog
      *
@@ -76,6 +78,8 @@ public class TaskDialog extends JDialog {
     public TaskDialog(ApplicationGUI app, Connection conn, final Task task) {
         this.app = app;
         this.conn = conn;
+
+        this.task = task;
 
         contentPanel = new JPanel();
 
@@ -147,6 +151,7 @@ public class TaskDialog extends JDialog {
         }
         {
             startDate = new JTextField();
+            startDate.setEditable(false);
             contentPanel.add(startDate, "cell 1 " + counter + ",growx");
             startDate.setColumns(10);
             //TODO Delete this
@@ -160,6 +165,7 @@ public class TaskDialog extends JDialog {
         }
         {
             endDate = new JTextField();
+            endDate.setEditable(false);
             contentPanel.add(endDate, "cell 1 " + counter + ",growx");
             endDate.setColumns(10);
             // TODO Delete this
@@ -267,8 +273,8 @@ public class TaskDialog extends JDialog {
         String memberID = memberId.getText();
         int member_id = Integer.parseInt(memberID);
 
-        Date startDateTime = new Date();
-        Date endDateTime = new Date();
+        Date startDateTime = this.task.getStartDate();
+        Date endDateTime = this.task.getEndDate();
 
         String status = (String) statusList.getSelectedItem();
 
