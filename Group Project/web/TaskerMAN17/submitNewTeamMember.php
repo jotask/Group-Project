@@ -59,6 +59,11 @@
 			?>
 			</tbody>
 			</table>
+			<div id="cancelButton">
+				<form action="myTeam.php">
+					<input type="submit" value="Home">
+				</form>
+			</div>
 		</div>
 	</div>
 </body>

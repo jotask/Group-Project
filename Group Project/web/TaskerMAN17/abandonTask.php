@@ -33,7 +33,7 @@
 		$abandonCount = mysqli_num_rows($dbNumOfAbandonedTask);
 		$dbTaskCount = mysqli_query ($connection, "SELECT * FROM TASK");
 		$taskCount = mysqli_num_rows($dbTaskCount);
-		if ($taskCount >= $abandonCount){
+		if ($taskCount > $abandonCount){
 // Display table headers for tasks
 			echo "<table border='1'>";
 			echo "<th>" . "</th>";

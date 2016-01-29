@@ -1,9 +1,0 @@
-<?php
-session_save_path("/aber/ajw21/public_html/cs221TaskerMAN/tmp/");
-session_start();
-$connection=mysqli_connect("db.dcs.aber.ac.uk", "csgpadm_17", "ZsdRKXnE", "csgp_17_15_16");
-if (!$connection) {
-	die("No connection to the database possible ".mysql_error());
-}
-echo "connected successful";
-?>
